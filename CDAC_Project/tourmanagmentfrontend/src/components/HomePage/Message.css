@@ -1,0 +1,70 @@
+/* General container padding */
+.lg\:px-36 {
+  padding-left: 36px;
+  padding-right: 36px;
+}
+
+.md\:py-5 {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.px-5 {
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+/* Styling for the text */
+.text-primary {
+  color: #41A4FF;
+}
+
+.text-dark {
+  color: #333;
+}
+
+.text-body-color {
+  color: #6c757d;
+}
+
+.fs-3 {
+  font-size: 2rem;
+}
+
+.fs-5 {
+  font-size: 1.25rem;
+}
+
+.fw-bold {
+  font-weight: bold;
+}
+
+.fw-semibold {
+  font-weight: 600;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.mb-12 {
+  margin-bottom: 3rem;
+}
+
+/* Responsive image styling */
+img {
+  border-radius: 12px;
+}
+
+/* Adjust for images */
+.w-100 {
+  width: 100%;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}

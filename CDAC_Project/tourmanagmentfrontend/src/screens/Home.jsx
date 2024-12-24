@@ -1,7 +1,15 @@
+import GetStarted from "../components/HomePage/GetStarted";
+import react from "react";
+import WhyUs from "../components/HomePage/WhyUs";
+import Services from "../components/HomePage/Services";
+import Message from "../components/HomePage/Message";
 function Home() {
   return (
     <div>
-      <h1>HELLOOO</h1>
+      <GetStarted />
+      <WhyUs />
+      <Services />
+      <Message />
     </div>
   );
 }

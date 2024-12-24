@@ -1,0 +1,79 @@
+/* Container Spacing */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Heading Styles */
+h1 {
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+h1.text-primary {
+  color: #41a4ff;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+h1:hover {
+  color: #41a4ff;
+  transform: translateY(-5px);
+}
+
+/* Paragraph Styling */
+p {
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Button Styling */
+.btn-dark {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border-radius: 8px;
+}
+
+.btn-long {
+  padding: 10px 40px; /* Longer button */
+  min-width: 200px; /* Ensures consistent size */
+  text-align: center;
+}
+
+.btn-dark:hover {
+  background-color: #41a4ff;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Image Styling */
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.img-fluid:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .btn-dark {
+    width: 100%; /* Full width for smaller screens */
+  }
+}
+
+@media (max-width: 576px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+}

@@ -36,3 +36,49 @@
     transform: rotate(360deg);
   }
 }
+/* Custom Styles */
+.card {
+  border-radius: 15px; /* Rounded corners for the card */
+}
+
+.card h2 {
+  font-size: 2rem; /* Larger heading */
+  font-weight: 600;
+}
+
+.form-control {
+  border-radius: 10px; /* Rounded inputs */
+}
+
+.btn {
+  border-radius: 10px; /* Rounded button */
+}
+
+.text-center a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.text-center a:hover {
+  text-decoration: underline;
+}
+
+/* Add some spacing for mobile responsiveness */
+@media (max-width: 576px) {
+  .card {
+    padding: 20px;
+    width: 90%;
+  }
+
+  .card h2 {
+    font-size: 1.5rem;
+  }
+
+  .form-control {
+    font-size: 1rem;
+  }
+
+  .btn {
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,83 @@
+/* General Styling */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Images Section Styling */
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.img-fluid:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.row .col-6 img {
+  border-radius: 12px;
+}
+
+/* Text Section Styling */
+.text-primary {
+  color: #41a4ff !important;
+}
+
+.text-dark {
+  color: #333 !important;
+}
+
+.text-secondary {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.fw-semibold {
+  font-weight: 600;
+}
+
+.fw-bold {
+  font-weight: 700;
+}
+
+.display-5 {
+  font-size: 2.5rem;
+}
+
+.mb-2,
+.mb-3,
+.mb-4 {
+  margin-bottom: 1rem !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .row .col-6 {
+    margin-bottom: 20px;
+  }
+  
+  .display-5 {
+    font-size: 2rem;
+  }
+  
+  .text-secondary {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .row .col-6 img {
+    margin-bottom: 15px;
+  }
+
+
+}
+
+
+.text-justify {
+  text-align: justify;
+}

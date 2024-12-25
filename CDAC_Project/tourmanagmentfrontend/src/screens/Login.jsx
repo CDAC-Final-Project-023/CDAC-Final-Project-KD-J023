@@ -108,7 +108,7 @@ const LoginPage = () => {
             </a>
           </div>
 
-          Separator
+        
           <div className="text-center my-3">
             <span className="text-muted"></span>
             <p></p>

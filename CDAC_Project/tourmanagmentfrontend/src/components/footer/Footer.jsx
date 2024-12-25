@@ -12,7 +12,7 @@ const Footer = () => {
       <div className="row">
         {/* Left Section */}
         <div className="col-md-6 mb-4">
-          <h3 className="text-primary">Travely</h3>
+          <h3 className="text-primary">Not Yet Decided</h3>
           <p className="mt-3">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. A odio non
             nemo veniam, natus accusantium. Praesentium, doloribus mollitia

@@ -1,0 +1,48 @@
+/* Navbar Styles */
+.custom-navbar {
+  position: absolute; /* To make it overlap the carousel */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10; /* Ensure it stays above the carousel */
+  background-color: rgba(255, 255, 255, 0.6); /* Transparent white */
+  backdrop-filter: blur(10px); /* Blur effect */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 10px 0;
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.custom-navbar .navbar-brand {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.custom-navbar .navbar-nav .nav-link {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  margin: 0 15px;
+  transition: color 0.3s ease;
+}
+
+.custom-navbar .navbar-nav .nav-link:hover {
+  color: #41a4ff;
+}
+
+.custom-navbar .btn-primary,
+.custom-navbar .btn-dark {
+  margin-left: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 991px) {
+  .custom-navbar .navbar-nav {
+    text-align: center;
+  }
+
+  .custom-navbar .navbar-nav .nav-link {
+    margin: 5px 0;
+  }
+}

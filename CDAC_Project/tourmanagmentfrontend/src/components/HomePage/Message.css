@@ -68,3 +68,7 @@ img {
 .mt-3 {
   margin-top: 1rem;
 }
+
+.text-justify {
+  text-align: justify;
+}

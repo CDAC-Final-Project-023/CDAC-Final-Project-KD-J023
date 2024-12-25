@@ -1,12 +1,13 @@
-import GetStarted from "../components/HomePage/GetStarted";
 import react from "react";
+import HomeCarousel from "../components/HomePage/HomeCarousel";
 import WhyUs from "../components/HomePage/WhyUs";
 import Services from "../components/HomePage/Services";
 import Message from "../components/HomePage/Message";
+
 function Home() {
   return (
     <div>
-      <GetStarted />
+      <HomeCarousel/>
       <WhyUs />
       <Services />
       <Message />

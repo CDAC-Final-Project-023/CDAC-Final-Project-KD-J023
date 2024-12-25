@@ -14,15 +14,20 @@ const WhyUs = () => {
             <h2 className="text-dark mb-4 fw-bold display-5">
               TAKE ONLY MEMORIES, LEAVE ONLY FOOTPRINTS
             </h2>
-            <p className="text-secondary mb-3">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse
-              nulla enim aperiam culpa cupiditate quas animi ducimus blanditiis!
-              Dolorum, perspiciatis.
+            <p className="text-secondary  mb-3">
+              Every journey is a story waiting to be written. Let your travels
+              be filled with breathtaking vistas, authentic connections, and
+              unforgettable moments.
             </p>
             <p className="text-secondary mb-3">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse
-              nulla enim aperiam culpa cupiditate quas animi ducimus blanditiis!
-              Dolorum, perspiciatis.
+              Explore untouched landscapes, immerse yourself in diverse
+              cultures, and take a step closer to nature's wonders. With us,
+              your adventures become cherished memories, and every destination
+              feels like home.
+            </p>
+            <p className="text-secondary mb-3">
+              Experience the beauty of the world and leave behind footprints of
+              kindness and care. Let’s make your travel dreams a reality.
             </p>
           </div>
         </div>

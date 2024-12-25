@@ -73,4 +73,11 @@
   .row .col-6 img {
     margin-bottom: 15px;
   }
+
+
+}
+
+
+.text-justify {
+  text-align: justify;
 }

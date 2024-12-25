@@ -43,8 +43,8 @@ const Services = () => {
         </span>
         <h2 className="text-dark fw-bold mb-4">What We Offer</h2>
         <p className="text-secondary">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat
-          reprehenderit autem ea ab repellat eum, quasi modi.
+          Discover a wide range of services designed to make your travel
+          experience smooth and enjoyable.
         </p>
       </div>
 

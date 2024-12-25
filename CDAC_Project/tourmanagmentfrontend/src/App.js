@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Login />} /> {/* Corrected component name */}
         <Route path='/login' element={<Login />} /> {/* Corrected component name */}
-        <Route path="/home" element={<Home />}></Route>
+        <Route path="/home" element={<Home />} />
       </Routes>
 
       <ToastContainer />  {/* Render ToastContainer */}

@@ -10,7 +10,7 @@ const HomeCarousel = () => {
   };
 
   return (
-    <div className="hero-carousel">
+    <div className="hero-carousel ">
       <Carousel
         activeIndex={index}
         onSelect={handleSelect}

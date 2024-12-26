@@ -1,7 +1,8 @@
 .hero-carousel {
-  position: relative;
+  position: relative; 
   height: 100vh;
   overflow: hidden;
+
 }
 
 .hero-carousel img {

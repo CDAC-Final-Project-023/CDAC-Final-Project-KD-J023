@@ -16,7 +16,7 @@ const Navbar = () => {
 
   const inside_nav = [
     { path: "/hotelhome", display: "Hotels" },
-    { path: "/tours/home", display: "Tour Packages" },
+    { path: "/tourPackage", display: "Tour Packages" },
     { path: "/vehicles", display: "Vehicles" },
     { path: "/Restaurants", display: "Restaurants" },
     { path: "/events", display: "Events" },

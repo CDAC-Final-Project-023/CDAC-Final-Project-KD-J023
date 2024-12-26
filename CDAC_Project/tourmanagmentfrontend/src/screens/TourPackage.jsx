@@ -1,5 +1,6 @@
 import "./Tourpackage.css";
 import React from "react";
+import Footer from "../components/footer/Footer"
 
 const packages = {
   south: [
@@ -29,15 +30,16 @@ const packages = {
   ],
 };
 
-function App() {
+function Tourpackage() {
   return (
-    <div className="App">
+    <div className="tourpackage-container">
       <h1>Tour Packages by Region</h1>
       <div className="categories">
         {Object.entries(packages).map(([region, packageList]) => (
           <Category key={region} name={region} packages={packageList} />
         ))}
       </div>
+      <Footer />
     </div>
   );
 }
@@ -67,4 +69,4 @@ function PackageCard({ package: { title, description, image } }) {
   );
 }
 
-export default App;
+export default Tourpackage;

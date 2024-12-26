@@ -1,6 +1,6 @@
-body {
-  margin: 0; /* Remove default margin */
-  padding: 0; /* Remove default padding */
+.tourpackage-container {
+  margin: 0;
+  padding: 0;
   font-family: Arial, sans-serif;
   color: #fff;
   position: relative;
@@ -9,7 +9,7 @@ body {
   overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
-body::before {
+.tourpackage-container::before {
   content: '';
   position: fixed; /* Use fixed positioning to cover the entire viewport */
   top: 0;
@@ -20,7 +20,7 @@ body::before {
   z-index: -1; /* Ensure it’s behind all content */
 }
 
-h1 {
+.tourpackage-container h1 {
   text-align: center;
   margin: 20px 0;
   font-size: 2.5rem;

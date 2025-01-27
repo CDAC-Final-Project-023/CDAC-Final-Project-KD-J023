@@ -3,7 +3,7 @@ import "./SignUpPage.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-
+import Navbar from "../components/navbar/BetaNav";
 const Signup = () => {
     
     
@@ -50,6 +50,7 @@ const Signup = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
+      <Navbar />
       <div
         className="row shadow-lg bg-white rounded overflow-hidden"
         style={{

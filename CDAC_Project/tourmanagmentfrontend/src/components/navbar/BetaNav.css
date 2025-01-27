@@ -1,11 +1,11 @@
 /* Navbar Styles */
 .custom-navbar {
-  position: absolute; /* To make it overlap the carousel */
+  position: fixed; /* Ensure it overlays the carousel */
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 10; /* Ensure it stays above the carousel */
-  background-color: rgba(43, 132, 241, 0.847); /* Transparent white */
+  z-index: 1000; /* Ensure it stays above the carousel */
+  background-color: rgba(255, 255, 255, 0); /* Semi-transparent background */
   backdrop-filter: blur(1px); /* Blur effect */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
   padding: 10px 0;
@@ -15,25 +15,38 @@
 .custom-navbar .navbar-brand {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #fff;
+  color: #000; /* Black color for better visibility */
   text-transform: uppercase;
 }
 
 .custom-navbar .navbar-nav .nav-link {
   font-size: 1rem;
   font-weight: 500;
-  color: #fff;
+  color: #000; /* Black color for better visibility */
   margin: 0 15px;
   transition: color 0.3s ease;
 }
 
 .custom-navbar .navbar-nav .nav-link:hover {
-  color: #41a4ff;
+  color: #41a3ff;
 }
 
 .custom-navbar .btn-primary,
 .custom-navbar .btn-dark {
   margin-left: 10px;
+}
+
+/* Avatar Styles */
+.custom-navbar .navbar-nav .nav-item .nav-link img {
+  border: 2px solid #000;
+  border-radius: 50%; /* Make the avatar circular */
+  width: 30px; /* Ensure width is consistent */
+  height: 30px; /* Ensure height is consistent */
+  transition: border-color 0.3s ease;
+}
+
+.custom-navbar .navbar-nav .nav-item .nav-link img:hover {
+  border-color: #41a3ff;
 }
 
 /* Responsive Design */
@@ -46,4 +59,3 @@
     margin: 5px 0;
   }
 }
-

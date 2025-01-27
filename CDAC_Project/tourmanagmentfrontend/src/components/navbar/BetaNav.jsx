@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
-import "./Navbar.css"; // Importing the CSS
-
-const Navbar = () => {
+import "./BetaNav.css"; // Importing the CSS
+import defaultuserlogo from "../../images/euser.png"; // Importing the default user image
+const BetaNav = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -15,16 +14,16 @@ const Navbar = () => {
   };
 
   const inside_nav = [
-    { path: "/hotelhome", display: "Hotels" },
+    // { path: "/hotelhome", display: "Hotels" },
     { path: "/tourPackage", display: "Tour Packages" },
-    { path: "/vehicles", display: "Vehicles" },
-    { path: "/Restaurants", display: "Restaurants" },
-    { path: "/events", display: "Events" },
-    { path: "/TrainHome", display: "Trains" },
+    // { path: "/vehicles", display: "Vehicles" },
+    // { path: "/Restaurants", display: "Restaurants" },
+    // { path: "/events", display: "Events" },
+    // { path: "/TrainHome", display: "Trains" },
   ];
 
   return (
-    <nav className="navbar custom-navbar navbar-expand-lg">
+    <nav className="navbar custom-navbar navbar-expand-lg fixed-top">
       <div className="container">
         {/* Logo */}
         <Link to="/" className="navbar-brand logo">
@@ -78,22 +77,26 @@ const Navbar = () => {
             </li>
           </ul>
 
-          {/* Right-Side Buttons */}
+          {/* Right-Side Avatar */}
           <ul className="navbar-nav ms-auto">
             {user ? (
               <li className="nav-item dropdown">
                 <a
-                  className="nav-link dropdown-toggle"
+                  className="nav-link"
                   href="#"
                   id="userDropdown"
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false">
                   <img
-                    src={user.img || "https://via.placeholder.com/30"}
+                    src={user.img || defaultuserlogo}
                     alt="User"
                     className="rounded-circle me-2"
-                    style={{ width: "30px", height: "30px" }}
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      borderRadius: "50%",
+                    }}
                   />
                   {user.name}
                 </a>
@@ -102,7 +105,12 @@ const Navbar = () => {
                   aria-labelledby="userDropdown">
                   <li>
                     <Link to="/profile" className="dropdown-item">
-                      Profile
+                      My Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/bookings" className="dropdown-item">
+                      My Bookings
                     </Link>
                   </li>
                   <li>
@@ -113,18 +121,40 @@ const Navbar = () => {
                 </ul>
               </li>
             ) : (
-              <>
-                <li className="nav-item">
-                  <Link to="/login" className="btn btn-primary me-2">
-                    Sign In
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/signup" className="btn btn-dark">
-                    Sign Up
-                  </Link>
-                </li>
-              </>
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link"
+                  href="#"
+                  id="guestDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <img
+                    src={defaultuserlogo}
+                    alt=""
+                    className="rounded-circle"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                  />
+                </a>
+                <ul
+                  className="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="guestDropdown">
+                  <li>
+                    <Link to="/login" className="dropdown-item">
+                      Sign In
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/signup" className="dropdown-item">
+                      Sign Up
+                    </Link>
+                  </li>
+                </ul>
+              </li>
             )}
           </ul>
         </div>
@@ -133,4 +163,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default BetaNav;

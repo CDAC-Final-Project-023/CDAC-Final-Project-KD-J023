@@ -2,7 +2,7 @@ import "react-toastify/dist/ReactToastify.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-
+import Navbar from "../components/navbar/BetaNav";
 const ResetPassword = () => {
   const [step, setStep] = useState(1); // Step 1: Enter Email, Step 2: Enter OTP, Step 3: Reset Password
   const [formData, setFormData] = useState({
@@ -88,6 +88,7 @@ const ResetPassword = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
+      <Navbar />
       <div
         className="row shadow-lg bg-white rounded overflow-hidden"
         style={{

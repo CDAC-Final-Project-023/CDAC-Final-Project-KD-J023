@@ -4,7 +4,7 @@ import "./LoginPage.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-
+import Navbar from "../components/navbar/BetaNav";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,6 +24,7 @@ const LoginPage = () => {
 
   return (
     <div className="container-fluid vh-100 d-flex align-items-center justify-content-center bg-light">
+      <Navbar />
       <div className="row shadow-lg bg-white rounded overflow-hidden" style={{ width: "90%", maxWidth: "900px" }}>
         {/* Left Section with Image and Branding */}
         <div

@@ -1,9 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
+import Navbar from "../components/navbar/BetaNav";
 
 const TourPackagesList = ({ category, packages }) => {
   return (
     <div className="container mt-4">
+      <Navbar />
       {/* Header */}
       <header className="text-center mb-4">
         <h1 className="fw-bold">{category} Tour Packages</h1>

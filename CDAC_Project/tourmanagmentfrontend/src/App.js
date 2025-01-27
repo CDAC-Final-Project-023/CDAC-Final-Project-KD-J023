@@ -11,9 +11,10 @@ import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Navbar from "./components/navbar/Navbar";
 
+/*container-fluid*/
 function App() {
   return (
-    <div className="container-fluid">
+    <div className="">      
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

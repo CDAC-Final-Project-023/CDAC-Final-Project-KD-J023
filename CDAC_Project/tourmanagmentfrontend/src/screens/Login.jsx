@@ -43,7 +43,7 @@ const LoginPage = () => {
 
           {/* Content */}
           <div className="z-index-1">
-            <h1 className="brand-title">Travelista Tours</h1>
+            <h1 className="brand-title">Sunbeam Tours</h1>
             <p className="brand-subtitle mt-3">
               Travel is the only purchase that enriches you in ways beyond material wealth.
             </p>

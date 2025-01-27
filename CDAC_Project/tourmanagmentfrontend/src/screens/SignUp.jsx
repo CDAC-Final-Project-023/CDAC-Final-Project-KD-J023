@@ -60,7 +60,7 @@ const Signup = () => {
       >
         {/* Left Section with Image and Tagline */}
         <div className="col-md-6 p-4 d-flex flex-column justify-content-center align-items-center text-center bg-primary text-white">
-          <h1 className="fw-bold">Join Travelista</h1>
+          <h1 className="fw-bold">Join Sunbeam Tours</h1>
           <p className="mt-3">
             Start your journey with us and explore the world like never before!
           </p>

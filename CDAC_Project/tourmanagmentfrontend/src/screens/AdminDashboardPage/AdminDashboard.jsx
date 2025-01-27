@@ -2,6 +2,7 @@ import "./AdminDashboard.css";
 import ManageBookings from "../../components/Admin/ManageBookings";
 import ManageTours from "../../components/Admin/ManageTours";
 import ManageUsers from "../../components/Admin/ManageUsers";
+import Navbar from "../../components/navbar/BetaNav";
 import React, { useState } from "react";
 import ViewReports from "../../components/Admin/ViewReports";
 
@@ -17,6 +18,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
+      <Navbar />
       <h1>Admin Dashboard</h1>
       <div className="tabs">
         <button

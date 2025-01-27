@@ -1,11 +1,12 @@
 /* /src/screens/AdminDashboardPage/AdminDashboard.css */
 .admin-dashboard {
+    margin-top: 90px;
     padding: 20px;
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     min-height: 100vh;
   }
-  
+
   h1 {
     text-align: center;
     margin-bottom: 30px;

@@ -1,8 +1,8 @@
+import "./Navbar.css";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
-import "./Navbar.css"; // Importing the CSS
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -15,7 +15,7 @@ const Navbar = () => {
   };
 
   const inside_nav = [
-    { path: "/hotelhome", display: "Hotels" },
+    { path: "/home", display: "Hotels" },
     { path: "/tourPackage", display: "Tour Packages" },
     { path: "/vehicles", display: "Vehicles" },
     { path: "/Restaurants", display: "Restaurants" },

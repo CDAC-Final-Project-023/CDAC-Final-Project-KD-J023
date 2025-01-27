@@ -1,0 +1,46 @@
+/* /src/screens/AdminDashboardPage/AdminDashboard.css */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+button.edit-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  margin-right: 10px;
+}
+
+button.delete-btn {
+  background-color: #ff3333;
+  color: white;
+  border: none;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+select {
+  margin-top: 10px;
+}

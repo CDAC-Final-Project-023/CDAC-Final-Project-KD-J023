@@ -1,8 +1,9 @@
+import "./BetaNav.css";
 import React, { useContext } from "react";
+import defaultuserlogo from "../../images/euser.png";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
-import "./BetaNav.css"; // Importing the CSS
-import defaultuserlogo from "../../images/euser.png"; // Importing the default user image
+
 const BetaNav = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();

@@ -1,0 +1,25 @@
+.tour-details-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .tour-details-content {
+    margin: 0 auto;
+    max-width: 800px;
+    text-align: left;
+  }
+  
+  .tour-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .tour-image {
+    width: calc(33.33% - 10px);
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  

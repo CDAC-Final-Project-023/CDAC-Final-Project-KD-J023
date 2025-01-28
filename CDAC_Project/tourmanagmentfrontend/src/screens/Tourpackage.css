@@ -1,6 +1,6 @@
 .tourpackage-container {
   margin: 0;
-  padding: 0;
+  padding: 70px 0 0 0; /* Add top padding to prevent overlap with navbar */
   font-family: Arial, sans-serif;
   color: #fff;
   position: relative;
@@ -11,13 +11,13 @@
 
 .tourpackage-container::before {
   content: '';
-  position: fixed; /* Use fixed positioning to cover the entire viewport */
+  position: fixed; /* Fixed to cover the entire viewport */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.4); /* Semi-transparent overlay */
-  z-index: -1; /* Ensure it’s behind all content */
+  z-index: -2; /* Keep it below the navbar */
 }
 
 .tourpackage-container h1 {
@@ -31,6 +31,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-top: 20px;
+  padding: 20px; /* Add spacing for better alignment */
 }
 
 .category {
@@ -89,4 +91,21 @@
 .package-details p {
   font-size: 0.9rem;
   color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tourpackage-container {
+    padding: 80px 10px 0; /* Increase top padding on smaller screens */
+  }
+
+  .category {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .package-card {
+    width: 100%; /* Full-width cards on smaller screens */
+    max-width: 300px;
+  }
 }

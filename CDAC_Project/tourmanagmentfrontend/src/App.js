@@ -9,6 +9,8 @@ import TourPackage from "./screens/TourPackage";
 import TourPackagesList from "./screens/TourPackageList";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import ContactUs from "./screens/ContactUs";
+import AboutUs from "./screens/AboutUs";
 
 
 function App() {
@@ -24,6 +26,8 @@ function App() {
         <Route path="/tourPackageList" element={<TourPackagesList />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/admin" element={<AdminDashboardPage />} />
+        <Route path="/ContactUs" element={<ContactUs />} />
+        <Route path="/AboutUs" element={<AboutUs />} />
       </Routes>
 
       <ToastContainer />

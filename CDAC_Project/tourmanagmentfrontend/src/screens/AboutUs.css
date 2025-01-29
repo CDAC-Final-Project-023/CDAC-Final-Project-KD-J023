@@ -1,0 +1,35 @@
+.container {
+    max-width: 1100px;
+  }
+  
+  .img-fluid {
+    border-radius: 10px;
+  }
+  
+  .list-unstyled li {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .rounded-circle {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+  }
+  
+  .card {
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .rounded-circle {
+    width: 200px; /* Adjust as necessary */
+    height: 200px; /* Ensures square dimensions */
+    object-fit: cover; /* Ensures the image covers the circle area */
+  }
+  

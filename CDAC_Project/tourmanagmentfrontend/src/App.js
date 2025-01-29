@@ -9,12 +9,13 @@ import TourPackage from "./screens/TourPackage";
 import TourPackagesList from "./screens/TourPackageList";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import PurchasePackage from "./screens/PurchasePackage";
+import PaymentSuccess from "./screens/PaymentSuccess";
 
 
 function App() {
   return (
     <div className="app-container">
-      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
@@ -24,6 +25,8 @@ function App() {
         <Route path="/tourPackageList" element={<TourPackagesList />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/admin" element={<AdminDashboardPage />} />
+        <Route path="/purchase-package" element={<PurchasePackage />} />
+        <Route path="/payment-success" element={<PaymentSuccess />} />  
       </Routes>
 
       <ToastContainer />

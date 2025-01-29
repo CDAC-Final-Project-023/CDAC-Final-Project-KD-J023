@@ -1,15 +1,16 @@
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import AdminDashboardPage from "./screens/AdminDashboardPage/AdminDashboard";
+import BookTour from "./BookTour";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 import ResetPassword from "./screens/ResetPassword";
 import SignUp from "./screens/SignUp";
+import TourDetails from "./screens/TourDetails";
 import TourPackage from "./screens/TourPackage";
 import TourPackagesList from "./screens/TourPackageList";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
         <Route path="/tourPackageList" element={<TourPackagesList />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/admin" element={<AdminDashboardPage />} />
+        <Route path="/tour-details/:id" element={<TourDetails />} />
+        <Route path="/book-tour/:tourId" element={<BookTour />} />
       </Routes>
 
       <ToastContainer />

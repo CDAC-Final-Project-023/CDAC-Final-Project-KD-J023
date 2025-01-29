@@ -1,20 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import successAnimation from "../animations/success-checkmark.json";
+import Loading from "./Loading";
 import "./PaymentSuccess.css";
 
 const PaymentSuccess = () => {
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Redirect to home page after 5 seconds
-    const timer = setTimeout(() => {
-      navigate("/");
-    }, 5000);
+    // Simulate loading time
+    const loadingTimer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust the loading time as needed
 
-    return () => clearTimeout(timer); // Cleanup timer on unmount
+    // Redirect to home page after 5 seconds
+    const redirectTimer = setTimeout(() => {
+      navigate("/");
+    }, 7000); // Adjust the total time to include loading time
+
+    return () => {
+      clearTimeout(loadingTimer);
+      clearTimeout(redirectTimer);
+    }; // Cleanup timers on unmount
   }, [navigate]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="payment-success-container">

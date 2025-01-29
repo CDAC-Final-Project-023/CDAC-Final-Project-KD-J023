@@ -1,0 +1,19 @@
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f9f9f9; /* Optional */
+}
+
+.loading-animation {
+  width: 150px; /* Adjust size as needed */
+  height: 150px;
+}
+
+.loading-container p {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #333;
+}

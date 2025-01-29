@@ -19,7 +19,7 @@ const PurchasePackage = () => {
 
   useEffect(() => {
     // Fetch package details from the API
-    fetch("https://api.example.com/package-details")
+    fetch("https://api.example.com/package-details/")
       .then((response) => response.json())
       .then((data) => {
         setTitle(data.title);

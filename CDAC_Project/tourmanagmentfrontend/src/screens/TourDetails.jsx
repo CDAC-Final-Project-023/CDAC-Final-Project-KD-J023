@@ -3,6 +3,7 @@ import Footer from "../components/footer/Footer";
 import Navbar from "../components/navbar/BetaNav";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function TourDetails() {
   const { id } = useParams(); // Get tour ID from URL
@@ -94,11 +95,12 @@ function TourDetails() {
           ))}
         </ul>
 
-        <p className="tour-price"><strong>Price:</strong> {tour.price}</p>
-        <button className="book-now-btn">Book Now</button>
-        {/* <Link to={`/book-tour/${tour.id}`}>
+        <p className="tour-price">
+          <strong>Price:</strong> {tour.price}
+        </p>
+        <Link to={`/purchase-package/${tour.id}`}>
           <button className="book-now-btn">Book Now</button>
-        </Link> */}
+        </Link>
       </div>
 
       {/* Reviews Section */}

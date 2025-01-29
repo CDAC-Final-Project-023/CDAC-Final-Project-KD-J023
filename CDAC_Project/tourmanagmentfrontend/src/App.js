@@ -11,6 +11,8 @@ import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import PurchasePackage from "./screens/PurchasePackage";
 import PaymentSuccess from "./screens/PaymentSuccess";
+import ContactUs from "./screens/ContactUs";
+import AboutUs from "./screens/AboutUs";
 
 
 function App() {
@@ -27,6 +29,8 @@ function App() {
         <Route path="/admin" element={<AdminDashboardPage />} />
         <Route path="/purchase-package" element={<PurchasePackage />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />  
+        <Route path="/ContactUs" element={<ContactUs />} />
+        <Route path="/AboutUs" element={<AboutUs />} />
       </Routes>
 
       <ToastContainer />

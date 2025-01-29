@@ -14,6 +14,7 @@ import PurchasePackage from "./screens/PurchasePackage";
 import PaymentSuccess from "./screens/PaymentSuccess";
 import ContactUs from "./screens/ContactUs";
 import AboutUs from "./screens/AboutUs";
+import UpdateProfile from "./screens/UpdateProfile";
 
 function App() {
   return (
@@ -32,7 +33,8 @@ function App() {
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/AboutUs" element={<AboutUs />} />
         <Route path="/tour-details/:id" element={<TourDetails />} />
-        
+        <Route path="/UpdateProfile" element={<UpdateProfile />} />
+
       </Routes>
 
       <ToastContainer />

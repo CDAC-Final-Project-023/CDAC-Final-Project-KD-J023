@@ -1,3 +1,4 @@
+/* General Page Styling */
 .tourpackage-container {
   margin: 0;
   padding: 0;
@@ -7,86 +8,141 @@
   background: url('https://wallpapers.com/images/featured/travel-ibk7fgrvtvhs7qzg.jpg') no-repeat center center fixed;
   background-size: cover;
   overflow-x: hidden; /* Prevent horizontal scrolling */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+.package-card-link {
+  text-decoration: none;  /* Remove underline */
+}
+/* Dark Overlay */
 .tourpackage-container::before {
   content: '';
-  position: fixed; /* Use fixed positioning to cover the entire viewport */
+  position: fixed; /* Fixed to cover the whole viewport */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4); /* Semi-transparent overlay */
-  z-index: -1; /* Ensure it’s behind all content */
+  background: rgba(0, 0, 0, 0.5); /* Increased opacity for better readability */
+  z-index: -1;
 }
 
+/* Page Heading */
 .tourpackage-container h1 {
   text-align: center;
-  margin: 20px 0;
-  font-size: 2.5rem;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  margin: 30px 0;
+  font-size: 2.8rem;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+  color: #fff;
 }
 
+/* Categories Container */
 .categories {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+  max-width: 1400px;
 }
 
+/* Category Box */
 .category {
   width: 90%;
   max-width: 1200px;
-  margin: 20px auto;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.95); /* Slightly more opacity */
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(5px); /* Adds a subtle blur effect */
 }
 
+/* Category Heading */
 .category h2 {
   text-align: center;
-  color: #333;
-  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
+  font-size: 2rem;
+  color: #222;
+  margin-bottom: 15px;
+  text-transform: uppercase;
 }
 
+/* Package List */
 .package-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 15px;
 }
 
+/* Package Card */
 .package-card {
-  width: 220px;
-  margin: 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  width: 260px;
+  border-radius: 10px;
   overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
-  background-color: white;
+  background: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #ddd;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Hover Effect */
 .package-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Package Image */
 .package-image {
   width: 100%;
-  height: 150px;
+  height: 160px;
   object-fit: cover;
+  border-bottom: 2px solid #eee;
 }
 
+/* Package Details */
 .package-details {
-  padding: 10px;
+  padding: 15px;
   text-align: center;
 }
 
+/* Package Title */
 .package-details h3 {
-  font-size: 1.2rem;
-  color: #333;
+  font-size: 1.3rem;
+  color: #222;
+  margin-bottom: 5px;
 }
 
+/* Package Description */
 .package-details p {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: #666;
+  line-height: 1.4;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .tourpackage-container h1 {
+    font-size: 2.2rem;
+  }
+  .category {
+    padding: 20px;
+  }
+  .package-card {
+    width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .tourpackage-container h1 {
+    font-size: 2rem;
+  }
+  .category h2 {
+    font-size: 1.6rem;
+  }
+  .package-card {
+    width: 100%;
+  }
 }

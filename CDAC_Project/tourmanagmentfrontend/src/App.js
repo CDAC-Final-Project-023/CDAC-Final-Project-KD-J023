@@ -5,6 +5,7 @@ import Home from "./screens/Home";
 import Login from "./screens/Login";
 import ResetPassword from "./screens/ResetPassword";
 import SignUp from "./screens/SignUp";
+import TourDetails from "./screens/TourDetails";
 import TourPackage from "./screens/TourPackage";
 import TourPackagesList from "./screens/TourPackageList";
 import { Route, Routes } from "react-router-dom";
@@ -13,7 +14,6 @@ import PurchasePackage from "./screens/PurchasePackage";
 import PaymentSuccess from "./screens/PaymentSuccess";
 import ContactUs from "./screens/ContactUs";
 import AboutUs from "./screens/AboutUs";
-
 
 function App() {
   return (
@@ -27,10 +27,12 @@ function App() {
         <Route path="/tourPackageList" element={<TourPackagesList />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/admin" element={<AdminDashboardPage />} />
-        <Route path="/purchase-package" element={<PurchasePackage />} />
+        <Route path="/purchase-package/:id" element={<PurchasePackage />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />  
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/AboutUs" element={<AboutUs />} />
+        <Route path="/tour-details/:id" element={<TourDetails />} />
+        
       </Routes>
 
       <ToastContainer />

@@ -1,0 +1,18 @@
+.review-form {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .form-control {
+    border-radius: 8px;
+  }
+  
+  .btn-success {
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .btn-success:hover {
+    background-color: #28a745;
+  }
+  

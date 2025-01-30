@@ -15,6 +15,8 @@ import PaymentSuccess from "./screens/PaymentSuccess";
 import ContactUs from "./screens/ContactUs";
 import AboutUs from "./screens/AboutUs";
 import UpdateProfile from "./screens/UpdateProfile";
+import MyBookings from "./screens/MyBookings";
+import AddReview from "./screens/AddReview";
 
 function App() {
   return (
@@ -34,6 +36,9 @@ function App() {
         <Route path="/AboutUs" element={<AboutUs />} />
         <Route path="/tour-details/:id" element={<TourDetails />} />
         <Route path="/UpdateProfile" element={<UpdateProfile />} />
+        <Route path="/MyBookings" element={<MyBookings/>} />
+        <Route path="/AddReview" element={<AddReview/>} />
+        
 
       </Routes>
 

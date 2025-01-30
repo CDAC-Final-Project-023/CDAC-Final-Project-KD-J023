@@ -112,7 +112,7 @@ const BetaNav = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/bookings" className="dropdown-item">
+                    <Link to="/mybookings" className="dropdown-item">
                       My Bookings
                     </Link>
                   </li>

@@ -1,0 +1,67 @@
+/* PaymentSuccess.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+}
+
+.payment-success-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(to bottom, #ffffff, #e6f7ff);
+  padding: 20px;
+}
+
+.success-animation {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 28px;
+  color: #28a745;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 18px;
+  color: #495057;
+  margin-bottom: 30px;
+}
+
+button {
+  background-color: #28a745;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 22px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}

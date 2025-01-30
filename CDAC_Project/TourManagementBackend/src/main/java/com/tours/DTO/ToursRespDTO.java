@@ -1,6 +1,9 @@
 package com.tours.DTO;
 
+import com.tours.entity.Category;
+import com.tours.entity.City;
 import com.tours.entity.Photo;
+import com.tours.entity.State;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,8 +20,9 @@ public class ToursRespDTO {
     private String description;
     private double price;
     private String status;
-    private String cityName;
-    private String stateName;
-    private String categoryName;
+    private City city;
+    private State state;
+    private Category category;
     private String photoPath;
+   
 }

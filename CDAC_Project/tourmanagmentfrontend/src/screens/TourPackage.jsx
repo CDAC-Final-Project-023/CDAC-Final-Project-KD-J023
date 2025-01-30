@@ -16,6 +16,7 @@ function Tourpackage() {
         const categoriesResponse = await fetch(
           "http://localhost:8080/categories"
         );
+
         if (!categoriesResponse.ok)
           throw new Error("Failed to fetch categories");
         const categories = await categoriesResponse.json();
@@ -25,24 +26,23 @@ function Tourpackage() {
         const toursResponse = await fetch(
           `http://localhost:8080/tours/categories?categoryIds=${categoryIds}`
         );
-        
         if (!toursResponse.ok) throw new Error("Failed to fetch tours");
         const data = await toursResponse.json();
-        console.log(data);
+       
         
 
           
         // Ensure the data is structured correctly and add default image URL
         const formattedData = data.reduce((acc, tourPackage) => {
-          console.log(tourPackage);
-          
-          const category = categories.find(cat => cat.name === tourPackage.categoryName);
+          const category = categories.find(cat => cat.id === tourPackage.category?.id);
           const region = category ? category.name : "Unknown";
           if (!acc[region]) acc[region] = [];
           acc[region].push({
             ...tourPackage,
-            photoUrl: tourPackage.photoUrl || "/default-image.jpg",
+            photoUrl: tourPackage.photoPath || "/default-image.jpg",
           });
+                  
+
           return acc;
         }, {});
 

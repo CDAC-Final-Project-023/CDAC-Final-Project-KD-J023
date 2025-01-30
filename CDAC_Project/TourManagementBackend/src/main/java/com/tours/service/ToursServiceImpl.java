@@ -31,9 +31,9 @@ public class ToursServiceImpl implements ToursService{
 	            .stream()
 	            .map(tour -> {
 	                ToursRespDTO dto = modelMapper.map(tour, ToursRespDTO.class);
-	                dto.setCityName(tour.getCity().getCityName());
-	                dto.setStateName(tour.getState().getStateName());
-	                dto.setCategoryName(tour.getCategory().getName());
+	                dto.setCity(tour.getCity());
+	                dto.setState(tour.getState());
+	                dto.setCategory(tour.getCategory());
 	                dto.setPhotoPath(tour.getPhoto() != null ? tour.getPhoto().getPhotoPath() : null); // Set photo URL
 	                return dto;
 	            })
@@ -46,9 +46,9 @@ public class ToursServiceImpl implements ToursService{
 	            .stream()
 	            .map(tour -> {
 	                ToursRespDTO dto = modelMapper.map(tour, ToursRespDTO.class);
-	                dto.setCityName(tour.getCity().getCityName());
-	                dto.setStateName(tour.getState().getStateName());
-	                dto.setCategoryName(tour.getCategory().getName());
+	                dto.setCity(tour.getCity());
+	                dto.setState(tour.getState());
+	                dto.setCategory(tour.getCategory());
 	                dto.setPhotoPath(tour.getPhoto() != null ? tour.getPhoto().getPhotoPath() : null); // Set photo URL
 	                return dto;
 	            })
@@ -57,8 +57,19 @@ public class ToursServiceImpl implements ToursService{
 
 	@Override
 	public ToursRespDTO getTourDetailsById(Long tourId) {
-		Tour tourEntity =toursDao.findById(tourId).orElseThrow(() -> new ResourceNotFoundException("Invalid Tour ID !!!"));
-		return modelMapper.map(tourEntity, ToursRespDTO.class);
+		Tour tourEntity = toursDao.findById(tourId)
+	            .orElseThrow(() -> new ResourceNotFoundException("Invalid Tour ID !!!"));
+
+	    ToursRespDTO dto = modelMapper.map(tourEntity, ToursRespDTO.class);
+
+	    // Manually set the photoPath if photo exists
+	    if (tourEntity.getPhoto() != null) {
+	        dto.setPhotoPath(tourEntity.getPhoto().getPhotoPath());
+	    } else {
+	        dto.setPhotoPath("default.jpg"); // 
+	    }
+
+	    return dto;
 	}
 
 

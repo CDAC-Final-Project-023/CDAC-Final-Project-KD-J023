@@ -16,32 +16,29 @@ function TourDetails() {
     const fetchTourDetails = async () => {
       try {
         // Mock Data (Replace with API call when backend is ready)
-        const mockData = {
-          1: {
-            id: 1,
-            title: "Himalayan Adventure",
-            description: "Explore the breathtaking Himalayas with this exciting trek. lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            image: "https://www.esikkimtourism.in/wp-content/uploads/2019/05/adventure-tourism-sikkim-tts.jpg",    
-            price: "$500 per person",
-            itinerary: [
-              "Day 1: Arrival in Manali",
-              "Day 2: Trekking to Solang Valley",
-              "Day 3: Camping under the stars",
-              "Day 4: Return to Base"
-            ]
-          }
-        };
+        // const mockData = {
+        //   1: {
+        //     id: 1,
+        //     title: "Himalayan Adventure",
+        //     description: "Explore the breathtaking Himalayas with this exciting trek. lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        //     image: "https://www.esikkimtourism.in/wp-content/uploads/2019/05/adventure-tourism-sikkim-tts.jpg",
+        //     price: "$500 per person",
+        //     itinerary: [
+        //       "Day 1: Arrival in Manali",
+        //       "Day 2: Trekking to Solang Valley",
+        //       "Day 3: Camping under the stars",
+        //       "Day 4: Return to Base"
+        //     ]
+        //   }
+        // };
 
-        setTour(mockData[id]);
-
-        /*
-           UNCOMMENT & USE THIS CODE WHEN BACKEND IS READY:
-
-          const response = await fetch(`http://localhost:8080/api/tours/${id}`);
-          if (!response.ok) throw new Error("Failed to fetch tour details");
-          const data = await response.json();
-          setTour(data);
-        */
+        //http://localhost:8080/tours/11
+        const response = await fetch(`http://localhost:8080/tours/${id}`);
+        if (!response.ok) throw new Error("Failed to fetch tour details");
+        const data = await response.json();
+        setTour(data);
+        console.log(data);
+       
       } catch (err) {
         setError("Failed to load tour details. Please try again later.");
       } finally {
@@ -85,18 +82,18 @@ function TourDetails() {
       <Navbar />
       <div className="tour-details-content">
         <h1>{tour.title}</h1>
-        <img src={tour.image} alt={tour.title} className="tour-image" />
+        <img src={tour.photoPath} alt={tour.title} className="tour-image" />
+        <h3>Description</h3>
         <p className="tour-description">{tour.description}</p>
 
-        <h3>Description</h3>
-        <ul className="itinerary-list">
+        {/* <ul className="itinerary-list">
           {tour.itinerary.map((item, index) => (
             <li key={index}>{item}</li>
           ))}
-        </ul>
+        </ul> */}
 
         <p className="tour-price">
-          <strong>Price:</strong> {tour.price}
+          <strong>Price: </strong> ₹{tour.price}
         </p>
         <Link to={`/purchase-package/${tour.id}`}>
           <button className="book-now-btn">Book Now</button>

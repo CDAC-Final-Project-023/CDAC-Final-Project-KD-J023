@@ -9,7 +9,7 @@ const MyBookings = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:8080/bookings/user/1") // Change user ID dynamically
+    axios.get("http://localhost:8080/mybookings/user/1") // Change user ID dynamically
       .then((response) => {
         setBookings(response.data);
       })
@@ -40,7 +40,7 @@ const MyBookings = () => {
                   </p>
                   <button
                     className="btn btn-primary"
-                    onClick={() => navigate(`/add-review/${booking.id}`)}
+                    onClick={() => navigate(`/addreview/${booking.id}`)}
                   >
                     Write Review
                   </button>

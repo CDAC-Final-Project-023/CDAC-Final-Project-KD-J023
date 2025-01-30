@@ -12,43 +12,41 @@ function Tourpackage() {
   useEffect(() => {
     const getTours = async () => {
       try {
-        // REPLACE THIS MOCK DATA WITH API CALL WHEN BACKEND IS READY
-        const mockData = {
-          "North": [
-            {
-              id: 1,
-              title: "Himalayan Adventure",
-              description: "Explore the scenic beauty of the Himalayas.",
-              image: "https://www.esikkimtourism.in/wp-content/uploads/2019/05/adventure-tourism-sikkim-tts.jpg"
-            },
-            {
-              id: 2,
-              title: "Golden Triangle",
-              description: "Visit Delhi, Agra, and Jaipur.",
-              image: "/images/golden-triangle.jpg"
-            }
-          ],
-          "South": [
-            {
-              id: 3,
-              title: "Kerala Backwaters",
-              description: "Enjoy the peaceful houseboat experience.",
-              image: "/images/kerala.jpg"
-            }
-          ]
-        };
+        // Fetch categories from the backend
+        const categoriesResponse = await fetch(
+          "http://localhost:8080/categories"
+        );
+        if (!categoriesResponse.ok)
+          throw new Error("Failed to fetch categories");
+        const categories = await categoriesResponse.json();
 
-        setPackages(mockData); // Using mock data for now
+        // Construct the query string with category IDs as a comma-separated string
+        const categoryIds = categories.map((category) => category.id).join(",");
+        const toursResponse = await fetch(
+          `http://localhost:8080/tours/categories?categoryIds=${categoryIds}`
+        );
+        
+        if (!toursResponse.ok) throw new Error("Failed to fetch tours");
+        const data = await toursResponse.json();
+        console.log(data);
+        
 
-        /*
-           UNCOMMENT & USE THIS CODE WHEN BACKEND API IS READY:
           
-          const response = await fetch("http://localhost:8080/api/tours"); // Update the API URL
-          if (!response.ok) throw new Error("Failed to fetch tours");
-          const data = await response.json();
-          setPackages(data); // Store fetched data in state
-        */
+        // Ensure the data is structured correctly and add default image URL
+        const formattedData = data.reduce((acc, tourPackage) => {
+          console.log(tourPackage);
+          
+          const category = categories.find(cat => cat.name === tourPackage.categoryName);
+          const region = category ? category.name : "Unknown";
+          if (!acc[region]) acc[region] = [];
+          acc[region].push({
+            ...tourPackage,
+            photoUrl: tourPackage.photoUrl || "/default-image.jpg",
+          });
+          return acc;
+        }, {});
 
+        setPackages(formattedData); // Store fetched data in state
       } catch (err) {
         setError("Failed to load tour packages. Please try again later.");
       } finally {
@@ -88,12 +86,17 @@ function Category({ name, packages }) {
     </div>
   );
 }
-function PackageCard({ package: { id, title, description, image } }) {
+
+function PackageCard({ package: { id, title, description, photoUrl } }) {
   return (
     // Wrap the entire card with Link and apply a custom class
     <Link to={`/tour-details/${id}`} className="package-card-link">
       <div className="package-card">
-        <img src={image} alt={title} className="package-image" />
+        <img
+          src={photoUrl || "/default-image.jpg"}
+          alt={title}
+          className="package-image"
+        />
         <div className="package-details">
           <h3>{title}</h3>
           <p>{description}</p>
@@ -102,6 +105,5 @@ function PackageCard({ package: { id, title, description, image } }) {
     </Link>
   );
 }
-
 
 export default Tourpackage;

@@ -18,7 +18,5 @@ public class Photo extends BaseEntity {
     @Column(nullable = false)
     private String photoPath; // Storing image as a file path instead of BLOB
 
-    @ManyToOne
-    @JoinColumn(name = "tour_id")
-    private Tour tour;
+    
 }

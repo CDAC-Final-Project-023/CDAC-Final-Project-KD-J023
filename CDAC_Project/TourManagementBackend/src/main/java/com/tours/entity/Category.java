@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(callSuper = true)
 public class Category extends BaseEntity {
 
 	@Column(name = "name", nullable = false, length = 100, unique = true)

@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(callSuper = true )
 public class Tour extends BaseEntity {
 
     @Column(nullable = false, length = 100)
@@ -25,19 +25,25 @@ public class Tour extends BaseEntity {
     private String description;
 
     @Column(nullable = false)
-    private BigDecimal price;
+    private double price;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TourStatus status = TourStatus.ACTIVE;
 
-    @Column(name = "city_id")
-    private Long cityId;
+    
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
 
-    @Column(name = "state_id")
-    private Long stateId;
+    @ManyToOne
+    @JoinColumn(name = "state_id")
+    private State state;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+    
+    @OneToOne
+    private Photo photo;
 }

@@ -15,6 +15,7 @@ const PurchasePackage = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +30,12 @@ const PurchasePackage = () => {
       .catch((error) => {
         console.error("Error fetching package details:", error);
       });
+
+    // Check if the user is authenticated
+    const user = sessionStorage.getItem("user");
+    if (user) {
+      setIsAuthenticated(true);
+    }
   }, []);
 
   const handleAddTourist = () => {
@@ -73,6 +80,14 @@ const PurchasePackage = () => {
   };
 
   const handleProceedToPay = () => {
+    const user = sessionStorage.getItem("user");
+    if (user === "null") {
+      toast.error("Please log in first!");
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 1000);
+      return;
+    }
     if (!startDate || !endDate) {
       toast.error("Please select a start and end date!");
       return;

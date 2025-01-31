@@ -12,6 +12,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  
 }
 
 .package-card-link {
@@ -80,6 +81,7 @@
 /* Package Card */
 .package-card {
   width: 260px;
+  height: 350px; 
   border-radius: 10px;
   overflow: hidden;
   background: white;
@@ -94,7 +96,6 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Package Image */
 .package-image {
   width: 100%;
   height: 160px;
@@ -102,7 +103,7 @@
   border-bottom: 2px solid #eee;
 }
 
-/* Package Details */
+
 .package-details {
   padding: 15px;
   text-align: center;
@@ -145,4 +146,9 @@
   .package-card {
     width: 100%;
   }
+}
+
+/* New Class for Content Wrapper */
+.content-wrapper {
+  margin-top: 70px; 
 }

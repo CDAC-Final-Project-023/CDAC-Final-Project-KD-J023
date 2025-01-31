@@ -49,6 +49,20 @@
   border-color: #41a3ff;
 }
 
+/* Right-side toggle */
+.right-side-toggle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 15%; /* Occupy only 10% of the width */
+  height: 100%; /* Match the height of the navbar */
+}
+
+/* Ensure the collapse expands from the right side */
+.navbar-collapse {
+  justify-content: flex-end;
+}
+
 /* Responsive Design */
 @media (max-width: 991px) {
   .custom-navbar .navbar-nav {
@@ -58,4 +72,49 @@
   .custom-navbar .navbar-nav .nav-link {
     margin: 5px 0;
   }
+
+  .navbar-collapse {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45%; /* Expand to 40-45% of the screen width */
+    background-color: rgba(103, 103, 103, 0.558);
+    height: 100vh;
+    transition: transform 0.5s ease; 
+  }
+
+  .navbar-collapse.collapse.show {
+    transform: translateX(0);
+  }
+
+  .navbar-collapse.collapse {
+    transform: translateX(100%);
+  }
+
+  .navbar-toggler {
+    order: 1;
+    height: 100%; /* Match the height of the navbar */
+  }
+
+  .navbar-brand {
+    order: -1;
+    margin-right: auto;
+  }
+
+  .navbar-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%280, 0, 0, 0.5%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

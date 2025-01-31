@@ -4,6 +4,7 @@ import Navbar from "../components/navbar/BetaNav";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { config } from "../services/config";
 
 function TourDetails() {
   const { id } = useParams(); // Get tour ID from URL
@@ -33,7 +34,7 @@ function TourDetails() {
         // };
 
         //http://localhost:8080/tours/11
-        const response = await fetch(`http://localhost:8080/tours/${id}`);
+        const response = await fetch(`${config.serverUrl}/tours/${id}`);
         if (!response.ok) throw new Error("Failed to fetch tour details");
         const data = await response.json();
         setTour(data);

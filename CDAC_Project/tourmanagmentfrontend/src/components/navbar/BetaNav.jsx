@@ -1,11 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import "./BetaNav.css"; // Importing the CSS
 import defaultuserlogo from "../../images/euser.png"; // Importing the default user image
+
 const BetaNav = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [isExpanded, setIsExpanded] = useState(false);
+  const navbarRef = useRef(null);
 
   const handleLogout = () => {
     logout();
@@ -14,17 +17,29 @@ const BetaNav = () => {
   };
 
   const inside_nav = [
-    // { path: "/hotelhome", display: "Hotels" },
     { path: "/tourPackage", display: "Tour Packages" },
-    // { path: "/vehicles", display: "Vehicles" },
-    // { path: "/Restaurants", display: "Restaurants" },
-    // { path: "/events", display: "Events" },
-    // { path: "/TrainHome", display: "Trains" },
   ];
 
+  const toggleNavbar = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const handleClickOutside = (event) => {
+    if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+      setIsExpanded(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <nav className="navbar custom-navbar navbar-expand-lg fixed-top">
-      <div className="container">
+    <nav className="navbar custom-navbar navbar-expand-lg fixed-top" ref={navbarRef}>
+      <div className="container d-flex justify-content-between align-items-center">
         {/* Logo */}
         <Link to="/" className="navbar-brand logo">
           NOt yet decided
@@ -32,18 +47,19 @@ const BetaNav = () => {
 
         {/* Toggle Button for Mobile */}
         <button
-          className="navbar-toggler"
+          className={`navbar-toggler right-side-toggle ${isExpanded ? 'collapsed' : ''}`}
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
           aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation">
+          aria-expanded={isExpanded ? "true" : "false"}
+          aria-label="Toggle navigation"
+          onClick={toggleNavbar}>
           <span className="navbar-toggler-icon"></span>
         </button>
 
         {/* Navbar Links */}
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div className={`collapse navbar-collapse justify-content-end ${isExpanded ? 'show' : ''}`} id="navbarNav">
           <ul className="navbar-nav mx-auto">
             <li className="nav-item">
               <Link to="/" className="nav-link">
@@ -76,8 +92,8 @@ const BetaNav = () => {
               </Link>
             </li>
             <li className="nav-item">
-          <Link className="nav-link" to="/aboutus">About Us</Link>
-          </li>
+              <Link className="nav-link" to="/aboutus">About Us</Link>
+            </li>
           </ul>
 
           {/* Right-Side Avatar */}

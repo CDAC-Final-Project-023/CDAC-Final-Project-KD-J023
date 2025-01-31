@@ -3,6 +3,7 @@ import Footer from "../components/footer/Footer";
 import Navbar from "../components/navbar/BetaNav";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { config } from "../services/config";
 
 function Tourpackage() {
   const [packages, setPackages] = useState({});
@@ -14,17 +15,17 @@ function Tourpackage() {
       try {
         // Fetch categories from the backend
         const categoriesResponse = await fetch(
-          "http://localhost:8080/categories"
+          `${config.serverUrl}/categories`
         );
 
         if (!categoriesResponse.ok)
           throw new Error("Failed to fetch categories");
         const categories = await categoriesResponse.json();
 
-        // Construct the query string with category IDs as a comma-separated string
+        
         const categoryIds = categories.map((category) => category.id).join(",");
         const toursResponse = await fetch(
-          `http://localhost:8080/tours/categories?categoryIds=${categoryIds}`
+          `${config.serverUrl}/tours/categories?categoryIds=${categoryIds}`
         );
         if (!toursResponse.ok) throw new Error("Failed to fetch tours");
         const data = await toursResponse.json();
@@ -32,7 +33,7 @@ function Tourpackage() {
         
 
           
-        // Ensure the data is structured correctly and add default image URL
+       
         const formattedData = data.reduce((acc, tourPackage) => {
           const category = categories.find(cat => cat.id === tourPackage.category?.id);
           const region = category ? category.name : "Unknown";
@@ -46,7 +47,7 @@ function Tourpackage() {
           return acc;
         }, {});
 
-        setPackages(formattedData); // Store fetched data in state
+        setPackages(formattedData); 
       } catch (err) {
         setError("Failed to load tour packages. Please try again later.");
       } finally {
@@ -63,11 +64,13 @@ function Tourpackage() {
   return (
     <div className="tourpackage-container">
       <Navbar />
-      <h1>Tour Packages by Region</h1>
-      <div className="categories">
-        {Object.entries(packages).map(([region, packageList]) => (
-          <Category key={region} name={region} packages={packageList} />
-        ))}
+      <div className="content-wrapper">
+        <h1>Tour Packages by Region</h1>
+        <div className="categories">
+          {Object.entries(packages).map(([region, packageList]) => (
+            <Category key={region} name={region} packages={packageList} />
+          ))}
+        </div>
       </div>
       <Footer />
     </div>
@@ -87,7 +90,7 @@ function Category({ name, packages }) {
   );
 }
 
-function PackageCard({ package: { id, title, description, photoUrl } }) {
+function PackageCard({ package: { id, title, description, photoUrl, price } }) {
   return (
     // Wrap the entire card with Link and apply a custom class
     <Link to={`/tour-details/${id}`} className="package-card-link">
@@ -100,6 +103,7 @@ function PackageCard({ package: { id, title, description, photoUrl } }) {
         <div className="package-details">
           <h3>{title}</h3>
           <p>{description}</p>
+          <h4>Price: ₹{price}</h4> 
         </div>
       </div>
     </Link>

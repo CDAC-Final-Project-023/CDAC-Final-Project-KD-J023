@@ -14,28 +14,29 @@ import PurchasePackage from "./screens/PurchasePackage";
 import PaymentSuccess from "./screens/PaymentSuccess";
 import ContactUs from "./screens/ContactUs";
 import AboutUs from "./screens/AboutUs";
-
+import { AuthContextProvider } from "./context/authContext";
 function App() {
   return (
     <div className="app-container">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/tourPackage" element={<TourPackage />} />
-        <Route path="/tourPackageList" element={<TourPackagesList />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route path="/admin" element={<AdminDashboardPage />} />
-        <Route path="/purchase-package/:id" element={<PurchasePackage />} />
-        <Route path="/payment-success" element={<PaymentSuccess />} />  
-        <Route path="/ContactUs" element={<ContactUs />} />
-        <Route path="/AboutUs" element={<AboutUs />} />
-        <Route path="/tour-details/:id" element={<TourDetails />} />
-        
-      </Routes>
+      <AuthContextProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/tourPackage" element={<TourPackage />} />
+          <Route path="/tourPackageList" element={<TourPackagesList />} />
+          <Route path="/resetpassword" element={<ResetPassword />} />
+          <Route path="/admin" element={<AdminDashboardPage />} />
+          <Route path="/purchase-package/:id" element={<PurchasePackage />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route path="/ContactUs" element={<ContactUs />} />
+          <Route path="/AboutUs" element={<AboutUs />} />
+          <Route path="/tour-details/:id" element={<TourDetails />} />
+        </Routes>
 
-      <ToastContainer />
+        <ToastContainer />
+      </AuthContextProvider>
     </div>
   );
 }

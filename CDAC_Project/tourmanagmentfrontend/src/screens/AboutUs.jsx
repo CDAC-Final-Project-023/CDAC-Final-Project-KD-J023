@@ -4,10 +4,13 @@ import "./AboutUs.css";
 import aboutus1 from "../images/aboutus1.jpg";
 import aboutus2 from "../images/aboutus2.jpg";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import Navbar from "../components/navbar/BetaNav";
 
 const AboutUs = () => {
   return (
-    <Container className="my-5">
+    <div style={{ marginTop: "100px" }}>
+      <Navbar />
+    <Container className="my-5" >
       {/* Header Section */}
       <div className="text-center mb-5">
         <h1 className="fw-bold">About Us</h1>
@@ -132,6 +135,7 @@ const AboutUs = () => {
         <Button variant="primary" size="lg" href="/contactus">Contact Us</Button>
       </div>
     </Container>
+    </div>
   );
 };
 

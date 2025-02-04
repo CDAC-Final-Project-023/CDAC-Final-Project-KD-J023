@@ -2,8 +2,7 @@ package com.tours.service;
 
 import java.util.List;
 
-import com.tours.dto.ApiResponse;
-import com.tours.dto.ReviewDTO;
+import com.tours.DTO.*;
 import com.tours.entity.Review;
 
 

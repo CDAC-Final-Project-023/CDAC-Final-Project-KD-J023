@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Carousel } from "react-bootstrap";
 import "./HomeCarousel.css";
 import mountains from "../../images/mountains.jpg";
+import tajmahal from "../../images/TajMahal.jpg";
+import city from "../../images/city.jpg";
 const HomeCarousel = () => {
   const [index, setIndex] = useState(0);
 
@@ -23,7 +25,7 @@ const HomeCarousel = () => {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="https://img.freepik.com/premium-photo/palm-tree-jungle-philippines-concept-about-wanderlust-tropical-travels-swinging-river-people-having-fun_186382-1220.jpg?w=1060"
+            src={mountains}
             alt="Slide 1"
           />
           <Carousel.Caption className="hero-caption">
@@ -47,7 +49,7 @@ const HomeCarousel = () => {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="https://img.freepik.com/premium-photo/sunrise-taj-mahal-agra-india_268835-1128.jpg?w=1060"
+            src={ tajmahal }
             alt="Slide 2"
           />
           <Carousel.Caption className="hero-caption">
@@ -64,7 +66,7 @@ const HomeCarousel = () => {
 
         {/* Slide 3 */}
         <Carousel.Item>
-          <img className="d-block w-100" src={mountains} alt="Slide 3" />
+          <img className="d-block w-100" src={city} alt="Slide 3" />
           <Carousel.Caption className="hero-caption">
             <h3 className="fw-bold text-white">Embrace Serenity</h3>
             <h1 className="fw-bold text-white">

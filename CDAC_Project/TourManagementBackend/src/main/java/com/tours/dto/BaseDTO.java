@@ -1,5 +1,4 @@
-package com.tours.dto;
-
+package com.tours.DTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 

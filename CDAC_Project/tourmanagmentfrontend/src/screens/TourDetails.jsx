@@ -17,23 +17,6 @@ function TourDetails() {
   useEffect(() => {
     const fetchTourDetails = async () => {
       try {
-        // Mock Data (Replace with API call when backend is ready)
-        // const mockData = {
-        //   1: {
-        //     id: 1,
-        //     title: "Himalayan Adventure",
-        //     description: "Explore the breathtaking Himalayas with this exciting trek. lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        //     image: "https://www.esikkimtourism.in/wp-content/uploads/2019/05/adventure-tourism-sikkim-tts.jpg",
-        //     price: "$500 per person",
-        //     itinerary: [
-        //       "Day 1: Arrival in Manali",
-        //       "Day 2: Trekking to Solang Valley",
-        //       "Day 3: Camping under the stars",
-        //       "Day 4: Return to Base"
-        //     ]
-        //   }
-        // };
-
         //http://localhost:8080/tours/11
         const response = await fetch(`${config.serverUrl}/tours/${id}`);
         if (!response.ok) throw new Error("Failed to fetch tour details");
@@ -79,11 +62,12 @@ function TourDetails() {
   if (error) return <div className="error-message">{error}</div>;
   if (!tour) return <div className="error-message">Tour not found.</div>;
 
-  if(tour.photoPath == "null"){
-    var image = DefaultScene;
+  var image;
+  if(tour.photoPath === "null"){
+    image = DefaultScene;
   }
   else{
-    var image = `${config.serverUrl}/${tour.photoPath}`;
+    image = `${config.serverUrl}/${tour.photoPath}`;
   }
 
   

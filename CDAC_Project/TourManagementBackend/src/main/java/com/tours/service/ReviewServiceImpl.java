@@ -36,6 +36,10 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewDao.findAll();
     }
 
+    @Override
+    public List<Review> getReviewsByTourId(Long tourId) {  // New method
+        return reviewDao.findByTourId(tourId);
+    }
    
     
 }

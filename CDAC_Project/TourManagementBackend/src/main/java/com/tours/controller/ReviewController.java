@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.tours.dto.ReviewDTO;
+import com.tours.entity.Review;
 import com.tours.service.ReviewService;
 
 import jakarta.validation.Valid;
@@ -32,5 +33,8 @@ public class ReviewController {
                 .body(reviewService.addReview(reviewDTO));
     }
 
-   
+    @GetMapping("/tour/{tourId}")
+    public ResponseEntity<List<Review>> getReviewsByTourId(@PathVariable Long tourId) {
+        return ResponseEntity.ok(reviewService.getReviewsByTourId(tourId));
+    }
 }

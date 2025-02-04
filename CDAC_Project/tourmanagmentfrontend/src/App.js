@@ -15,6 +15,8 @@ import PaymentSuccess from "./screens/PaymentSuccess";
 import ContactUs from "./screens/ContactUs";
 import AboutUs from "./screens/AboutUs";
 import { AuthContextProvider } from "./context/authContext";
+import UpdateProfile from "./screens/UpdateProfile";
+
 function App() {
   return (
     <div className="app-container">
@@ -33,6 +35,7 @@ function App() {
           <Route path="/ContactUs" element={<ContactUs />} />
           <Route path="/AboutUs" element={<AboutUs />} />
           <Route path="/tour-details/:id" element={<TourDetails />} />
+          <Route path="/UpdateProfile" element={<UpdateProfile />} />
         </Routes>
 
         <ToastContainer />

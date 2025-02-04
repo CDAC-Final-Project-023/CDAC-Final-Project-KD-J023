@@ -6,7 +6,7 @@ public interface ToursService {
 
 	public List<ToursRespDTO> getAllActiveTours();
 	
-	public List<ToursRespDTO> getActiveToursByCategoryIds(List<Long> categoryIds);
+	public List<ToursRespDTO> getActiveToursByRegionIds(List<Long> regionIds);
 
 	public ToursRespDTO getTourDetailsById(Long tourId);
 	

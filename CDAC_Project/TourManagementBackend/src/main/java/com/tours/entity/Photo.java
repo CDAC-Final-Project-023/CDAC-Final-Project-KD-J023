@@ -16,7 +16,6 @@ import lombok.*;
 public class Photo extends BaseEntity {
 
     @Column(nullable = false)
-    private String photoPath; // Storing image as a file path instead of BLOB
-
+    private String photoPath; 
     
 }

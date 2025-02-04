@@ -7,7 +7,6 @@ public class TourReqDTO {
     private double price;
     private String status; 
     private Long cityId;
-    private Long stateId;
-    private Long categoryId;
+    private Long regionId;
     
 }

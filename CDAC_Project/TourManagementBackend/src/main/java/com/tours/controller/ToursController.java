@@ -29,16 +29,16 @@ public class ToursController {
 
 	
 
-	@GetMapping("/categories")
-    public ResponseEntity<List<ToursRespDTO>> getToursByCategories(
-            @RequestParam(value = "categoryIds", required = false) List<Long> categoryIds) {
+	@GetMapping("/regions")
+    public ResponseEntity<List<ToursRespDTO>> getToursByRegions(
+            @RequestParam(value = "regionIds", required = false) List<Long> regionIds) {
         List<ToursRespDTO> tours;
-        if (categoryIds == null || categoryIds.isEmpty()) {
-            // Fetch all active tours if no category IDs are provided
+        if (regionIds == null || regionIds.isEmpty()) {
+           
             tours = tourService.getAllActiveTours();
         } else {
-            // Fetch tours for the specified category IDs
-            tours = tourService.getActiveToursByCategoryIds(categoryIds);
+            
+            tours = tourService.getActiveToursByRegionIds(regionIds);
         }
         return ResponseEntity.ok(tours);
     }

@@ -10,8 +10,8 @@ import com.tours.entity.Tour;
 import com.tours.entity.*;
 public interface ToursDao extends JpaRepository<Tour, Long> {
 
-	@Query("SELECT t FROM Tour t WHERE t.category.id IN :categoryIds AND t.status = :status")
-    List<Tour> findByCategoryIdsAndStatus(@Param("categoryIds") List<Long> categoryIds, @Param("status") TourStatus status);
+	@Query("SELECT t FROM Tour t WHERE t.region.id IN :regionIds AND t.status = :status")
+    List<Tour> findByRegionIdsAndStatus(@Param("regionIds") List<Long> regionIds, @Param("status") TourStatus status);
 
     @Query("SELECT t FROM Tour t WHERE t.status = :status")
     List<Tour> findByStatus(@Param("status") TourStatus status);

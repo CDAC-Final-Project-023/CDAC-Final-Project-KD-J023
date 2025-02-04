@@ -4,6 +4,9 @@ import Navbar from "../components/navbar/BetaNav";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { config } from "../services/config";
+import Loading from "./Loading";
+import DefaultScene from "../images/DefaultScene.png"
+
 
 function Tourpackage() {
   const [packages, setPackages] = useState({});
@@ -13,41 +16,43 @@ function Tourpackage() {
   useEffect(() => {
     const getTours = async () => {
       try {
-        // Fetch categories from the backend
-        const categoriesResponse = await fetch(
-          `${config.serverUrl}/categories`
-        );
+        // Fetch regions from the backend
+        const regionsResponse = await fetch(`${config.serverUrl}/region`);
 
-        if (!categoriesResponse.ok)
-          throw new Error("Failed to fetch categories");
-        const categories = await categoriesResponse.json();
+        if (!regionsResponse.ok) throw new Error("Failed to fetch Regions");
+        const regions = await regionsResponse.json();
 
-        
-        const categoryIds = categories.map((category) => category.id).join(",");
+        const regionIds = regions.map((region) => region.id).join(",");
         const toursResponse = await fetch(
-          `${config.serverUrl}/tours/categories?categoryIds=${categoryIds}`
+          `${config.serverUrl}/tours/regions?regionIds=${regionIds}`
         );
         if (!toursResponse.ok) throw new Error("Failed to fetch tours");
         const data = await toursResponse.json();
-       
-        
 
-          
-       
+        
         const formattedData = data.reduce((acc, tourPackage) => {
-          const category = categories.find(cat => cat.id === tourPackage.category?.id);
-          const region = category ? category.name : "Unknown";
-          if (!acc[region]) acc[region] = [];
-          acc[region].push({
+          const region = regions.find(
+            (reg) => reg.id === tourPackage.region?.id
+          );
+          const zone = region ? region.name : "Unknown";
+          if (!acc[zone]) acc[zone] = [];
+          
+          let photoUrl;
+          if (tourPackage.photoPath !== "null") {
+            photoUrl = `${config.serverUrl}/${tourPackage.photoPath}`;
+          } else {
+            photoUrl = DefaultScene;
+          }
+
+          acc[zone].push({
             ...tourPackage,
-            photoUrl: tourPackage.photoPath || "/default-image.jpg",
+            photoUrl: photoUrl, 
           });
-                  
 
           return acc;
         }, {});
 
-        setPackages(formattedData); 
+        setPackages(formattedData);
       } catch (err) {
         setError("Failed to load tour packages. Please try again later.");
       } finally {
@@ -58,7 +63,7 @@ function Tourpackage() {
     getTours();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading />; 
   if (error) return <div>{error}</div>;
 
   return (
@@ -66,9 +71,9 @@ function Tourpackage() {
       <Navbar />
       <div className="content-wrapper">
         <h1>Tour Packages by Region</h1>
-        <div className="categories">
-          {Object.entries(packages).map(([region, packageList]) => (
-            <Category key={region} name={region} packages={packageList} />
+        <div className="regions">
+          {Object.entries(packages).map(([zone, packageList]) => (
+            <Region key={zone} name={zone} packages={packageList} />
           ))}
         </div>
       </div>
@@ -77,9 +82,9 @@ function Tourpackage() {
   );
 }
 
-function Category({ name, packages }) {
+function Region({ name, packages }) {
   return (
-    <div className="category">
+    <div className="region">
       <h2>{name.charAt(0).toUpperCase() + name.slice(1)} Region</h2>
       <div className="package-list">
         {packages.map((pkg) => (
@@ -96,7 +101,7 @@ function PackageCard({ package: { id, title, description, photoUrl, price } }) {
     <Link to={`/tour-details/${id}`} className="package-card-link">
       <div className="package-card">
         <img
-          src={photoUrl || "/default-image.jpg"}
+          src={photoUrl || DefaultScene}
           alt={title}
           className="package-image"
         />

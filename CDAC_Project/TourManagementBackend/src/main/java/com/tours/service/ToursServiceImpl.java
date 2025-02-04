@@ -24,6 +24,8 @@ public class ToursServiceImpl implements ToursService{
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	
 
 	@Override
 	public List<ToursRespDTO> getAllActiveTours() {
@@ -32,24 +34,22 @@ public class ToursServiceImpl implements ToursService{
 	            .map(tour -> {
 	                ToursRespDTO dto = modelMapper.map(tour, ToursRespDTO.class);
 	                dto.setCity(tour.getCity());
-	                dto.setState(tour.getState());
-	                dto.setCategory(tour.getCategory());
-	                dto.setPhotoPath(tour.getPhoto() != null ? tour.getPhoto().getPhotoPath() : null); // Set photo URL
+	                dto.setRegion(tour.getRegion());
+	                dto.setPhotoPath(tour.getPhoto() != null ? tour.getPhoto() : null); 
 	                return dto;
 	            })
 	            .collect(Collectors.toList());
 	}
 
 	@Override
-	public List<ToursRespDTO> getActiveToursByCategoryIds(List<Long> categoryIds) {
-	    return toursDao.findByCategoryIdsAndStatus(categoryIds, TourStatus.ACTIVE)
+	public List<ToursRespDTO> getActiveToursByRegionIds(List<Long> regionIds) {
+	    return toursDao.findByRegionIdsAndStatus(regionIds, TourStatus.ACTIVE)
 	            .stream()
 	            .map(tour -> {
 	                ToursRespDTO dto = modelMapper.map(tour, ToursRespDTO.class);
 	                dto.setCity(tour.getCity());
-	                dto.setState(tour.getState());
-	                dto.setCategory(tour.getCategory());
-	                dto.setPhotoPath(tour.getPhoto() != null ? tour.getPhoto().getPhotoPath() : null); // Set photo URL
+	                dto.setRegion(tour.getRegion());
+	                dto.setPhotoPath(tour.getPhoto() != null ? tour.getPhoto() : null); // Set photo URL
 	                return dto;
 	            })
 	            .collect(Collectors.toList());
@@ -64,9 +64,9 @@ public class ToursServiceImpl implements ToursService{
 
 	    // Manually set the photoPath if photo exists
 	    if (tourEntity.getPhoto() != null) {
-	        dto.setPhotoPath(tourEntity.getPhoto().getPhotoPath());
+	        dto.setPhotoPath(tourEntity.getPhoto());
 	    } else {
-	        dto.setPhotoPath("default.jpg"); // 
+	        dto.setPhotoPath(null); // 
 	    }
 
 	    return dto;

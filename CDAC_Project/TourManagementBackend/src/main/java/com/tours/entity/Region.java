@@ -7,13 +7,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Category")
+@Table(name = "Region")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-public class Category extends BaseEntity {
+public class Region extends BaseEntity {
 
 	@Column(name = "name", nullable = false, length = 100, unique = true)
     private String name;

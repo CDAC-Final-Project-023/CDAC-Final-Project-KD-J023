@@ -9,7 +9,7 @@ const WhyUs = () => {
         <div className="col-lg-6">
           <div className="row g-4">
             {/* First column: Two stacked images */}
-            <div className="col-6">
+            <div className="col-6 ">
               <img
                 src="https://images.unsplash.com/photo-1627895457805-c7bf42cb9873?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
                 alt="Scenic View 1"

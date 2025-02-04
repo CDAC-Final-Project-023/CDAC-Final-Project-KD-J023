@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class CategoryRespDTO {
+public class RegionRespDTO {
 	private Long id;
     private String name;
 

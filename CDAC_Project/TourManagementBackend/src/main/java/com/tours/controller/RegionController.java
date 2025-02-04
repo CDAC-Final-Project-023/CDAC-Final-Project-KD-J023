@@ -9,26 +9,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tours.DTO.CategoryRespDTO;
-import com.tours.service.CategoryService;
+import com.tours.DTO.RegionRespDTO;
+import com.tours.service.RegionService;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/region")
 @CrossOrigin(origins = "http://localhost:3000")
-public class CategoryController {
+public class RegionController {
 
 	@Autowired
-	private CategoryService categoryService;
+	private RegionService regionService;
 
-	public CategoryController() {
+	public RegionController() {
 		System.out.println("in ctor " + getClass());
 
 	}
 	
 	 @GetMapping()
-	    public ResponseEntity<List<CategoryRespDTO>> getAllCategories() {
-	        List<CategoryRespDTO> categories = categoryService.getAllCategories();
-	        return ResponseEntity.ok(categories);
+	    public ResponseEntity<List<RegionRespDTO>> getAllRegion() {
+	        List<RegionRespDTO> region = regionService.getAllRegions();
+	        return ResponseEntity.ok(region);
 	    }
 	
 }

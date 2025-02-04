@@ -40,7 +40,7 @@
 }
 
 /* Categories Container */
-.categories {
+.regions {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -50,8 +50,8 @@
   max-width: 1400px;
 }
 
-/* Category Box */
-.category {
+/* Region Box */
+.region {
   width: 90%;
   max-width: 1200px;
   padding: 25px;
@@ -61,8 +61,8 @@
   backdrop-filter: blur(5px); /* Adds a subtle blur effect */
 }
 
-/* Category Heading */
-.category h2 {
+/* Region Heading */
+.region h2 {
   text-align: center;
   font-size: 2rem;
   color: #222;
@@ -128,7 +128,7 @@
   .tourpackage-container h1 {
     font-size: 2.2rem;
   }
-  .category {
+  .region {
     padding: 20px;
   }
   .package-card {
@@ -140,7 +140,7 @@
   .tourpackage-container h1 {
     font-size: 2rem;
   }
-  .category h2 {
+  .region h2 {
     font-size: 1.6rem;
   }
   .package-card {

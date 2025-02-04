@@ -1,6 +1,6 @@
 package com.tours.DTO;
 
-import com.tours.entity.Category;
+import com.tours.entity.Region;
 import com.tours.entity.City;
 import com.tours.entity.Photo;
 import com.tours.entity.State;
@@ -21,8 +21,16 @@ public class ToursRespDTO {
     private double price;
     private String status;
     private City city;
-    private State state;
-    private Category category;
+    private Region region;
     private String photoPath;
+    
+    public void setPhotoPath(String photoFilename) {
+        if (photoFilename != null) {
+            this.photoPath =  photoFilename;
+        } else {
+            this.photoPath = null;
+        }
+    }
+
    
 }

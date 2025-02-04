@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { config } from "../services/config";
+import DefaultScene from "../images/DefaultScene.png";
 
 function TourDetails() {
   const { id } = useParams(); // Get tour ID from URL
@@ -38,7 +39,7 @@ function TourDetails() {
         if (!response.ok) throw new Error("Failed to fetch tour details");
         const data = await response.json();
         setTour(data);
-        console.log(data);
+        
        
       } catch (err) {
         setError("Failed to load tour details. Please try again later.");
@@ -78,12 +79,25 @@ function TourDetails() {
   if (error) return <div className="error-message">{error}</div>;
   if (!tour) return <div className="error-message">Tour not found.</div>;
 
+  if(tour.photoPath == "null"){
+    var image = DefaultScene;
+  }
+  else{
+    var image = `${config.serverUrl}/${tour.photoPath}`;
+  }
+
+  
+
   return (
     <div className="tour-details-container">
       <Navbar />
       <div className="tour-details-content">
         <h1>{tour.title}</h1>
-        <img src={tour.photoPath} alt={tour.title} className="tour-image" />
+        <img
+          src={image || DefaultScene}
+          alt={tour.title}
+          className="tour-image"
+        />
         <h3>Description</h3>
         <p className="tour-description">{tour.description}</p>
 

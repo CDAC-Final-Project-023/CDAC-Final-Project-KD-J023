@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.tours.DTO.*;
+import com.tours.entity.Review;
 import com.tours.service.ReviewService;
 
 import jakarta.validation.Valid;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/reviews")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ReviewController {
     
     @Autowired
@@ -34,6 +36,7 @@ public class ReviewController {
 
     @GetMapping("/tour/{tourId}")
     public ResponseEntity<List<Review>> getReviewsByTourId(@PathVariable Long tourId) {
+    	System.out.println("in class " +getClass() );
         return ResponseEntity.ok(reviewService.getReviewsByTourId(tourId));
     }
 }

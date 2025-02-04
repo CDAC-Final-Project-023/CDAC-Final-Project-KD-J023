@@ -33,22 +33,18 @@ function TourDetails() {
 
     const fetchReviews = async () => {
       try {
-        // Mock Data (Replace with API call when backend is ready)
-        const mockReviews = [
-          { id: 1, username: "John Doe", rating: 5, comment: "Amazing experience! Loved the trek." },
-          { id: 2, username: "Sarah Lee", rating: 4, comment: "Great trip, but the weather was a bit rough." }
-        ];
+        // // Mock Data (Replace with API call when backend is ready)
+        // const mockReviews = [
+        //   { id: 1, username: "John Doe", rating: 5, comment: "Amazing experience! Loved the trek." },
+        //   { id: 2, username: "Sarah Lee", rating: 4, comment: "Great trip, but the weather was a bit rough." }
+        // ];
 
-        setReviews(mockReviews);
+        // setReviews(mockReviews);
 
-        /*
-          UNCOMMENT & USE THIS CODE WHEN BACKEND IS READY:
-
-          const response = await fetch(`http://localhost:8080/api/reviews/${id}`);
-          if (!response.ok) throw new Error("Failed to fetch reviews");
-          const data = await response.json();
-          setReviews(data);
-        */
+        const response = await fetch(`${config.serverUrl}/reviews/tour/${id}`);
+        if (!response.ok) throw new Error("Failed to fetch reviews");
+        const data = await response.json();
+        setReviews(data);
       } catch (err) {
         console.error("Failed to load reviews:", err);
       }
@@ -106,7 +102,7 @@ function TourDetails() {
           <ul className="reviews-list">
             {reviews.map((review) => (
               <li key={review.id} className="review-card">
-                <h4>{review.username}</h4>
+                <h4>{review.user.firstName} {review.user.lastName}</h4>
                 <p className="rating">⭐ {review.rating}/5</p>
                 <p className="comment">"{review.comment}"</p>
               </li>

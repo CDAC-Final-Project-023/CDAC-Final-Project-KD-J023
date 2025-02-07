@@ -1,199 +1,398 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const ManageTours = () => {
-  const [tours, setTours] = useState([]);
-  const [newTour, setNewTour] = useState({
-    title: "",
-    description: "",
-    price: "",
-    status: "Active", // New tour is active by default
-  });
-  const [selectedImage, setSelectedImage] = useState(null); // To store selected image file
-  const [editingTour, setEditingTour] = useState(null);
-  const [error, setError] = useState("");
+// import "./ManageTours.css";
 
-  // Fetch tours from the backend
-  useEffect(() => {
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+
+// const API_BASE_URL = "http://localhost:8080";
+
+// const ManageTours = () => {
+//     const [tours, setTours] = useState([]);
+//     const [tour, setTour] = useState({
+//         title: '',
+//         description: '',
+//         price: '',
+//         status: 'ACTIVE',
+//         regionId: '',
+//         cityId: '',
+//         photoPath: '',
+//     });
+//     const [editingTourId, setEditingTourId] = useState(null);
+//     const [regions, setRegions] = useState([]);
+//     const [cities, setCities] = useState([]);
+//     const [image, setImage] = useState(null);
+
+//     useEffect(() => {
+//         fetchTours();
+//         fetchRegions();
+//     }, []);
+
+//     const fetchTours = async () => {
+//         try {
+//             const response = await axios.get(`${API_BASE_URL}/admin/tours`);
+//             setTours(response.data);
+//         } catch (error) {
+//             console.error('Error fetching tours:', error);
+//         }
+//     };
+
+//     const fetchRegions = async () => {
+//         try {
+//             const response = await axios.get(`${API_BASE_URL}/admin/regions`);
+//             setRegions(response.data);
+//         } catch (error) {
+//             console.error('Error fetching regions:', error);
+//         }
+//     };
+
+//     const fetchCities = async (regionId) => {
+//         try {
+//             const response = await axios.get(`${API_BASE_URL}/cities/admin/by-region/${regionId}`);
+//             setCities(response.data);
+//         } catch (error) {
+//             console.error('Error fetching cities:', error);
+//         }
+//     };
+
+//     const handleInputChange = (e) => {
+//         const { name, value } = e.target;
+//         setTour({ ...tour, [name]: value });
+//     };
+
+//     const handleImageChange = (e) => {
+//         setImage(e.target.files[0]);
+//     };
+
+//     const handleRegionChange = (e) => {
+//         const regionId = e.target.value;
+//         setTour({ ...tour, regionId });
+//         fetchCities(regionId);
+//     };
+
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+//         const formData = new FormData();
+//         formData.append('title', tour.title);
+//         formData.append('description', tour.description);
+//         formData.append('price', tour.price);
+//         formData.append('status', tour.status);
+//         formData.append('regionId', tour.regionId);
+//         formData.append('cityId', tour.cityId);
+//         if (image) {
+//             formData.append('file', image);
+//         }
+
+//         try {
+//             if (editingTourId) {
+//                 await axios.put(`${API_BASE_URL}/admin/tours/update/${editingTourId}`, formData, {
+//                     headers: { 'Content-Type': 'multipart/form-data' },
+//                 });
+//                 alert('Tour updated successfully!');
+//             } else {
+//                 await axios.post(`${API_BASE_URL}/admin/tours/add`, formData, {
+//                     headers: { 'Content-Type': 'multipart/form-data' },
+//                 });
+//                 alert('Tour added successfully!');
+//             }
+//             fetchTours();
+//             resetForm();
+//         } catch (error) {
+//             console.error('Error saving tour:', error);
+//             alert('Error saving tour');
+//         }
+//     };
+
+//     const handleUpdateTour = (tour) => {
+//         setTour({
+//             title: tour.title,
+//             description: tour.description,
+//             price: tour.price,
+//             status: tour.status,
+//             regionId: tour.regionId,
+//             cityId: tour.cityId,
+//             photoPath: tour.photoPath,
+//         });
+//         setEditingTourId(tour.id);
+//         fetchCities(tour.regionId);
+//     };
+//     const handleChangeStatus = async (id, currentStatus) => {
+//       const newStatus = currentStatus === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
+//       try {
+//           await axios.patch(`${API_BASE_URL}/admin/tours/status/${id}?status=${newStatus}`);
+//           alert(`Tour status changed to ${newStatus}`);
+//           fetchTours();
+//       } catch (error) {
+//           console.error('Error changing tour status:', error);
+//       }
+//   };
+
+//     const resetForm = () => {
+//         setTour({ title: '', description: '', price: '', status: 'ACTIVE', regionId: '', cityId: '', photoPath: '' });
+//         setImage(null);
+//         setEditingTourId(null);
+//     };
+
+//     return (
+//         <div>
+//             <h1>Manage Tours</h1>
+//             <form onSubmit={handleSubmit}>
+//                 <input type="text" name="title" value={tour.title} onChange={handleInputChange} required placeholder="Title" />
+//                 <textarea name="description" value={tour.description} onChange={handleInputChange} required placeholder="Description" />
+//                 <input type="number" name="price" value={tour.price} onChange={handleInputChange} required placeholder="Price" />
+//                 <select name="status" value={tour.status} onChange={handleInputChange}>
+//                     <option value="ACTIVE">Active</option>
+//                     <option value="INACTIVE">Inactive</option>
+//                 </select>
+//                 <select name="regionId" value={tour.regionId} onChange={handleRegionChange} required>
+//                     <option value="">Select Region</option>
+//                     {regions.map(region => <option key={region.id} value={region.id}>{region.name}</option>)}
+//                 </select>
+//                 <select name="cityId" value={tour.cityId} onChange={handleInputChange} required>
+//                     <option value="">Select City</option>
+//                     {cities.map(city => <option key={city.id} value={city.id}>{city.name}</option>)}
+//                 </select>
+//                 <input type="file" onChange={handleImageChange} />
+//                 <button type="submit">{editingTourId ? "Update Tour" : "Add Tour"}</button>
+//             </form>
+//             <h2>Available Active Tours</h2>
+//             <table border="1">
+//                 <thead>
+//                     <tr>
+//                         <th>ID</th>
+//                         <th>Title</th>
+//                         <th>Description</th>
+//                         <th>Price</th>
+//                         <th>Region</th>
+//                         <th>City</th>
+//                         <th>Image</th>
+//                         <th>Actions</th>
+//                     </tr>
+//                 </thead>
+//                 <tbody>
+//                     {tours.map(tour => (
+//                         <tr key={tour.id}>
+//                             <td>{tour.id}</td>
+//                             <td>{tour.title}</td>
+//                             <td>{tour.description}</td>
+//                             <td>{tour.price}</td>
+//                             <td>{tour.status}</td>
+//                             <td>{tour.region}</td>
+//                             <td>{tour.city}</td>
+//                             <td><img src={`${API_BASE_URL}/uploads/${tour.photoPath}`} alt={tour.title} width="100" /></td>
+//                             <td>
+//                                <button onClick={() => handleChangeStatus(tour.id, tour.status)}>{tour.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}</button>
+//                                 <button onClick={() => handleUpdateTour(tour)}>Update Tour</button>
+//                             </td>
+//                         </tr>
+//                     ))}
+//                 </tbody>
+//             </table>
+//         </div>
+//     );
+// };
+
+// export default ManageTours;
+
+
+
+const API_BASE_URL = "http://localhost:8080";
+
+const ManageTours = () => {
+    const [tours, setTours] = useState([]);
+    const [tour, setTour] = useState({
+        title: '',
+        description: '',
+        price: '',
+        status: 'ACTIVE',
+        regionId: '',
+        cityId: '',
+        photoPath: '',
+    });
+    const [editingTourId, setEditingTourId] = useState(null);
+    const [regions, setRegions] = useState([]);
+    const [cities, setCities] = useState([]);
+    const [image, setImage] = useState(null);
+
+    useEffect(() => {
+        fetchTours();
+        fetchRegions();
+    }, []);
+
     const fetchTours = async () => {
-      try {
-        const response = await axios.get("/api/tours"); // Replace with your backend endpoint
-        setTours(response.data);
-      } catch (err) {
-        console.error("Error fetching tours:", err);
-        setError("Failed to fetch tours.");
-      }
+        try {
+            const response = await axios.get(`${API_BASE_URL}/admin/tours`);
+            setTours(response.data);
+        } catch (error) {
+            console.error('Error fetching tours:', error);
+        }
     };
 
-    fetchTours();
-  }, []);
+    const fetchRegions = async () => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/admin/regions`);
+            setRegions(response.data);
+        } catch (error) {
+            console.error('Error fetching regions:', error);
+        }
+    };
 
-  // Handle add tour
-  const handleAddTour = async () => {
-    if (!newTour.title || !newTour.description || !newTour.price || !selectedImage) {
-      setError("All fields are required, including the image.");
-      return;
-    }
+    const fetchCities = async (regionId) => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/cities/admin/by-region/${regionId}`);
+            setCities(response.data);
+        } catch (error) {
+            console.error('Error fetching cities:', error);
+        }
+    };
 
-    const formData = new FormData();
-    formData.append("title", newTour.title);
-    formData.append("description", newTour.description);
-    formData.append("price", newTour.price);
-    formData.append("status", newTour.status);
-    formData.append("image", selectedImage); // Append the image file
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setTour({ ...tour, [name]: value });
+    };
 
-    try {
-      const response = await axios.post("/api/tours", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data", // This is important for file uploads
-        },
-      });
+    const handleImageChange = (e) => {
+        setImage(e.target.files[0]);
+    };
 
-      setTours([...tours, response.data]);
-      setNewTour({ title: "", description: "", price: "", status: "Active" }); // Reset form
-      setSelectedImage(null); // Reset image
-      setError(""); // Clear error
-    } catch (err) {
-      console.error("Error adding tour:", err);
-      setError("Failed to add tour.");
-    }
-  };
+    const handleRegionChange = (e) => {
+        const regionId = e.target.value;
+        setTour({ ...tour, regionId, cityId: '' }); // Reset city when region changes
+        fetchCities(regionId);
+    };
 
-  // Handle update tour
-  const handleUpdateTour = async () => {
-    if (!editingTour.title || !editingTour.description || !editingTour.price) {
-      setError("All fields are required");
-      return;
-    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('title', tour.title);
+        formData.append('description', tour.description);
+        formData.append('price', tour.price);
+        formData.append('status', tour.status);
+        formData.append('regionId', tour.regionId);
+        formData.append('cityId', tour.cityId);
+        if (image) {
+            formData.append('file', image);
+        }
 
-    const formData = new FormData();
-    formData.append("title", editingTour.title);
-    formData.append("description", editingTour.description);
-    formData.append("price", editingTour.price);
-    formData.append("status", editingTour.status);
-    if (selectedImage) {
-      formData.append("image", selectedImage); // Append the image file if selected
-    }
+        try {
+            if (editingTourId) {
+                await axios.put(`${API_BASE_URL}/admin/tours/update/${editingTourId}`, formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                });
+                alert('Tour updated successfully!');
+            } else {
+                await axios.post(`${API_BASE_URL}/admin/tours/add`, formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                });
+                alert('Tour added successfully!');
+            }
+            fetchTours();
+            resetForm();
+        } catch (error) {
+            console.error('Error saving tour:', error);
+            alert('Error saving tour');
+        }
+    };
 
-    try {
-      const response = await axios.put(`/api/tours/${editingTour.id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data", // This is important for file uploads
-        },
-      });
+    const handleUpdateTour = (tour) => {
+        setTour({
+            title: tour.title,
+            description: tour.description,
+            price: tour.price,
+            status: tour.status,
+            regionId: tour.regionId,
+            cityId: tour.cityId,
+            photoPath: tour.photoPath,
+        });
+        setEditingTourId(tour.id);
+        fetchCities(tour.regionId); // Fetch cities when editing a tour
+    };
 
-      setTours(
-        tours.map((tour) => (tour.id === editingTour.id ? response.data : tour))
-      );
-      setEditingTour(null); // Clear editing state
-      setSelectedImage(null); // Reset image
-      setError(""); // Clear error
-    } catch (err) {
-      console.error("Error updating tour:", err);
-      setError("Failed to update tour.");
-    }
-  };
+    const handleChangeStatus = async (id, currentStatus) => {
+        const newStatus = currentStatus === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
+        try {
+            await axios.patch(`${API_BASE_URL}/admin/tours/status/${id}?status=${newStatus}`);
+            alert(`Tour status changed to ${newStatus}`);
+            fetchTours();
+        } catch (error) {
+            console.error('Error changing tour status:', error);
+        }
+    };
 
-  // Handle soft delete (change status to Inactive)
-  const handleDeleteTour = async (id) => {
-    try {
-      const response = await axios.put(`/api/tours/${id}`, { status: "Inactive" }); // Change status to Inactive
-      setTours(
-        tours.map((tour) => (tour.id === id ? { ...tour, status: "Inactive" } : tour))
-      );
-    } catch (err) {
-      console.error("Error deleting tour:", err);
-      setError("Failed to delete tour.");
-    }
-  };
+    const resetForm = () => {
+        setTour({ title: '', description: '', price: '', status: 'ACTIVE', regionId: '', cityId: '', photoPath: '' });
+        setImage(null);
+        setEditingTourId(null);
+    };
 
-  return (
-    <div>
-      <h3>{editingTour ? "Edit Tour" : "Add New Tour"}</h3>
-      {error && <div className="error-message">{error}</div>}
+    return (
+        <div className="manage-tours-container">
+            <h1>Manage Tours</h1>
+            <form onSubmit={handleSubmit}>
+                <input type="text" name="title" value={tour.title} onChange={handleInputChange} required placeholder="Title" />
+                <textarea name="description" value={tour.description} onChange={handleInputChange} required placeholder="Description" />
+                <input type="number" name="price" value={tour.price} onChange={handleInputChange} required placeholder="Price" />
+                
+                <select name="status" value={tour.status} onChange={handleInputChange} required>
+                    <option value="ACTIVE">Active</option>
+                    <option value="INACTIVE">Inactive</option>
+                </select>
 
-      {/* Add or Edit Tour Form */}
-      <div>
-        <input
-          type="text"
-          placeholder="Tour Title"
-          value={editingTour ? editingTour.title : newTour.title}
-          onChange={(e) =>
-            editingTour
-              ? setEditingTour({ ...editingTour, title: e.target.value })
-              : setNewTour({ ...newTour, title: e.target.value })
-          }
-        />
-        <textarea
-          placeholder="Tour Description"
-          value={editingTour ? editingTour.description : newTour.description}
-          onChange={(e) =>
-            editingTour
-              ? setEditingTour({ ...editingTour, description: e.target.value })
-              : setNewTour({ ...newTour, description: e.target.value })
-          }
-        />
-        <input
-          type="number"
-          placeholder="Price"
-          value={editingTour ? editingTour.price : newTour.price}
-          onChange={(e) =>
-            editingTour
-              ? setEditingTour({ ...editingTour, price: e.target.value })
-              : setNewTour({ ...newTour, price: e.target.value })
-          }
-        />
-        <input
-          type="file"
-          onChange={(e) => setSelectedImage(e.target.files[0])} // Handle image selection
-        />
-        <button onClick={editingTour ? handleUpdateTour : handleAddTour}>
-          {editingTour ? "Update Tour" : "Add Tour"}
-        </button>
-      </div>
+                <select name="regionId" value={tour.regionId} onChange={handleRegionChange} required>
+                    <option value="">Select Region</option>
+                    {regions.map(region => <option key={region.id} value={region.id}>{region.name}</option>)}
+                </select>
 
-      <h3>Existing Tours</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tours.length > 0 ? (
-            tours.map((tour) => (
-              <tr key={tour.id}>
-                <td>{tour.title}</td>
-                <td>{tour.description}</td>
-                <td>{tour.price}</td>
-                <td>{tour.status}</td>
-                <td>
-                  <button
-                    onClick={() => setEditingTour(tour)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDeleteTour(tour.id)}
-                  >
-                    {tour.status === "Inactive" ? "Restore" : "Delete"}
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="5">No tours available</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
-  );
+                <select name="cityId" value={tour.cityId} onChange={handleInputChange} required>
+                    <option value="">Select City</option>
+                    {cities.map(city => <option key={city.id} value={city.id}>{city.name}</option>)}
+                </select>
+
+                <input type="file" onChange={handleImageChange} />
+                <button type="submit">{editingTourId ? "Update Tour" : "Add Tour"}</button>
+            </form>
+
+            <h2>Available Active Tours</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Region</th>
+                        <th>City</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {tours.map(tour => (
+                        <tr key={tour.id}>
+                            <td>{tour.id}</td>
+                            <td>{tour.title}</td>
+                            <td>{tour.description}</td>
+                            <td>{tour.price}</td>
+                            <td>{tour.status}</td>
+                            <td>{tour.region}</td>
+                            <td>{tour.city}</td>
+                            <td>
+                                <img src={`${API_BASE_URL}/uploads/${tour.photoPath}`} alt={tour.title} width="100" />
+                            </td>
+                            <td className="actions">
+                                <button onClick={() => handleChangeStatus(tour.id, tour.status)}>
+                                    {tour.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}
+                                </button>
+                                <button onClick={() => handleUpdateTour(tour)}>Update Tour</button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
 };
 
 export default ManageTours;

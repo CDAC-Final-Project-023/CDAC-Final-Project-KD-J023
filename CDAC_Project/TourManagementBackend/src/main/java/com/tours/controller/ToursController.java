@@ -25,9 +25,6 @@ public class ToursController {
 	public ToursController() {
 		System.out.println("in ctor " + getClass());
 	}
-	
-
-	
 
 	@GetMapping("/regions")
     public ResponseEntity<List<ToursRespDTO>> getToursByRegions(
@@ -51,6 +48,8 @@ public class ToursController {
 		return ResponseEntity.ok(tour);
 		
 	}
+
+	
 	
 	
 }

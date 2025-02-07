@@ -31,12 +31,9 @@ public class Tour extends BaseEntity {
     @Column(nullable = false)
     private TourStatus status = TourStatus.ACTIVE;
 
-    
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
-
-    
 
     @ManyToOne
     @JoinColumn(name = "region_id")

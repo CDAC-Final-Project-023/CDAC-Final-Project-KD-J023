@@ -10,7 +10,7 @@ import lombok.ToString;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "Tours")
+@Table(name = "tour")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -39,6 +39,10 @@ public class Tour extends BaseEntity {
     @JoinColumn(name = "region_id")
     private Region region;
     
+    @Column(length = 255)
+    private String photoPath;
     
-    private String photo;
+    public String getFullImagePath() {
+        return (photoPath == null) ? null : "/uploads/" + photoPath;
+    }
 }

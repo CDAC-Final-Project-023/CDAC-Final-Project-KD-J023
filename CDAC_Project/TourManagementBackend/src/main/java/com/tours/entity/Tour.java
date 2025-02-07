@@ -10,7 +10,7 @@ import lombok.ToString;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "tour")
+@Table(name = "Tours")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,18 +31,17 @@ public class Tour extends BaseEntity {
     @Column(nullable = false)
     private TourStatus status = TourStatus.ACTIVE;
 
+    
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
+
+    
 
     @ManyToOne
     @JoinColumn(name = "region_id")
     private Region region;
     
-    @Column(length = 255)
-    private String photoPath;
     
-    public String getFullImagePath() {
-        return (photoPath == null) ? null : "/uploads/" + photoPath;
-    }
+    private String photo;
 }

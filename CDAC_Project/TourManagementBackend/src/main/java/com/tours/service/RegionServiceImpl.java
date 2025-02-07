@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.tours.DTO.RegionRespDTO;
 import com.tours.dao.RegionDao;
-import com.tours.entity.Region;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -30,12 +28,6 @@ public class RegionServiceImpl implements RegionService {
 	                .stream() 
 	                .map(region -> modelMapper.map(region, RegionRespDTO.class)) 
 	                .collect(Collectors.toList()); 
-	 }
-
-	    // Method to fetch a region by ID
-	    public Region getRegionById(Long id) {
-	        return regionDao.findById(id)
-	                .orElseThrow(() -> new EntityNotFoundException("Region not found with id: " + id));
 	    }
 
 	

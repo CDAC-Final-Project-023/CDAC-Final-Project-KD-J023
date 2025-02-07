@@ -10,30 +10,40 @@ const categories = [
   {
     name: "Hotel Reservation",
     icon: <FaHotel />,
+    path: "/coming-soon",
   },
   {
     name: "Tour Package Reservation",
     icon: <MdTour />,
+    path: "/tourPackage",
   },
   {
     name: "Vehicle Reservation",
     icon: <AiFillCar />,
+    path: "/coming-soon",
   },
   {
     name: "Train Reservation",
     icon: <FaTrain />,
+    path: "/coming-soon",
   },
   {
     name: "Restaurant Reservation",
     icon: <BiRestaurant />,
+    path: "/coming-soon",
   },
   {
     name: "Event Reservation",
     icon: <BsCalendarEvent />,
+    path: "/coming-soon",
   },
 ];
 
 const Services = () => {
+  const handleCategoryClick = (path) => {
+    window.location.href = path; 
+  };
+
   return (
     <div className="container py-5">
       {/* Section Heading */}
@@ -52,11 +62,17 @@ const Services = () => {
       <div className="row g-4">
         {categories.map((category, index) => (
           <div className="col-lg-4 col-md-6" key={index}>
-            <div className="service-card text-center">
+            <div
+              className="service-card text-center"
+              onClick={() => handleCategoryClick(category.path)} 
+            >
               {/* Icon */}
               <div className="service-icon mb-3">{category.icon}</div>
               {/* Service Name */}
               <h4 className="service-name">{category.name}</h4>
+              {category.name !== "Tour Package Reservation" && (
+                <p className="text-muted">Coming Soon</p>
+              )}
             </div>
           </div>
         ))}

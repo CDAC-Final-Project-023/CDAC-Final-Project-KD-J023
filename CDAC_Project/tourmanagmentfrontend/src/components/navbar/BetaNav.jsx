@@ -16,9 +16,11 @@ const BetaNav = () => {
     window.location.reload();
   };
 
-  const inside_nav = [
-    { path: "/tourPackage", display: "Tour Packages" },
-  ];
+  const handleRedirect = (url) => {
+    window.location.href = url;
+  };
+
+  const inside_nav = [{ path: "/tourPackage", display: "Tour Packages" }];
 
   const toggleNavbar = () => {
     setIsExpanded(!isExpanded);
@@ -38,7 +40,9 @@ const BetaNav = () => {
   }, []);
 
   return (
-    <nav className="navbar custom-navbar navbar-expand-lg fixed-top" ref={navbarRef}>
+    <nav
+      className="navbar custom-navbar navbar-expand-lg fixed-top"
+      ref={navbarRef}>
       <div className="container d-flex justify-content-between align-items-center">
         {/* Logo */}
         <Link to="/" className="navbar-brand logo">
@@ -47,7 +51,9 @@ const BetaNav = () => {
 
         {/* Toggle Button for Mobile */}
         <button
-          className={`navbar-toggler right-side-toggle ${isExpanded ? 'collapsed' : ''}`}
+          className={`navbar-toggler right-side-toggle ${
+            isExpanded ? "collapsed" : ""
+          }`}
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
@@ -59,7 +65,11 @@ const BetaNav = () => {
         </button>
 
         {/* Navbar Links */}
-        <div className={`collapse navbar-collapse justify-content-end ${isExpanded ? 'show' : ''}`} id="navbarNav">
+        <div
+          className={`collapse navbar-collapse justify-content-end ${
+            isExpanded ? "show" : ""
+          }`}
+          id="navbarNav">
           <ul className="navbar-nav mx-auto">
             <li className="nav-item">
               <Link to="/" className="nav-link">
@@ -87,12 +97,18 @@ const BetaNav = () => {
               </ul>
             </li>
             <li className="nav-item">
-              <Link to="/contactus" className="nav-link">
+              <span
+                className="nav-link"
+                onClick={() => handleRedirect("/contactus")}>
                 Contact Us
-              </Link>
+              </span>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/aboutus">About Us</Link>
+              <span
+                className="nav-link"
+                onClick={() => handleRedirect("/aboutus")}>
+                About Us
+              </span>
             </li>
           </ul>
 

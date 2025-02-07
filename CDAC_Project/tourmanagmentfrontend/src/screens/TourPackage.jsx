@@ -18,7 +18,7 @@ function Tourpackage() {
       try {
         // Fetch regions from the backend
         const regionsResponse = await fetch(`${config.serverUrl}/region`);
-
+        debugger;
         if (!regionsResponse.ok) throw new Error("Failed to fetch Regions");
         const regions = await regionsResponse.json();
 

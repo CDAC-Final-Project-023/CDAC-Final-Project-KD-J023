@@ -41,7 +41,9 @@ function TourDetails() {
 
         // setReviews(mockReviews);
 
-        const response = await fetch(`${config.serverUrl}/reviews/tour/${id}`);
+        const response = await fetch(
+          `${config.serverUrl}/reviews/tour/${id}`
+        );
         if (!response.ok) throw new Error("Failed to fetch reviews");
         const data = await response.json();
         setReviews(data);

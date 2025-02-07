@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Carousel } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import "./HomeCarousel.css";
 import mountains from "../../images/mountains.jpg";
 import tajmahal from "../../images/TajMahal.jpg";
@@ -9,6 +10,10 @@ const HomeCarousel = () => {
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
+  };
+
+  const handleButtonClick = () => {
+    window.location.href = "/ContactUs";
   };
 
   return (
@@ -23,11 +28,7 @@ const HomeCarousel = () => {
         prevLabel="">
         {/* Slide 1 */}
         <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src={mountains}
-            alt="Slide 1"
-          />
+          <img className="d-block w-100" src={mountains} alt="Slide 1" />
           <Carousel.Caption className="hero-caption">
             <h3 className="fw-bold text-white">
               Get up to <span className="text-warning">40% OFF</span>
@@ -39,7 +40,9 @@ const HomeCarousel = () => {
               Starting at INR 15,500{" "}
               <span className="text-decoration-line-through">INR 33,000</span>
             </p>
-            <button className="btn btn-warning px-4 py-2 mt-3">
+            <button
+              className="btn btn-warning px-4 py-2 mt-3"
+              onClick={handleButtonClick}>
               Connect With An Expert
             </button>
           </Carousel.Caption>
@@ -47,18 +50,16 @@ const HomeCarousel = () => {
 
         {/* Slide 2 */}
         <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src={ tajmahal }
-            alt="Slide 2"
-          />
+          <img className="d-block w-100" src={tajmahal} alt="Slide 2" />
           <Carousel.Caption className="hero-caption">
             <h3 className="fw-bold text-white">Experience the Beauty</h3>
             <h1 className="fw-bold text-white">Discover Timeless Monuments</h1>
             <p className="text-light fs-5">
               Book Now and Explore India's Marvels
             </p>
-            <button className="btn btn-warning px-4 py-2 mt-3">
+            <button
+              className="btn btn-warning px-4 py-2 mt-3"
+              onClick={handleButtonClick}>
               Connect With An Expert
             </button>
           </Carousel.Caption>
@@ -73,7 +74,9 @@ const HomeCarousel = () => {
               Experience Breathtaking Landscapes
             </h1>
             <p className="text-light fs-5">Plan Your Dream Vacation Today</p>
-            <button className="btn btn-warning px-4 py-2 mt-3">
+            <button
+              className="btn btn-warning px-4 py-2 mt-3"
+              onClick={handleButtonClick}>
               Connect With An Expert
             </button>
           </Carousel.Caption>

@@ -2,8 +2,7 @@ package com.tours.DTO;
 
 import com.tours.entity.Region;
 import com.tours.entity.City;
-import com.tours.entity.Photo;
-import com.tours.entity.State;
+
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

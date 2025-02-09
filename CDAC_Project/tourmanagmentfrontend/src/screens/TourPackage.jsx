@@ -39,7 +39,7 @@ function Tourpackage() {
           
           let photoUrl;
           if (tourPackage.photoPath !== "null") {
-            photoUrl = `${config.serverUrl}/${tourPackage.photoPath}`;
+            photoUrl = `${config.serverUrl}/uploads/${tourPackage.photoPath}`;
           } else {
             photoUrl = DefaultScene;
           }

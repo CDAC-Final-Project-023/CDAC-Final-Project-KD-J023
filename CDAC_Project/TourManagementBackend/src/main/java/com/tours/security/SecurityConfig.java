@@ -59,7 +59,11 @@ public class SecurityConfig {
 			requests
 				.requestMatchers("/auth/register", "/auth/login", "/auth/authenticate").permitAll()
 				.requestMatchers("/user/**").permitAll()                            //hasRole("CUSTOMER")      
-				.requestMatchers("/admin/**").permitAll()                 //hasRole("ADMIN")
+				.requestMatchers("/region/**").permitAll()                            //hasRole("CUSTOMER")      
+				.requestMatchers("/tours/**").permitAll()                            //hasRole("CUSTOMER")      
+				.requestMatchers("/reviews/**").permitAll()                            //hasRole("CUSTOMER")      
+				
+				.requestMatchers("/admin/**").hasRole("ADMIN")
 				.requestMatchers("/uploads/**").permitAll()
 		    	.anyRequest().authenticated()
 		    )

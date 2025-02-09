@@ -58,7 +58,15 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="container-fluid vh-100 d-flex align-items-center justify-content-center bg-light">
+   <div
+        className="container-fluid vh-100 d-flex align-items-center justify-content-center"
+        style={{
+          backgroundImage:
+            "url('https://cdn.pixabay.com/photo/2022/06/25/13/33/landscape-7283516_1280.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}>
       <Navbar />
       <div
         className="row shadow-lg bg-white rounded overflow-hidden"

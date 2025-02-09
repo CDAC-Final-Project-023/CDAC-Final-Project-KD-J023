@@ -108,7 +108,8 @@ const Signup = () => {
       <div
         className="container-fluid vh-100 d-flex align-items-center justify-content-center"
         style={{
-          backgroundImage: "url('https://placehold.co/1920x1080/EEE2DC/FFF')",
+          backgroundImage:
+            "url('https://cdn.pixabay.com/photo/2022/06/25/13/33/landscape-7283516_1280.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -199,7 +200,7 @@ const Signup = () => {
                 </label>
                 <div className="input-group">
                   <input
-                    type={showPassword ? "text" : "password"} 
+                    type={showPassword ? "text" : "password"}
                     className="form-control"
                     id="password"
                     name="password"
@@ -212,8 +213,7 @@ const Signup = () => {
                     className="btn btn-outline-secondary"
                     type="button"
                     onClick={togglePasswordVisibility}
-                    style={{ width: "50px" }} 
-                  >
+                    style={{ width: "50px" }}>
                     {showPassword ? <FaEyeSlash /> : <FaEye />}
                   </button>
                 </div>

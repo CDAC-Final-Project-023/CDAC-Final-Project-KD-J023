@@ -65,7 +65,7 @@ function TourDetails() {
     image = DefaultScene;
   }
   else{
-    image = `${config.serverUrl}/${tour.photoPath}`;
+    image = `${config.serverUrl}/uploads/${tour.photoPath}`;
   }
 
   

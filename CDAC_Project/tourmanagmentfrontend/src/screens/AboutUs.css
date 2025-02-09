@@ -6,6 +6,11 @@
   .img-fluid {
     border-radius: 10px;
   }
+  .team-member-img {
+  width: 150px;
+  height: 150px;
+  
+}
   
   .list-unstyled li {
     font-size: 18px;
@@ -15,7 +20,7 @@
   .rounded-circle {
     width: 120px;
     height: 120px;
-    object-fit: cover;
+    object-fit: contain;
   }
   
   .card {
@@ -29,8 +34,8 @@
   }
   
   .rounded-circle {
-    width: 200px; /* Adjust as necessary */
-    height: 200px; /* Ensures square dimensions */
-    object-fit: cover; /* Ensures the image covers the circle area */
+    width: 200px; 
+    height: 200px;
+    object-fit: cover; 
   }
   

@@ -1,7 +1,7 @@
 package com.tours.entity;
 
 public enum UserRole {
-    USER,
-    ADMIN
+	ROLE_CUSTOMER,
+	ROLE_ADMIN
 }
 

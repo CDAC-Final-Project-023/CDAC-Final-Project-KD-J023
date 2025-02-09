@@ -1,6 +1,7 @@
-import axios from "axios";
 import { createContext, useEffect, useReducer } from "react";
+import Logout from "./Logout"; // Import the Logout function
 
+// Initial state, checking for user in sessionStorage
 const INITIAL_STATE = {
   user: JSON.parse(sessionStorage.getItem("user")) || null,
   loading: false,
@@ -19,7 +20,7 @@ const AuthReducer = (state, action) => {
       };
     case "LOGIN_SUCCESS":
       return {
-        user: action.payload,
+        user: action.payload, // Store user data after successful login
         loading: false,
         error: null,
       };
@@ -44,16 +45,13 @@ export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
 
   useEffect(() => {
-    sessionStorage.setItem("user", JSON.stringify(state.user));
+    if (state.user) {
+      sessionStorage.setItem("user", JSON.stringify(state.user)); // Save user to sessionStorage
+    }
   }, [state.user]);
 
   const logout = () => {
-    debugger;
-    sessionStorage.removeItem("user"); // remove the user from sessionStorage
-    dispatch({ type: "LOGOUT" }); // update the state to clear the user
-    axios.get("/api/logout").then(() => {
-      // make a request to your backend to clear cookies and session
-    });
+    Logout(dispatch); // Call the Logout function with dispatch
   };
 
   return (
@@ -63,9 +61,8 @@ export const AuthContextProvider = ({ children }) => {
         loading: state.loading,
         error: state.error,
         dispatch,
-        logout, // add the logout function to the context
-      }}
-    >
+        logout,
+      }}>
       {children}
     </AuthContext.Provider>
   );

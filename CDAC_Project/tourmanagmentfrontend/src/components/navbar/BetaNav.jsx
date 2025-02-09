@@ -1,18 +1,39 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode"; // Import jwt-decode
 import { AuthContext } from "../../context/authContext";
+import { capitalizeFirstLetter } from "../../utils/formatName"; // Import utility function
+import { config } from "../../services/config"; // Import configuration as named import
 import "./BetaNav.css"; // Importing the CSS
 import defaultuserlogo from "../../images/euser.png"; // Importing the default user image
+import Logout from "../../context/Logout"; // Ensure Logout is imported
 
 const BetaNav = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext); // Access user and logout function from context
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
   const navbarRef = useRef(null);
+  const [userName, setUserName] = useState("");
+  const [userPhoto, setUserPhoto] = useState("");
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("jwtToken");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken.name) {
+        setUserName(capitalizeFirstLetter(decodedToken.name)); // Set the user's name with the first letter capitalized
+      }
+
+      if (decodedToken.photo) {
+        const photoUrl = `${config.serverUrl}/uploads/${decodedToken.photo}`; // Use serverUrl from config
+        setUserPhoto(photoUrl);
+      }
+    }
+  }, []);
 
   const handleLogout = () => {
-    logout();
-    navigate("/login");
+     Logout();
+ 
     window.location.reload();
   };
 
@@ -32,13 +53,12 @@ const BetaNav = () => {
     }
   };
 
-  useEffect(() => {
+ useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
   return (
     <nav
       className="navbar custom-navbar navbar-expand-lg fixed-top"
@@ -46,10 +66,9 @@ const BetaNav = () => {
       <div className="container d-flex justify-content-between align-items-center">
         {/* Logo */}
         <Link to="/" className="navbar-brand logo">
-          NOt yet decided
+          MyApp
         </Link>
 
-        {/* Toggle Button for Mobile */}
         <button
           className={`navbar-toggler right-side-toggle ${
             isExpanded ? "collapsed" : ""
@@ -124,7 +143,7 @@ const BetaNav = () => {
                   data-bs-toggle="dropdown"
                   aria-expanded="false">
                   <img
-                    src={user.img || defaultuserlogo}
+                    src={userPhoto ? userPhoto : defaultuserlogo}
                     alt="User"
                     className="rounded-circle me-2"
                     style={{
@@ -133,7 +152,7 @@ const BetaNav = () => {
                       borderRadius: "50%",
                     }}
                   />
-                  {user.name}
+                  {userName}
                 </a>
                 <ul
                   className="dropdown-menu dropdown-menu-end"

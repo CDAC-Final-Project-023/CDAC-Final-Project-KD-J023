@@ -15,6 +15,8 @@ import lombok.*;
 @ToString
 public class Photo extends BaseEntity {
 
+	
+	
     @Column(nullable = false)
     private String photoPath; 
     

@@ -36,7 +36,7 @@ public class ReviewController {
 
     @GetMapping("/tour/{tourId}")
     public ResponseEntity<List<Review>> getReviewsByTourId(@PathVariable Long tourId) {
-    	System.out.println("in class " +getClass() );
+    	System.out.println("in class " + getClass() );
         return ResponseEntity.ok(reviewService.getReviewsByTourId(tourId));
     }
 }

@@ -78,6 +78,7 @@ package com.tours.service;
 
 import com.tours.DTO.TourRequestDTO;
 import com.tours.DTO.TourResponseDTO;
+import com.tours.DTO.ToursRespDTO;
 import com.tours.custom_exceptions.ResourceNotFoundException;
 import com.tours.dao.CityDao;
 
@@ -212,4 +213,10 @@ public class ToursServiceImpl implements ToursService {
 
 		return tours.stream().map(this::mapToResponseDTO).collect(Collectors.toList());
 	}
+
+	public List getToursByRegionIds(List<Long> regionIds, TourStatus status) {
+		List<Tour> tours = toursDao.findByRegionIdsAndStatus(regionIds, status);
+		return tours.stream().map(tour -> modelMapper.map(tour, TourResponseDTO.class)).collect(Collectors.toList());
+	}
+
 }

@@ -22,6 +22,7 @@ public interface ToursDao extends JpaRepository<Tour, Long> {
 
 	List<Tour> findByTitleContainingIgnoreCase(String keyword);
 
-    
+
+
 	
 }

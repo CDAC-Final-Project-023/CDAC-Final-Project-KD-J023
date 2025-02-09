@@ -1,10 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "./LoginPage.css";
+import Navbar from "../components/navbar/BetaNav";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import Navbar from "../components/navbar/BetaNav";
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -102,7 +103,7 @@ const LoginPage = () => {
               className="text-primary"
               onClick={(e) => {
                 e.preventDefault();
-                navigate("/resetpassword");
+                navigate("/requestReset");
               }}
             >
               Forgot your password?

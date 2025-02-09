@@ -9,6 +9,7 @@ public class FileUploadUtil {
 
     private static final String UPLOAD_DIR = "src/main/resources/uploads/";
 
+    // Save file and return the filename
     public static String saveFile(MultipartFile file) throws IOException {
         if (file.isEmpty()) {
             throw new IOException("File is empty");
@@ -26,5 +27,10 @@ public class FileUploadUtil {
         }
 
         return fileName;
+    }
+
+
+    public static String getImageUrl(String fileName) {
+        return "/uploads/" + fileName; 
     }
 }

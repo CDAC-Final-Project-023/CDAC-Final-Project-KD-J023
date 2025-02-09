@@ -17,9 +17,10 @@ import com.tours.DTO.*;
 import com.tours.custom_exceptions.ResourceNotFoundException;
 import com.tours.dao.ToursDao;
 import com.tours.entity.Tour;
+import com.tours.entity.TourStatus;
 
 @RestController
-@RequestMapping("/tours")
+@RequestMapping
 @CrossOrigin(origins = "http://localhost:3000")
 public class ToursUserController {
 
@@ -30,8 +31,6 @@ public class ToursUserController {
 	@Autowired
     private ModelMapper modelMapper;
 	
-	
-
 	@GetMapping("/region")
     public ResponseEntity<List<ToursRespDTO>> getToursByRegions(
             @RequestParam(value = "regionIds", required = false) List<Long> regionIds) {
@@ -45,7 +44,8 @@ public class ToursUserController {
         }
         return ResponseEntity.ok(tours);
     }
-	
+
+
 
 //	@GetMapping("/{tourId}")
 //	public ResponseEntity<?> getTourById(@PathVariable Long tourId){
@@ -54,7 +54,7 @@ public class ToursUserController {
 //		return ResponseEntity.ok(tour);
 //		
 //	}
-	 @GetMapping("/{tourId}")
+	 @GetMapping("/tours/region/{tourId}")
 	    public ResponseEntity<?> getTourById(@PathVariable Long tourId) {
 	        System.out.println("in getTourDetailsById " + tourId);
 

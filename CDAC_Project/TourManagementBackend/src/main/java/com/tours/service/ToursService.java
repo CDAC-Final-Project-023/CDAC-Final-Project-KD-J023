@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tours.DTO.*;
+import com.tours.entity.TourStatus;
 
 public interface ToursService {
 
@@ -27,4 +28,5 @@ public interface ToursService {
 
 	void deleteTour(Long id);
 
+	
 }

@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+const API_BASE_URL = "http://localhost:8080/admin/users"; 
+
 const ManageUser = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -13,7 +15,7 @@ const ManageUser = () => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:8080/admin/users");
+      const response = await axios.get(API_BASE_URL);
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -25,21 +27,23 @@ const ManageUser = () => {
   const toggleUserStatus = async (userId, currentStatus) => {
     try {
       const newStatus = currentStatus === "ACTIVE" ? "BLOCKED" : "ACTIVE";
-      await axios.put(`http://localhost:8080/admin/users/${userId}/status`, { status: newStatus });
+      await axios.put(`${API_BASE_URL}/${userId}/status?status=${newStatus}`);
       setMessage(`User status updated to ${newStatus}`);
       fetchUsers();
     } catch (error) {
       setMessage("Failed to update status");
+      console.error("Error updating user status:", error);
     }
   };
 
   const softDeleteUser = async (userId) => {
     try {
-      await axios.delete(`http://localhost:8080/admin/users/${userId}`);
+      await axios.delete(`${API_BASE_URL}/${userId}`);
       setMessage("User deleted successfully");
       fetchUsers();
     } catch (error) {
       setMessage("Failed to delete user");
+      console.error("Error deleting user:", error);
     }
   };
 

@@ -9,25 +9,36 @@ import TourPackage from "./screens/TourPackage";
 import TourPackagesList from "./screens/TourPackageList";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-
+import Logout from "./context/Logout";
+import { AuthContextProvider } from "./context/authContext";
 
 function App() {
   return (
-    <div className="app-container">
-      
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/tourPackage" element={<TourPackage />} />
-        <Route path="/tourPackageList" element={<TourPackagesList />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route path="/admin" element={<AdminDashboardPage />} />
-      </Routes>
-
-      <ToastContainer />
-    </div>
+    <AuthContextProvider>
+      <div className="app-container">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/tourPackage" element={<TourPackage />} />
+          <Route path="/tourPackageList" element={<TourPackagesList />} />
+          <Route path="/resetpassword" element={<ResetPassword />} />
+          <Route path="/admin" element={<AdminDashboardPage />} />
+        </Routes>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+      </div>
+    </AuthContextProvider>
   );
 }
 

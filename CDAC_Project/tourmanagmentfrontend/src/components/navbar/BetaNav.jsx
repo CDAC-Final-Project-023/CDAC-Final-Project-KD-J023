@@ -1,16 +1,15 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode"; // Import jwt-decode
+import { Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import { AuthContext } from "../../context/authContext";
-import { capitalizeFirstLetter } from "../../utils/formatName"; // Import utility function
-import { config } from "../../services/config"; // Import configuration as named import
-import "./BetaNav.css"; // Importing the CSS
-import defaultuserlogo from "../../images/euser.png"; // Importing the default user image
-import Logout from "../../context/Logout"; // Ensure Logout is imported
+import { capitalizeFirstLetter } from "../../utils/formatName"; 
+import { config } from "../../services/config"; 
+import "./BetaNav.css"; 
+import defaultuserlogo from "../../images/euser.png"; 
+import Logout from "../../context/Logout"; 
 
 const BetaNav = () => {
-  const { user, logout } = useContext(AuthContext); // Access user and logout function from context
-  const navigate = useNavigate();
+  const { user} = useContext(AuthContext); 
   const [isExpanded, setIsExpanded] = useState(false);
   const navbarRef = useRef(null);
   const [userName, setUserName] = useState("");
@@ -21,11 +20,11 @@ const BetaNav = () => {
     if (token) {
       const decodedToken = jwtDecode(token);
       if (decodedToken.name) {
-        setUserName(capitalizeFirstLetter(decodedToken.name)); // Set the user's name with the first letter capitalized
+        setUserName(capitalizeFirstLetter(decodedToken.name)); 
       }
 
       if (decodedToken.photo) {
-        const photoUrl = `${config.serverUrl}/uploads/${decodedToken.photo}`; // Use serverUrl from config
+        const photoUrl = `${config.serverUrl}/uploads/${decodedToken.photo}`;
         setUserPhoto(photoUrl);
       }
     }

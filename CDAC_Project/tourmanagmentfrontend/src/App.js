@@ -17,6 +17,8 @@ import AboutUs from "./screens/AboutUs";
 import { AuthContextProvider } from "./context/authContext";
 import UpdateProfile from "./screens/UpdateProfile";
 import ComingSoon from "./components/soon/ComingSoon";
+import MyBookings from "./screens/MyBookings";
+import AddReview from "./screens/AddReview";
 
 function App() {
   return (
@@ -37,7 +39,11 @@ function App() {
           <Route path="/AboutUs" element={<AboutUs />} />
           <Route path="/tour-details/:id" element={<TourDetails />} />
           <Route path="/UpdateProfile" element={<UpdateProfile />} />
-          <Route path="/coming-soon"  element={<ComingSoon />} />
+          <Route path="/coming-soon"  element={<ComingSoon />} />       
+          <Route path="/MyBookings" element={<MyBookings/>} />
+          <Route path="/AddReview" element={<AddReview/>} />
+        
+
         </Routes>
 
         <ToastContainer />

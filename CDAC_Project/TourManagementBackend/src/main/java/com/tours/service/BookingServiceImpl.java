@@ -1,5 +1,6 @@
 package com.tours.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tours.dao.BookingDao;
+import com.tours.dao.TouristDao;
 import com.tours.dao.ToursDao;
 import com.tours.dao.UserDao;
 import com.tours.DTO.*;
@@ -16,6 +18,7 @@ import com.tours.DTO.*;
 import com.tours.entity.Booking;
 import com.tours.entity.BookingStatus;
 import com.tours.entity.Tour;
+import com.tours.entity.Tourist;
 import com.tours.entity.User;
 import com.tours.exceptions.*;
 
@@ -31,27 +34,56 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private ToursDao tourDao;
+    
+    @Autowired
+    private TouristDao touristDao;
 
     @Autowired
     private ModelMapper modelMapper;
 
     @Override
-    public BookingRespDTO bookTour(BookingRespDTO bookingDTO) {
-        User user = userDao.findById(bookingDTO.getId())
+    public BookingRespDTO createBooking(BookingReqDTO bookingReqDTO) {
+        // Fetch User and Tour
+        User user = userDao.findById(bookingReqDTO.getUser())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-
-        Tour tour = tourDao.findById(bookingDTO.getId())
+        System.out.println(user);
+        Tour tour = tourDao.findById(bookingReqDTO.getTour())
                 .orElseThrow(() -> new ResourceNotFoundException("Tour not found"));
 
+        // Calculate base and total amounts
+        double baseAmount = tour.getPrice() * bookingReqDTO.getCount();
+        double totalAmount = baseAmount + (int) (baseAmount * 0.18);
+
+        // Create Booking
         Booking booking = new Booking();
         booking.setUser(user);
         booking.setTour(tour);
-        booking.setBookingDate(bookingDTO.getBookingDate());
+        booking.setBookingDate(LocalDate.now());
+        booking.setCount(bookingReqDTO.getCount());
         booking.setStatus(BookingStatus.PENDING);
+        booking.setBaseAmount(baseAmount);
+        booking.setTotalAmount(totalAmount);
 
         Booking savedBooking = bookingDao.save(booking);
+
+        // Save Tourist Details
+        if (bookingReqDTO.getTourists() != null && !bookingReqDTO.getTourists().isEmpty()) {
+            List<Tourist> tourists = bookingReqDTO.getTourists().stream()
+                    .map(touristDTO -> {
+                        Tourist tourist = new Tourist();
+                        tourist.setName(touristDTO.getName());
+                        tourist.setAge(touristDTO.getAge());
+                        tourist.setGender(touristDTO.getGender());
+                        tourist.setBooking(savedBooking);
+                        return tourist;
+                    }).collect(Collectors.toList());
+
+            touristDao.saveAll(tourists);
+        }
+
         return modelMapper.map(savedBooking, BookingRespDTO.class);
     }
+	
 
  
 
@@ -71,6 +103,11 @@ public class BookingServiceImpl implements BookingService {
         booking.setStatus(BookingStatus.CANCELLED);
         return new ApiResponse("Booking cancelled successfully.");
     }
+
+
+
+	
+	
 
    
 }

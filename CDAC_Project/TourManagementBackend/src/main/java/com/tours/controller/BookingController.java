@@ -17,12 +17,11 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    // Book a tour
-    @PostMapping("/book")
-    public ResponseEntity<BookingRespDTO> bookTour(@RequestBody BookingRespDTO bookingDTO) {
-        return ResponseEntity.ok(bookingService.bookTour(bookingDTO));
+    @PostMapping("/create")
+    public ResponseEntity<BookingRespDTO> BookTour(@RequestBody BookingReqDTO bookingReqDTO) {
+        BookingRespDTO response = bookingService.createBooking(bookingReqDTO);
+        return ResponseEntity.ok(response);
     }
-
     
 
     // Get bookings for a specific user

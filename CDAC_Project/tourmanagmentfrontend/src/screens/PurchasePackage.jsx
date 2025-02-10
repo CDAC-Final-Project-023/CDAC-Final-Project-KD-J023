@@ -1,31 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./PurchasePackage.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/navbar/BetaNav";
+import { config } from "../services/config";
 
 const PurchasePackage = () => {
+  const { id } = useParams(); // Get the package ID from the URL
   const [numTourists, setNumTourists] = useState(1);
   const [touristDetails, setTouristDetails] = useState([
-    { fullName: "", age: "", gender: "" },
+    { name: "", age: "", gender: "" },
   ]);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [photoPath, setPhotoPath] = useState("");
+  const [price, setPrice] = useState(0); // Add price state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch package details from the API
-    fetch("https://api.example.com/package-details/")
+    fetch(`${config.serverUrl}/tours/${id}`)
       .then((response) => response.json())
       .then((data) => {
         setTitle(data.title);
         setDescription(data.description);
-        setImageUrl(data.imageUrl);
+        setPhotoPath(data.photoPath);
+        setPrice(data.price); // Set the price from the data
       })
       .catch((error) => {
         console.error("Error fetching package details:", error);
@@ -36,13 +38,13 @@ const PurchasePackage = () => {
     if (user) {
       setIsAuthenticated(true);
     }
-  }, []);
+  }, [id]);
 
   const handleAddTourist = () => {
     setNumTourists(numTourists + 1);
     setTouristDetails([
       ...touristDetails,
-      { fullName: "", age: "", gender: "" },
+      { name: "", age: "", gender: "" },
     ]);
   };
 
@@ -60,117 +62,110 @@ const PurchasePackage = () => {
   };
 
   const calculateTotal = () => {
-    const basePrice = 1000; // Example base price per tourist
     const taxRate = 0.18;
-    const totalPrice = basePrice * numTourists;
+    const totalPrice = price * numTourists;
     const tax = totalPrice * taxRate;
     return { totalPrice, tax, grandTotal: totalPrice + tax };
   };
 
-  const handleConfirmDates = () => {
-    if (!startDate || !endDate) {
-      toast.error("Please select both 'From' and 'To' dates!");
-      return;
-    }
-    if (new Date(endDate) <= new Date(startDate)) {
-      toast.error("The 'To' date must be after the 'From' date!");
-      return;
-    }
-    toast.success("Dates Confirmed!");
-  };
-
   const handleProceedToPay = () => {
-    const user = sessionStorage.getItem("user");
-    if (user === "null") {
+    const user = JSON.parse(sessionStorage.getItem("user")); // Parse the user object
+    if (!user) {
       toast.error("Please log in first!");
       setTimeout(() => {
         window.location.href = "/login";
       }, 1000);
       return;
     }
-    if (!startDate || !endDate) {
-      toast.error("Please select a start and end date!");
-      return;
-    }
-    if (new Date(endDate) <= new Date(startDate)) {
-      toast.error("The End date must be after the Start date!");
-      return;
-    }
     if (
       touristDetails.some(
-        (detail) => !detail.fullName || !detail.age || !detail.gender
+        (detail) => !detail.name || !detail.age || !detail.gender
       )
     ) {
       toast.error("Please fill in all tourist details!");
       return;
     }
-    toast.success("Proceeding to payment!");
-    
-    navigate("/payment-success");
+
+    const bookingDetails = {
+      user: user.id, // Use the parsed user ID
+      tour: id,
+      count: numTourists,
+      baseAmount: price, // Use the fetched price
+      tourists: touristDetails,
+    };
+ 
+
+    fetch(`${config.serverUrl}/bookings/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bookingDetails),
+    })
+      .then((response) => {
+        if (response.ok) {
+          toast.success("Proceeding to payment!");
+          navigate("/payment-success");
+        } else {
+          toast.error("Failed to create booking. Please try again.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error creating booking:", error);
+        toast.error("Failed to create booking. Please try again.");
+      });
   };
 
   const { totalPrice, tax, grandTotal } = calculateTotal();
+  const imageUrl = `${config.serverUrl}/uploads/${photoPath}`;
 
   return (
-    <div className="purchase-package-container">
+    <div className="purchase-package-container container">
       <ToastContainer />
       <Navbar />
       {/* Section 1: Package Details */}
       <div className="row">
-        <div className="col-12 col-md-9 box">
+        <div className="col-12 col-md-7 box bg-light p-3 rounded">
           <div className="image-container">
             <img
               src={imageUrl}
               alt="Package"
-              style={{ width: "40rem", height: "20rem" }}
+              className="img-fluid rounded"
+              style={{ maxWidth: "100%", height: "auto", maxHeight: "300px" }}
             />
-            <h3>{title}</h3>
+            <h3 className="mt-3">{title}</h3>
             <p>{description}</p>
             <div className="d-flex align-items-center">
               <button
                 className="btn btn-secondary me-2"
-                onClick={handleRemoveTourist}
-              >
+                onClick={handleRemoveTourist}>
                 -
               </button>
               <span>{numTourists}</span>
               <button
                 className="btn btn-secondary ms-2"
-                onClick={handleAddTourist}
-              >
+                onClick={handleAddTourist}>
                 +
               </button>
             </div>
           </div>
         </div>
-        <div className="col-12 col-md-3 box select-dates">
-          <h4>Select Dates</h4>
-          <label>From</label>
-          <input
-            type="date"
-            className="form-control mb-2"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-          />
-          <label>To</label>
-          <input
-            type="date"
-            className="form-control"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-          />
+        <div className="col-12 col-md-3 box bg-light p-3 rounded payment-details  mt-3 mt-md-0">
+          <h4>Payment Details</h4>
+          <p>Base Price: ₹{totalPrice.toFixed(2)}</p>
+          <p>Tax (18%): ₹{tax.toFixed(2)}</p>
+          <h5>Total: ₹{grandTotal.toFixed(2)}</h5>
           <button
-            className="btn btn-primary mt-3 w-100"
-            onClick={handleConfirmDates}
-          >
-            Confirm
+            className="btn btn-success w-100 mt-3"
+            onClick={handleProceedToPay}>
+            Proceed to Pay
           </button>
         </div>
       </div>
 
-      {/* Section 2: Tourist Details & Payment */}
+      {/* Section 2: Tourist Details */}
       <div className="row mt-4">
-        <div className="col-12 col-md-9 box">
+        <div className="col-12 col-md-7 box bg-light p-3 rounded">
           <h4>Tourist Details</h4>
           {touristDetails.map((detail, index) => (
             <div key={index} className="row mb-3 tourist-details">
@@ -180,9 +175,9 @@ const PurchasePackage = () => {
                   type="text"
                   className="form-control mb-2"
                   placeholder="Full Name (As per Govt. ID)"
-                  value={detail.fullName}
+                  value={detail.name}
                   onChange={(e) =>
-                    handleTouristChange(index, "fullName", e.target.value)
+                    handleTouristChange(index, "name", e.target.value)
                   }
                 />
               </div>
@@ -203,8 +198,7 @@ const PurchasePackage = () => {
                   value={detail.gender}
                   onChange={(e) =>
                     handleTouristChange(index, "gender", e.target.value)
-                  }
-                >
+                  }>
                   <option value="">Gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
@@ -213,24 +207,9 @@ const PurchasePackage = () => {
             </div>
           ))}
         </div>
-
-        <div className="col-12 col-md-3 box payment-details">
-          <h4>Payment Details</h4>
-          <p>Base Price: ₹{totalPrice.toFixed(2)}</p>
-          <p>Tax (18%): ₹{tax.toFixed(2)}</p>
-          <h5>Total: ₹{grandTotal.toFixed(2)}</h5>
-          <button
-            className="btn btn-success w-100 mt-3"
-            onClick={handleProceedToPay}
-          >
-            Proceed to Pay
-          </button>
-        </div>
       </div>
     </div>
   );
 };
 
 export default PurchasePackage;
-
-

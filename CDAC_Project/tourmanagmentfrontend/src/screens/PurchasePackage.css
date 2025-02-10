@@ -1,7 +1,7 @@
 /* PurchasePackage.css */
 
 body {
-  background-color: #f8f9fa;
+  background-color: #e0f7fa; /* Light pastel background color */
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
@@ -9,9 +9,9 @@ body {
 
 .purchase-package-container {
   padding: 20px;
-  max-width: 1200px;
+  max-width: 1500px;
   margin: auto;
-  margin-top: 60px; /* Add top margin to prevent overlap */
+  margin-top: 10px; /* Reduce top margin */
 }
 
 .image-container {
@@ -21,20 +21,34 @@ body {
   border: 1px solid #dee2e6;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease; /* Add transition for hover effect */
 }
+
+
 
 .image-container img {
   max-width: 100%;
   height: auto;
   border-radius: 8px;
+  width: 100%; /* Ensure the image spans full width */
+  max-height: 300px; /* Reduce the image height */
+  object-fit: cover; /* Maintain aspect ratio and cover the container */
 }
 
-h3, h4 {
+h3,
+h4 {
   color: #333333;
 }
 
 button {
   border-radius: 4px;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition for hover effect */
+}
+
+button:hover {
+  background-color: #007bff;
+  color: #ffffff;
+  transform: scale(1.05); /* Scale up on hover */
 }
 
 .form-control {
@@ -76,21 +90,20 @@ button {
   padding: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+  transition: transform 0.3s ease; /* Add transition for hover effect */
+}
+
+.payment-details {
+  background-color: #ffeb3b; /* Different background color for payment details */
+  border: 1px solid #fbc02d;
+  height: 100 px; 
+  margin-top: 20px; 
+  margin-left: 150px
 }
 
 p {
   margin: 0;
   font-size: 16px;
-}
-
-button {
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #0056b3;
-  color: #ffffff;
 }
 
 @media (max-width: 768px) {
@@ -116,7 +129,8 @@ button:hover {
     margin: 0 auto; /* Center align if any spacing exists */
   }
 
-  .col-9, .col-3 {
+  .col-9,
+  .col-3 {
     width: 100%; /* Override column widths for mobile */
     padding: 0; /* Remove padding */
   }
@@ -135,14 +149,14 @@ button:hover {
     width: 100%; /* Ensure buttons span full width */
   }
 
-  .tourist-details .col-4, .tourist-details .col-3 {
+  .tourist-details .col-4,
+  .tourist-details .col-3 {
     width: 100%; /* Ensure tourist details columns span full width */
     padding: 0; /* Remove padding */
   }
 
-  .select-dates, .payment-details {
-    width: 100%; /* Ensure select dates and payment details span full width */
+  .payment-details {
+    width: 100%; /* Ensure payment details span full width */
     padding: 0; /* Remove padding */
   }
 }
-

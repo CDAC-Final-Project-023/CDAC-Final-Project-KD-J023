@@ -11,10 +11,11 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(callSuper = true)
 public class BookingRespDTO {
     private Long id;
     private User user;
     private Tour tour;
-    private LocalDate bookingDate;
+    private int count;
     private BookingStatus status;
 }

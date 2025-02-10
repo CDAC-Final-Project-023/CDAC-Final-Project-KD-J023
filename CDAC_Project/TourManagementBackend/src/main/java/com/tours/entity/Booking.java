@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 import lombok.*;
 
 @Entity
-@Table(name = "Bookings")
+@Table(name = "Booking")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -30,8 +30,19 @@ public class Booking extends BaseEntity {
 
     @Column(name = "booking_date", nullable = false)
     private LocalDate bookingDate;
+    
+    @Column(name = "person_count" ,nullable = false)
+    private int count;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private BookingStatus status = BookingStatus.PENDING;
+    
+    @Column(name = "base_amount")
+    private double baseAmount;
+    
+    @Column(name = "total_amount")
+    private double totalAmount;
+    
+    
 }

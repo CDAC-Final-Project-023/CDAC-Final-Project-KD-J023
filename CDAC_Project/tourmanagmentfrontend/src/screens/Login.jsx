@@ -1,63 +1,101 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "./LoginPage.css";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../components/navbar/BetaNav";
+import { AuthContext } from "../context/authContext"; // Import AuthContext
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
+import { config } from "../services/config"; // Import config
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const { dispatch } = useContext(AuthContext); // Use AuthContext
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    // Mock validation
-    if (email === "sanket@gmail.com" && password === "12345") {
-      toast.success("Login successful!");
-      setTimeout(() => navigate("/home"), 1000); // Redirect to home page after success
-    } else {
-      toast.error("Invalid credentials. Please do register.");
+    try {
+      const response = await fetch(`${config.serverUrl}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const result = await response.json(); // Parse the JSON response
+      if (response.ok) {
+        toast.success(result.message || "Login successful!");
+
+        // Store the token in session storage
+        sessionStorage.setItem("jwtToken", result.token);
+        sessionStorage.setItem("user", JSON.stringify(result));
+
+        // Dispatch the user information to the AuthContext
+        dispatch({ type: "LOGIN_SUCCESS", payload: result });
+
+        setTimeout(() => {
+          navigate("/home");
+        }, 1000);
+      } else {
+        toast.error(result.message || "Invalid email or password.");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
-    <div className="container-fluid vh-100 d-flex align-items-center justify-content-center bg-light">
+   <div
+        className="container-fluid vh-100 d-flex align-items-center justify-content-center"
+        style={{
+          backgroundImage:
+            "url('https://cdn.pixabay.com/photo/2022/06/25/13/33/landscape-7283516_1280.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}>
       <Navbar />
-      <div className="row shadow-lg bg-white rounded overflow-hidden" style={{ width: "90%", maxWidth: "900px" }}>
-        {/* Left Section with Image and Branding */}
+      <div
+        className="row shadow-lg bg-white rounded overflow-hidden"
+        style={{ width: "90%", maxWidth: "900px" }}>
         <div
           className="col-md-6 p-4 d-flex flex-column justify-content-center align-items-center text-center text-white position-relative"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080')",
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
-          }}
-        >
-          {/* Add a semi-transparent overlay */}
+          }}>
           <div
             className="position-absolute w-100 h-100"
-            style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-          ></div>
-
-          {/* Content */}
+            style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}></div>
           <div className="z-index-1">
             <h1 className="brand-title">Sunbeam Tours</h1>
             <p className="brand-subtitle mt-3">
-              Travel is the only purchase that enriches you in ways beyond material wealth.
+              Travel is the only purchase that enriches you in ways beyond
+              material wealth.
             </p>
           </div>
         </div>
-
-        {/* Right Section with Form */}
         <div className="col-md-6 p-4 d-flex flex-column justify-content-center">
           <h2 className="form-title text-center mb-3">Welcome to MyTours</h2>
           <p className="text-center text-muted mb-4">Login with your email</p>
 
           <form onSubmit={handleLogin}>
-            {/* Email Input */}
             <div className="mb-3">
               <label htmlFor="email" className="form-label">
                 Email Address
@@ -73,29 +111,34 @@ const LoginPage = () => {
               />
             </div>
 
-            {/* Password Input */}
-            <div className="mb-3">
+            <div className="mb-3 position-relative">
               <label htmlFor="password" className="form-label">
                 Password
               </label>
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <div className="input-group">
+                <input
+                  type={showPassword ? "text" : "password"} // Toggle input type
+                  className="form-control"
+                  id="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button
+                  className="btn btn-outline-secondary"
+                  type="button"
+                  onClick={togglePasswordVisibility}>
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
             </div>
 
-            {/* Login Button */}
             <button type="submit" className="btn btn-primary w-100">
-              Login
+              {loading ? "Logging in..." : "Login"}
             </button>
           </form>
 
-          {/* Links */}
           <div className="text-center mt-3">
             <a
               href="/forgot-password"
@@ -103,19 +146,11 @@ const LoginPage = () => {
               onClick={(e) => {
                 e.preventDefault();
                 navigate("/resetpassword");
-              }}
-            >
+              }}>
               Forgot your password?
             </a>
           </div>
 
-        
-          <div className="text-center my-3">
-            <span className="text-muted"></span>
-            <p></p>
-          </div>
-
-          {/* Registration Link */}
           <p className="text-center mt-3">
             Don't have an account?{" "}
             <a
@@ -124,15 +159,12 @@ const LoginPage = () => {
               onClick={(e) => {
                 e.preventDefault();
                 navigate("/signup");
-              }}
-            >
+              }}>
               Register Now
             </a>
           </p>
         </div>
       </div>
-
-      {/* Toast Notifications */}
       <ToastContainer />
     </div>
   );

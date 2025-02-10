@@ -1,5 +1,5 @@
 /* /* Importing Beautiful Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@500;700&family=Lobster&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@500;700&family=Lobster&display=swap");
 
 /* General Font Styling */
 body {
@@ -28,7 +28,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Black overlay with opacity */
+  background-color: rgba(0, 0, 0, 0.5); 
   z-index: 1;
 }
 
@@ -73,7 +73,7 @@ body {
   font-family: "Poppins", sans-serif;
   height: 45px;
   border-radius: 8px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   border: 1px solid #ddd;
 }
 
@@ -127,7 +127,17 @@ body {
   text-decoration: underline;
 }
 
-/* Responsive Design */
+/* Password Toggle Icon */
+.password-toggle-icon {
+  position: absolute;
+  top: 55%; 
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #6c757d;
+}
+
+
 @media (max-width: 768px) {
   .image-section {
     height: 40vh;

@@ -3,6 +3,7 @@
 /* Adjust the section's spacing */
 section {
     margin-bottom: 2rem;
+    margin-top: 100px ;
   }
   
   /* Style form inputs and textarea */

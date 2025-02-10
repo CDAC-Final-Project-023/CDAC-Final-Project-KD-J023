@@ -27,9 +27,9 @@ public class ReviewController {
     }
 
    
-    // Add a review (only authenticated users should be able to add a review)
     @PostMapping("/add")
     public ResponseEntity<?> addReview(@RequestBody @Valid ReviewDTO reviewDTO) {
+    	System.out.println(reviewDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(reviewService.addReview(reviewDTO));
     }

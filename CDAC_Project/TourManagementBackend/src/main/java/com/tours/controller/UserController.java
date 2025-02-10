@@ -74,7 +74,7 @@ public class UserController {
 	       
 	        String token = jwtUtil.createToken(user.getEmail());
 	        System.out.println("token = "+token);
-	        return ResponseEntity.ok(new LoginResponse(token, response, true));
+	        return ResponseEntity.ok(new LoginResponse(user.getId(),token, response, true));
 	    } catch (Exception e) {
 	        return ResponseEntity.status(500).body(new ApiResponse("Error during registration"));
 	    }
@@ -101,7 +101,7 @@ public class UserController {
 		        User user = (User) auth.getPrincipal(); // Cast to User
 		        System.out.println("user = "+user);
 		        String token = jwtUtil.createToken(auth);
-		        return ResponseEntity.ok(new LoginResponse(token, "Login successful", true));
+		        return ResponseEntity.ok(new LoginResponse(user.getId(),token, "Login successful", true));
 		    } catch (Exception e) {
 		        System.out.println("Authentication failed: " + e.getMessage());
 		        return ResponseEntity.status(401).body(new ApiResponse("Invalid credentials"));

@@ -8,5 +8,6 @@ public class ReviewDTO extends BaseDTO{
     private String comment;
     @NotNull
     private Long userId;
+    @NotNull
     private Long tourId;
 }

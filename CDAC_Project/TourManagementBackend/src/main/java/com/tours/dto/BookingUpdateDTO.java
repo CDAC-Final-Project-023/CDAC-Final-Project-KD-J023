@@ -1,4 +1,4 @@
-package com.tours.dto;
+package com.tours.DTO;
 
 import java.time.LocalDate;
 

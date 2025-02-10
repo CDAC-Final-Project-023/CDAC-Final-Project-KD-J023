@@ -1,0 +1,60 @@
+.star-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stars {
+  display: flex;
+}
+
+.star {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.star.filled {
+  color: #f39c12;
+}
+
+textarea.form-control {
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+}
+
+button.btn-primary {
+  width: 100%;
+}
+
+.star-rating form {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.5s ease, max-height 0.5s ease;
+}
+
+.star-rating form.show {
+  opacity: 1;
+  max-height: 500px; /* Adjust as needed */
+}
+
+@media (max-width: 768px) {
+  .stars {
+    justify-content: center;
+    flex-direction: row; /* Ensure stars remain horizontal */
+  }
+
+  .star {
+    font-size: 1.5rem;
+  }
+
+  textarea.form-control {
+    min-height: 80px;
+  }
+
+  button.btn-primary {
+    font-size: 1rem;
+  }
+}

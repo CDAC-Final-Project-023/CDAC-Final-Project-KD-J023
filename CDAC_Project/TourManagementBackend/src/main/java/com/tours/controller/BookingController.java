@@ -6,13 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.tours.dto.BookingDTO;
-import com.tours.dto.BookingUpdateDTO;
-import com.tours.dto.ApiResponse;
+import com.tours.DTO.*;
 import com.tours.service.BookingService;
 
 @RestController
 @RequestMapping("/bookings")
+@CrossOrigin(origins = "http://localhost:3000")
 public class BookingController {
 
     @Autowired
@@ -20,19 +19,15 @@ public class BookingController {
 
     // Book a tour
     @PostMapping("/book")
-    public ResponseEntity<BookingDTO> bookTour(@RequestBody BookingDTO bookingDTO) {
+    public ResponseEntity<BookingRespDTO> bookTour(@RequestBody BookingRespDTO bookingDTO) {
         return ResponseEntity.ok(bookingService.bookTour(bookingDTO));
     }
 
-    // Get all bookings (Admin)
-    @GetMapping("/all")
-    public ResponseEntity<List<BookingDTO>> getAllBookings() {
-        return ResponseEntity.ok(bookingService.getAllBookings());
-    }
+    
 
     // Get bookings for a specific user
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<BookingDTO>> getBookingsByUser(@PathVariable Long userId) {
+    public ResponseEntity<List<BookingRespDTO>> getBookingsByUser(@PathVariable Long userId) {
         return ResponseEntity.ok(bookingService.getBookingsByUser(userId));
     }
 
@@ -42,15 +37,5 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.cancelBooking(bookingId));
     }
 
-    // Approve a booking
-    @PutMapping("/approve/{bookingId}")
-    public ResponseEntity<ApiResponse> approveBooking(@PathVariable Long bookingId) {
-        return ResponseEntity.ok(bookingService.approveBooking(bookingId));
-    }
-
-    // Modify a booking
-    @PutMapping("/modify/{bookingId}")
-    public ResponseEntity<ApiResponse> modifyBooking(@PathVariable Long bookingId, @RequestBody BookingUpdateDTO updateDTO) {
-        return ResponseEntity.ok(bookingService.modifyBooking(bookingId, updateDTO));
-    }
+    
 }

@@ -9,11 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tours.dao.BookingDao;
-import com.tours.dao.TourDao;
+import com.tours.dao.ToursDao;
 import com.tours.dao.UserDao;
-import com.tours.dto.BookingDTO;
-import com.tours.dto.BookingUpdateDTO;
-import com.tours.dto.ApiResponse;
+import com.tours.DTO.*;
+
 import com.tours.entity.Booking;
 import com.tours.entity.BookingStatus;
 import com.tours.entity.Tour;
@@ -31,17 +30,17 @@ public class BookingServiceImpl implements BookingService {
     private UserDao userDao;
 
     @Autowired
-    private TourDao tourDao;
+    private ToursDao tourDao;
 
     @Autowired
     private ModelMapper modelMapper;
 
     @Override
-    public BookingDTO bookTour(BookingDTO bookingDTO) {
-        User user = userDao.findById(bookingDTO.getUserId())
+    public BookingRespDTO bookTour(BookingRespDTO bookingDTO) {
+        User user = userDao.findById(bookingDTO.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        Tour tour = tourDao.findById(bookingDTO.getTourId())
+        Tour tour = tourDao.findById(bookingDTO.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Tour not found"));
 
         Booking booking = new Booking();
@@ -51,21 +50,16 @@ public class BookingServiceImpl implements BookingService {
         booking.setStatus(BookingStatus.PENDING);
 
         Booking savedBooking = bookingDao.save(booking);
-        return modelMapper.map(savedBooking, BookingDTO.class);
+        return modelMapper.map(savedBooking, BookingRespDTO.class);
     }
 
-    @Override
-    public List<BookingDTO> getAllBookings() {
-        return bookingDao.findAll().stream()
-                .map(booking -> modelMapper.map(booking, BookingDTO.class))
-                .collect(Collectors.toList());
-    }
+ 
 
     @Override
-    public List<BookingDTO> getBookingsByUser(Long userId) {
+    public List<BookingRespDTO> getBookingsByUser(Long userId) {
         return bookingDao.findAll().stream()
                 .filter(booking -> booking.getUser().getId().equals(userId))
-                .map(booking -> modelMapper.map(booking, BookingDTO.class))
+                .map(booking -> modelMapper.map(booking, BookingRespDTO.class))
                 .collect(Collectors.toList());
     }
 
@@ -78,21 +72,5 @@ public class BookingServiceImpl implements BookingService {
         return new ApiResponse("Booking cancelled successfully.");
     }
 
-    @Override
-    public ApiResponse approveBooking(Long bookingId) {
-        Booking booking = bookingDao.findById(bookingId)
-                .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
-
-        booking.setStatus(BookingStatus.CONFIRMED);
-        return new ApiResponse("Booking approved successfully.");
-    }
-
-    @Override
-    public ApiResponse modifyBooking(Long bookingId, BookingUpdateDTO updateDTO) {
-        Booking booking = bookingDao.findById(bookingId)
-                .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
-
-        booking.setBookingDate(updateDTO.getNewBookingDate());
-        return new ApiResponse("Booking modified successfully.");
-    }
+   
 }

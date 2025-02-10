@@ -1,46 +1,69 @@
-/* /src/screens/AdminDashboardPage/AdminDashboard.css */
-.error-message {
-  color: red;
-  font-size: 14px;
-  margin-bottom: 10px;
-}
-
-button.edit-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  margin-right: 10px;
-}
-
-button.delete-btn {
-  background-color: #ff3333;
-  color: white;
-  border: none;
-}
-
-button:hover {
-  opacity: 0.8;
-}
-
+/* Table Styling */
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    background: #fff;
 }
 
-table, th, td {
-  border: 1px solid #ddd;
+/* Table Header */
+thead {
+    background-color: #f8f9fa;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
-th, td {
-  padding: 10px;
-  text-align: left;
-}
 
 th {
-  background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    font-weight: bold;
+    color: #333;
 }
 
-select {
-  margin-top: 10px;
+/* Table Rows */
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Alternate row styling for better readability */
+tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Button Styles */
+button {
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button.bg-blue-500:hover {
+    background-color: #0056b3;
+}
+
+button.bg-green-500:hover {
+    background-color: #218838;
+}
+
+button.bg-red-500:hover {
+    background-color: #c82333;
+}
+
+/* Modal Styling */
+.fixed {
+    backdrop-filter: blur(5px);
+}
+
+.bg-white {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }

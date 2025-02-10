@@ -5,6 +5,7 @@ import AdminDashboardPage from "./screens/AdminDashboardPage/AdminDashboard";
 import ContactUs from "./screens/ContactUs";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
+import ManageBookings from "./components/Admin/ManageBookings";
 import PaymentSuccess from "./screens/PaymentSuccess";
 import PurchasePackage from "./screens/PurchasePackage";
 import RequestReset from "./screens/RequestResetPassword";
@@ -31,6 +32,8 @@ function App() {
           <Route path="/tourPackageList" element={<TourPackagesList />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
           <Route path="/requestReset" element={<RequestReset />} />
+  
+<Route path="/admin/bookings" element={<ManageBookings />} />
 
           <Route path="/admin" element={<AdminDashboardPage />} />
           <Route path="/purchase-package/:id" element={<PurchasePackage />} />

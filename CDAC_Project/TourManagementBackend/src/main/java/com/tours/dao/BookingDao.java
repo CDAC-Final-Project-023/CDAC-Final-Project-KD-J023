@@ -11,5 +11,5 @@ import java.util.List;
 
 @Repository
 public interface BookingDao extends JpaRepository<Booking, Long> {
- 
+	 List<Booking> findByStatus(BookingStatus status);
 }

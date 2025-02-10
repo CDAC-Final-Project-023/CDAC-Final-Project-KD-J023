@@ -62,7 +62,7 @@ public class SecurityConfig {
 				.requestMatchers("/region/**").permitAll()                            //hasRole("CUSTOMER")      
 				.requestMatchers("/tours/**").permitAll()                            //hasRole("CUSTOMER")      
 				.requestMatchers("/reviews/**").permitAll()                            //hasRole("CUSTOMER")      
-				
+				.requestMatchers("/bookings/**").permitAll()
 				.requestMatchers("/admin/**").hasRole("ADMIN")
 				.requestMatchers("/uploads/**").permitAll()
 		    	.anyRequest().authenticated()

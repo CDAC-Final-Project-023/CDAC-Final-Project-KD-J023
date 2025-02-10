@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./PurchasePackage.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/navbar/BetaNav";
 
 const PurchasePackage = () => {
+  const { tourId } = useParams(); // Get tourId from URL
+  const navigate = useNavigate();
+ 
+
+  console.log("Tour ID:", tourId); // Log the tourId to ensure it's being received
+
   const [numTourists, setNumTourists] = useState(1);
   const [touristDetails, setTouristDetails] = useState([
     { fullName: "", age: "", gender: "" },
@@ -16,11 +22,10 @@ const PurchasePackage = () => {
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch package details from the API
-    fetch("https://api.example.com/package-details/")
+    // Fetch package details from the API using the tourId from the URL
+    fetch(`http://localhost:8080/bookings/purchase-package/${tourId}`)
       .then((response) => response.json())
       .then((data) => {
         setTitle(data.title);
@@ -36,7 +41,7 @@ const PurchasePackage = () => {
     if (user) {
       setIsAuthenticated(true);
     }
-  }, []);
+  }, [tourId]); // Make sure to run this effect whenever tourId changes
 
   const handleAddTourist = () => {
     setNumTourists(numTourists + 1);
@@ -79,37 +84,69 @@ const PurchasePackage = () => {
     toast.success("Dates Confirmed!");
   };
 
-  const handleProceedToPay = () => {
-    const user = sessionStorage.getItem("user");
-    if (user === "null") {
-      toast.error("Please log in first!");
-      setTimeout(() => {
-        window.location.href = "/login";
-      }, 1000);
-      return;
-    }
+  const handleProceedToPay = async () => {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+  if (!user || !user.token) {
+    toast.error("Please log in first!");
+    setTimeout(() => {
+      window.location.href = "/login";
+    }, 1000);
+    return;
+  }
+  console.log("Token:", user.token); 
+  
     if (!startDate || !endDate) {
       toast.error("Please select a start and end date!");
       return;
     }
+  
     if (new Date(endDate) <= new Date(startDate)) {
       toast.error("The End date must be after the Start date!");
       return;
     }
-    if (
-      touristDetails.some(
-        (detail) => !detail.fullName || !detail.age || !detail.gender
-      )
-    ) {
+  
+    if (touristDetails.some((detail) => !detail.fullName || !detail.age || !detail.gender)) {
       toast.error("Please fill in all tourist details!");
       return;
     }
-    toast.success("Proceeding to payment!");
+  
+    // Calculate grand total here
+    const { totalPrice, tax, grandTotal } = calculateTotal();
+  
+    const bookingData = {
+      userId: user, // Assuming user ID is stored in sessionStorage
+      tourists: touristDetails,
+      startDate,
+      endDate,
+      totalAmount: grandTotal,
+    };
+   
+    //const token = sessionStorage.getItem('token');
+    try {
+      const response = await fetch(`http://localhost:8080/bookings/create/${tourId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${user.token}`, // Assuming the token is stored in the user object
+        },
+        body: JSON.stringify(bookingData),
+      });
     
-    navigate("/payment-success");
-  };
 
-  const { totalPrice, tax, grandTotal } = calculateTotal();
+      if (response.ok) {
+        toast.success("Booking successful! Redirecting to payment...");
+        setTimeout(() => {
+          navigate("/payment-success");
+        }, 2000);
+      } else {
+        toast.error("Booking failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("An error occurred while booking.");
+    }
+  };
+    const { totalPrice, tax, grandTotal } = calculateTotal();
 
   return (
     <div className="purchase-package-container">
@@ -232,5 +269,3 @@ const PurchasePackage = () => {
 };
 
 export default PurchasePackage;
-
-

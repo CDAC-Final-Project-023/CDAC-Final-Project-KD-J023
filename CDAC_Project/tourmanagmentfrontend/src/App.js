@@ -31,13 +31,15 @@ function App() {
           <Route path="/tourPackageList" element={<TourPackagesList />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
           <Route path="/admin" element={<AdminDashboardPage />} />
-          <Route path="/purchase-package/:id" element={<PurchasePackage />} />
+          <Route path="/purchase-package/:tourId" element={<PurchasePackage />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/ContactUs" element={<ContactUs />} />
           <Route path="/AboutUs" element={<AboutUs />} />
           <Route path="/tour-details/:id" element={<TourDetails />} />
           <Route path="/UpdateProfile" element={<UpdateProfile />} />
           <Route path="/coming-soon"  element={<ComingSoon />} />
+         
+
         </Routes>
 
         <ToastContainer />

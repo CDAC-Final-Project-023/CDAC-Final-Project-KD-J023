@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.tours.DTO.RegionRespDTO;
 import com.tours.dao.RegionDao;
+import com.tours.entity.Region;
 
 import jakarta.transaction.Transactional;
 
@@ -28,6 +29,11 @@ public class RegionServiceImpl implements RegionService {
 	                .stream() 
 	                .map(region -> modelMapper.map(region, RegionRespDTO.class)) 
 	                .collect(Collectors.toList()); 
+	    }
+	 
+	 public Region getRegionById(Long id) {
+	        return regionDao.findById(id)
+	                .orElseThrow();
 	    }
 
 	

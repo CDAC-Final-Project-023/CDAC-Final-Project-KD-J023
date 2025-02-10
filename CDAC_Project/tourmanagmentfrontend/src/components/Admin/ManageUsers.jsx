@@ -1,83 +1,106 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
-const ManageUsers = () => {
+const API_BASE_URL = "http://localhost:8080/admin/users"; 
+
+const ManageUser = () => {
   const [users, setUsers] = useState([]);
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
-  // Fetch users data from the backend
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get("/api/users"); // Replace with your backend endpoint
-        setUsers(response.data);
-      } catch (err) {
-        console.error("Error fetching users:", err);
-        setError("Failed to fetch users.");
-      }
-    };
-
     fetchUsers();
   }, []);
 
-  // Handle block/unblock user
-  const handleBlockUnblockUser = async (id, status) => {
+  const fetchUsers = async () => {
+    setLoading(true);
     try {
-      const newStatus = status === "Blocked" ? "Active" : "Blocked"; // Toggle between Blocked and Active status
-      const response = await axios.put(`/api/users/${id}`, { status: newStatus });
+      const response = await axios.get(API_BASE_URL);
+      setUsers(response.data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-      setUsers((prevUsers) =>
-        prevUsers.map((user) =>
-          user.id === id ? { ...user, status: newStatus } : user
-        )
-      );
-    } catch (err) {
-      console.error("Error updating user status:", err);
-      setError("Failed to update user status.");
+  const toggleUserStatus = async (userId, currentStatus) => {
+    try {
+        const newStatus = currentStatus.toUpperCase() === "ACTIVE" ? "BLOCKED" : "ACTIVE";
+        await axios.put(`${API_BASE_URL}/${userId}/status?status=${newStatus}`);
+        setMessage(`User status updated to ${newStatus}`);
+        fetchUsers();
+    } catch (error) {
+        setMessage("Failed to update status");
+        console.error("Error updating user status:", error.response?.data || error.message);
+    }
+};
+
+
+  const softDeleteUser = async (userId) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/${userId}`);
+      setMessage("User deleted successfully");
+      fetchUsers();
+    } catch (error) {
+      setMessage("Failed to delete user");
+      console.error("Error deleting user:", error);
     }
   };
 
   return (
-    <div>
-      <h3>Manage Users</h3>
-      {error && <div className="error-message">{error}</div>}
-      
-      <h4>Existing Users</h4>
-      <table>
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.length > 0 ? (
-            users.map((user) => (
+    <div className="container mt-4">
+      <h2>Manage Users</h2>
+      {message && <div className="alert alert-info">{message}</div>}
+      {loading ? (
+        <p>Loading users...</p>
+      ) : users.length === 0 ? (
+        <p>No users found.</p>
+      ) : (
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Mobile Number</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
               <tr key={user.id}>
-                <td>{user.username}</td>
+                <td>{user.firstName}</td>
+                <td>{user.lastName}</td>
                 <td>{user.email}</td>
-                <td>{user.status}</td>
+                <td>{user.mobileNumber}</td>
                 <td>
-                  <button
-                    className="block-unblock-btn"
-                    onClick={() => handleBlockUnblockUser(user.id, user.status)}
-                  >
-                    {user.status === "Blocked" ? "Unblock" : "Block"}
+                  <span className={`badge ${user.role === "ADMIN" ? "bg-danger" : "bg-primary"}`}>
+                    {user.role}
+                  </span>
+                </td>
+                <td>
+                  <span className={`badge ${user.status === "ACTIVE" ? "bg-success" : "bg-warning"}`}>
+                    {user.status}
+                  </span>
+                </td>
+                <td>
+                  <button className="btn btn-sm btn-warning me-2" onClick={() => toggleUserStatus(user.id, user.status)}>
+                    {user.status === "ACTIVE" ? "Block" : "Unblock"}
+                  </button>
+                  <button className="btn btn-sm btn-danger" onClick={() => softDeleteUser(user.id)}>
+                    Delete
                   </button>
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="4">No users available</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };
 
-export default ManageUsers;
+export default ManageUser;

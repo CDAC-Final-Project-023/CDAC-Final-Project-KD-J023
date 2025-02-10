@@ -16,16 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tours.DTO.ApiResponse;
 import com.tours.DTO.Credentials;
 import com.tours.DTO.LoginResponse;
+import com.tours.entity.ApiResponse;
 import com.tours.entity.User;
-import com.tours.entity.UserRole;
-import com.tours.entity.UserStatus;
 import com.tours.security.JwtUtil;
 import com.tours.service.UserService;
-
-import io.jsonwebtoken.io.IOException;
 
 @RestController
 @RequestMapping("/auth")
@@ -38,14 +34,9 @@ public class UserController {
 	@Autowired
 	private JwtUtil jwtUtil;
 	
-	@Autowired
-	public UserController(UserService userService) {
-		this.userService = userService;
-	}
-	
 	@PostMapping("/authenticate")
 	public ResponseEntity<?> authenticate(@RequestBody Credentials cr) {
-		// authenticate user with authentication manager		
+		
 		Authentication auth = new UsernamePasswordAuthenticationToken(cr.getEmail(), cr.getPassword());
 		System.out.println("BEFORE AUTH: " + auth);
 		auth = authManager.authenticate(auth);

@@ -52,6 +52,9 @@ public class User extends BaseEntity implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
+    
+    @Column(nullable = false)
+    private boolean deleted = false; 
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

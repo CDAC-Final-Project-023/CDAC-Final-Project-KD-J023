@@ -1,4 +1,4 @@
-package com.tours.DTO;
+package com.tours.entity;
 
 import java.time.LocalDateTime;
 
@@ -19,3 +19,4 @@ public class ApiResponse {
 	}
 	
 }
+

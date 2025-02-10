@@ -43,34 +43,56 @@ public class SecurityConfig {
 		return authManagerBuilder.build();
 	}
 	
+//	@Bean
+//	SecurityFilterChain authorizeRequests(HttpSecurity http) throws Exception {
+//		http
+//		.cors(cors -> cors.configurationSource(request -> {
+//            CorsConfiguration config = new CorsConfiguration();
+//            config.setAllowedOrigins(List.of("http://localhost:3000"));
+//            config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+//            config.setAllowedHeaders(List.of("*"));
+//            config.setAllowCredentials(true);
+//            return config;
+//        }))
+//			.csrf(csrf -> csrf.disable())
+//			.authorizeHttpRequests(requests -> 
+//			requests
+//				.requestMatchers("/auth/register", "/auth/login", "/auth/authenticate").permitAll()
+//				.requestMatchers("/user/**").permitAll()                            //hasRole("CUSTOMER")      
+//				.requestMatchers("/region/**").permitAll()                            //hasRole("CUSTOMER")      
+//				.requestMatchers("/tours/**").permitAll()                            //hasRole("CUSTOMER")      
+//				.requestMatchers("/reviews/**").permitAll()                            //hasRole("CUSTOMER")      
+//				
+//				.requestMatchers("/admin/**").hasRole("ADMIN")
+//				.requestMatchers("/uploads/**").permitAll()
+//		    	.anyRequest().authenticated()
+//		    )
+//			.httpBasic(Customizer.withDefaults())
+//			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+//			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+//		return http.build();
+//	}
+	
 	@Bean
 	SecurityFilterChain authorizeRequests(HttpSecurity http) throws Exception {
-		http
-		.cors(cors -> cors.configurationSource(request -> {
-            CorsConfiguration config = new CorsConfiguration();
-            config.setAllowedOrigins(List.of("http://localhost:3000"));
-            config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
-            config.setAllowedHeaders(List.of("*"));
-            config.setAllowCredentials(true);
-            return config;
-        }))
-			.csrf(csrf -> csrf.disable())
-			.authorizeHttpRequests(requests -> 
-			requests
-				.requestMatchers("/auth/register", "/auth/login", "/auth/authenticate").permitAll()
-				.requestMatchers("/user/**").permitAll()                            //hasRole("CUSTOMER")      
-				.requestMatchers("/region/**").permitAll()                            //hasRole("CUSTOMER")      
-				.requestMatchers("/tours/**").permitAll()                            //hasRole("CUSTOMER")      
-				.requestMatchers("/reviews/**").permitAll()                            //hasRole("CUSTOMER")      
-				
-				.requestMatchers("/admin/**").hasRole("ADMIN")
-				.requestMatchers("/uploads/**").permitAll()
-		    	.anyRequest().authenticated()
-		    )
-			.httpBasic(Customizer.withDefaults())
-			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-		return http.build();
+	    http
+	    .cors(cors -> cors.configurationSource(request -> {
+	        CorsConfiguration config = new CorsConfiguration();
+	        config.setAllowedOrigins(List.of("http://localhost:3000"));
+	        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+	        config.setAllowedHeaders(List.of("*"));
+	        config.setAllowCredentials(true);
+	        return config;
+	    }))
+	    .csrf(csrf -> csrf.disable())
+	    .authorizeHttpRequests(requests -> 
+	        requests.anyRequest().permitAll() // ✅ ALLOW ALL REQUESTS FOR TESTING
+	    )
+	    .httpBasic(Customizer.withDefaults())
+	    .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+	    
+	    return http.build();
 	}
+
 	
 }

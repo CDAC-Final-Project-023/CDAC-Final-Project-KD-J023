@@ -1,100 +1,145 @@
+import "chart.js/auto";
+import "./Analytics.css";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Doughnut } from "react-chartjs-2";
 
-// import "./ViewReports.css";
+import {
+  Bar,
+  BarChart,
+  Cell,
+  Line,
+  LineChart,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+  Legend,
+} from "recharts";
 
-const ViewReports = () => {
-  const [totalCollections, setTotalCollections] = useState(0);
-  const [ratings, setRatings] = useState([]);
-  const [bookings, setBookings] = useState([]);
+const Analytics = () => {
+  const [analytics, setAnalytics] = useState(null);
 
   useEffect(() => {
-    // Fetch total collections
-    fetch("/api/reports/collections")
-      .then((response) => response.json())
-      .then((data) => setTotalCollections(data.totalCollections))
-      .catch((error) => console.error("Error fetching total collections:", error));
-
-    // Fetch ratings
-    fetch("/api/reports/ratings")
-      .then((response) => response.json())
-      .then((data) => setRatings(data.ratings))
-      .catch((error) => console.error("Error fetching ratings:", error));
-
-    // Fetch bookings
-    fetch("/api/reports/bookings")
-      .then((response) => response.json())
-      .then((data) => setBookings(data.bookings))
-      .catch((error) => console.error("Error fetching bookings:", error));
+    fetchAnalytics();
   }, []);
 
+  const fetchAnalytics = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/admin/analytics");
+      setAnalytics(response.data);
+    } catch (error) {
+      console.error("Error fetching analytics:", error);
+    }
+  };
+
   return (
-    <div className="view-reports">
-      <h1>Admin View Reports</h1>
+    <div className="analytics-container">
+      <h2 className="analytics-title">📊 Admin Analytics Dashboard</h2>
 
-      <div className="report-section">
-        <h2>Total Collections</h2>
-        <div className="collection-card">
-          <h3>₹{totalCollections.toLocaleString()}</h3>
+      {analytics ? (
+        <div className="analytics-grid">
+          {/* Total Revenue */}
+          <div className="card">
+            <h3>Total Revenue (₹)</h3>
+            <p className="highlight-text">₹{analytics.totalRevenue?.toLocaleString() || "0"}</p>
+            <ResponsiveContainer width="100%" height={200}>
+              <Doughnut
+                data={{
+                  labels: ["Revenue"],
+                  datasets: [
+                    {
+                      data: [analytics.totalRevenue || 0, 500000],
+                      backgroundColor: ["#4CAF50", "#E0E0E0"],
+                    },
+                  ],
+                }}
+              />
+            </ResponsiveContainer>
+          </div>
+
+          {/* Total Bookings */}
+          <div className="card">
+            <h3>Total Bookings</h3>
+            <p className="highlight-text">{analytics.totalBookings}</p>
+            <ResponsiveContainer width="100%" height={200}>
+              <LineChart data={[{ name: "Bookings", value: analytics.totalBookings }]}>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Line type="monotone" dataKey="value" stroke="#2196F3" strokeWidth={3} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Total Reviews */}
+          <div className="card">
+            <h3>Total Reviews</h3>
+            <p className="highlight-text">{analytics.totalReviews}</p>
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={[{ name: "Reviews", value: analytics.totalReviews }]}>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="value" fill="#FF9800" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Most Booked Tours */}
+          <div className="card">
+            <h3>Most Booked Tours</h3>
+            <ResponsiveContainer width="100%" height={250}>
+              <BarChart
+                data={analytics.mostBookedTours.map(([tour, count]) => ({
+                  name: tour,
+                  value: count,
+                }))}
+              >
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="value" fill="#673AB7" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Top Rated Tours */}
+          <div className="card">
+            <h3>Top Rated Tours</h3>
+            <ResponsiveContainer width="100%" height={250}>
+              <PieChart>
+                <Pie
+                  data={analytics.topRatedTours.map(([tour, rating]) => ({
+                    name: tour,
+                    value: rating,
+                  }))}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  fill="#FF5722"
+                  label
+                >
+                  {analytics.topRatedTours.map((_, index) => (
+                    <Cell
+                      key={index}
+                      fill={["#FF5722", "#FFC107", "#8BC34A", "#03A9F4", "#9C27B0"][index % 5]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         </div>
-      </div>
-
-      <div className="report-section">
-        <h2>Ratings</h2>
-        {ratings.length > 0 ? (
-          <table className="ratings-table">
-            <thead>
-              <tr>
-                <th>Tour Name</th>
-                <th>Average Rating</th>
-                <th>Total Reviews</th>
-              </tr>
-            </thead>
-            <tbody>
-              {ratings.map((rating) => (
-                <tr key={rating.tourId}>
-                  <td>{rating.tourName}</td>
-                  <td>{rating.averageRating.toFixed(1)}</td>
-                  <td>{rating.totalReviews}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>No ratings available</p>
-        )}
-      </div>
-
-      <div className="report-section">
-        <h2>Bookings</h2>
-        {bookings.length > 0 ? (
-          <table className="bookings-table">
-            <thead>
-              <tr>
-                <th>Booking ID</th>
-                <th>Customer Name</th>
-                <th>Tour Name</th>
-                <th>Booking Date</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {bookings.map((booking) => (
-                <tr key={booking.id}>
-                  <td>{booking.id}</td>
-                  <td>{booking.customerName}</td>
-                  <td>{booking.tourName}</td>
-                  <td>{booking.bookingDate}</td>
-                  <td>{booking.status}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>No bookings available</p>
-        )}
-      </div>
+      ) : (
+        <div className="loading-spinner">Loading analytics...</div>
+      )}
     </div>
   );
 };
 
-export default ViewReports;
+export default Analytics;

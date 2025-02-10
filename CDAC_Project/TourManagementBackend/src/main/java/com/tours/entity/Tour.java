@@ -36,8 +36,6 @@ public class Tour extends BaseEntity {
     @JoinColumn(name = "city_id")
     private City city;
 
-    
-
     @ManyToOne
     @JoinColumn(name = "region_id")
     private Region region;

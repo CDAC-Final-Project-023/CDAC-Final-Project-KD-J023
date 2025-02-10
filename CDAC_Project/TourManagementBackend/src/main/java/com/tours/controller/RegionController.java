@@ -24,7 +24,6 @@ public class RegionController {
 		System.out.println("in ctor " + getClass());
 
 	}
-	
 	 @GetMapping()
 	    public ResponseEntity<List<RegionRespDTO>> getAllRegion() {
 	        List<RegionRespDTO> region = regionService.getAllRegions();

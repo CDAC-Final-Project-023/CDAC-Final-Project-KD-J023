@@ -1,194 +1,178 @@
+import "./ManageBookings.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const ManageBookings = () => {
-  const [bookings, setBookings] = useState([]);
-  const [editingBooking, setEditingBooking] = useState(null);
-  const [error, setError] = useState("");
+const ManageBooking = () => {
+    const [bookings, setBookings] = useState([]);
+    const [tours, setTours] = useState([]);
+    const [editBooking, setEditBooking] = useState(null);
 
-  // Fetch bookings data from the backend
-  useEffect(() => {
+    useEffect(() => {
+        fetchBookings();
+        fetchTours();
+    }, []);
+
     const fetchBookings = async () => {
-      try {
-        const response = await axios.get("/api/bookings"); // Replace with your backend endpoint
-        setBookings(response.data);
-      } catch (err) {
-        console.error("Error fetching bookings:", err);
-        setError("Failed to fetch bookings.");
-      }
+        try {
+            const response = await axios.get("http://localhost:8080/admin/bookings");
+            setBookings(response.data || []);
+        } catch (error) {
+            console.error("Error fetching bookings:", error);
+            setBookings([]);
+        }
     };
 
-    fetchBookings();
-  }, []);
+    const fetchTours = async () => {
+        try {
+            const response = await axios.get("http://localhost:8080/admin/tours");
+            setTours(response.data || []);
+        } catch (error) {
+            console.error("Error fetching tours:", error);
+            setTours([]);
+        }
+    };
 
-  // Handle approve booking
-  const handleApproveBooking = async (id) => {
-    try {
-      const response = await axios.put(`/api/bookings/${id}`, {
-        status: "Approved",
-      });
-      setBookings((prevBookings) =>
-        prevBookings.map((booking) =>
-          booking.id === id ? { ...booking, status: "Approved" } : booking
-        )
-      );
-    } catch (err) {
-      console.error("Error approving booking:", err);
-      setError("Failed to approve booking.");
-    }
-  };
+    const handleEditClick = (booking) => {
+        setEditBooking({ ...booking, tourId: booking.tourId });
+    };
 
-  // Handle cancel booking
-  const handleCancelBooking = async (id) => {
-    try {
-      const response = await axios.put(`/api/bookings/${id}`, {
-        status: "Cancelled",
-      });
-      setBookings((prevBookings) =>
-        prevBookings.map((booking) =>
-          booking.id === id ? { ...booking, status: "Cancelled" } : booking
-        )
-      );
-    } catch (err) {
-      console.error("Error cancelling booking:", err);
-      setError("Failed to cancel booking.");
-    }
-  };
+    const handleUpdateBooking = async () => {
+        if (!editBooking) return;
+        try {
+            await axios.put(`http://localhost:8080/admin/bookings/${editBooking.id}`, {
+                bookingDate: editBooking.bookingDate,
+                tourId: editBooking.tourId,
+            });
+            setEditBooking(null);
+            fetchBookings();
+        } catch (error) {
+            console.error("Error updating booking:", error);
+        }
+    };
 
-  // Handle edit booking
-  const handleEditBooking = async () => {
-    if (!editingBooking) return;
+    const handleApproveBooking = async (id) => {
+        try {
+            await axios.put(`http://localhost:8080/admin/bookings/${id}/approve`);
+            fetchBookings();
+        } catch (error) {
+            console.error("Error approving booking:", error);
+        }
+    };
 
-    try {
-      const response = await axios.put(`/api/bookings/${editingBooking.id}`, editingBooking);
-      setBookings((prevBookings) =>
-        prevBookings.map((booking) =>
-          booking.id === editingBooking.id ? response.data : booking
-        )
-      );
-      setEditingBooking(null); // Clear editing state
-      setError(""); // Clear error
-    } catch (err) {
-      console.error("Error editing booking:", err);
-      setError("Failed to update booking.");
-    }
-  };
+    const handleCancelBooking = async (id) => {
+        try {
+            await axios.put(`http://localhost:8080/admin/bookings/${id}/cancel`);
+            fetchBookings();
+        } catch (error) {
+            console.error("Error cancelling booking:", error);
+        }
+    };
 
-  // Handle delete booking
-  const handleDeleteBooking = async (id) => {
-    try {
-      await axios.delete(`/api/bookings/${id}`);
-      setBookings((prevBookings) =>
-        prevBookings.filter((booking) => booking.id !== id)
-      );
-    } catch (err) {
-      console.error("Error deleting booking:", err);
-      setError("Failed to delete booking.");
-    }
-  };
+    return (
+        <div className="p-6">
+            <h2 className="text-2xl font-semibold mb-4">Manage Bookings</h2>
+            <table className="w-full border-collapse border border-gray-300">
+                <thead className="bg-black text-white h-12 border border-white">
+                    <tr>
+                        <th className="border border-white p-4">Booking ID</th>
+                        <th className="border border-white p-4">User Name</th>
+                        <th className="border border-white p-4">Tour Name</th>
+                        <th className="border border-white p-4">Booking Date</th>
+                        <th className="border border-white p-4">Status</th>
+                        <th className="border border-white p-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {bookings.length > 0 ? (
+                        bookings.map((booking) => (
+                            <tr key={booking.id} className="text-center">
+                                <td className="border p-2">{booking.id}</td>
+                                <td className="border p-2">{booking.userName || "Unknown User"}</td>
+                                <td className="border p-2">{booking.tourName || "Unknown Tour"}</td>
+                                <td className="border p-2">{booking.bookingDate || "N/A"}</td>
+                                <td className="border p-2">{booking.status || "N/A"}</td>
+                                <td className="border p-2 flex justify-center space-x-2">
+                                    <button
+                                        onClick={() => handleEditClick(booking)}
+                                        className="bg-blue-500 text-white px-3 py-1 rounded"
+                                    >
+                                        Modify
+                                    </button>
+                                    <button
+                                        onClick={() => handleApproveBooking(booking.id)}
+                                        className="bg-green-500 text-white px-3 py-1 rounded"
+                                    >
+                                        Approve
+                                    </button>
+                                    <button
+                                        onClick={() => handleCancelBooking(booking.id)}
+                                        className="bg-red-500 text-white px-3 py-1 rounded"
+                                    >
+                                        Cancel
+                                    </button>
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="6" className="border p-2 text-center">
+                                No bookings found
+                            </td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
 
-  // Handle field change when editing a booking
-  const handleFieldChange = (e, field) => {
-    setEditingBooking({ ...editingBooking, [field]: e.target.value });
-  };
-
-  return (
-    <div>
-      <h3>Manage Bookings</h3>
-      {error && <div className="error-message">{error}</div>}
-      <h4>Existing Bookings</h4>
-      <table>
-        <thead>
-          <tr>
-            <th>Customer Name</th>
-            <th>Tour Name</th>
-            <th>Booking Date</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {bookings.length > 0 ? (
-            bookings.map((booking) => (
-              <tr key={booking.id}>
-                <td>{booking.customerName}</td>
-                <td>{booking.tourName}</td>
-                <td>{booking.bookingDate}</td>
-                <td>{booking.status}</td>
-                <td>
-                  {booking.status !== "Cancelled" && booking.status !== "Approved" && (
-                    <>
-                      <button
-                        className="approve-btn"
-                        onClick={() => handleApproveBooking(booking.id)}
-                      >
-                        Approve
-                      </button>
-                      <button
-                        className="cancel-btn"
-                        onClick={() => handleCancelBooking(booking.id)}
-                      >
-                        Cancel
-                      </button>
-                    </>
-                  )}
-                  {booking.status !== "Cancelled" && (
-                    <button
-                      className="edit-btn"
-                      onClick={() => setEditingBooking(booking)}
-                    >
-                      Edit
-                    </button>
-                  )}
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleDeleteBooking(booking.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="5">No bookings available</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-
-      {editingBooking && (
-        <div>
-          <h3>Edit Booking</h3>
-          <input
-            type="text"
-            placeholder="Customer Name"
-            value={editingBooking.customerName}
-            onChange={(e) =>
-              handleFieldChange(e, "customerName")
-            }
-          />
-          <input
-            type="text"
-            placeholder="Tour Name"
-            value={editingBooking.tourName}
-            onChange={(e) =>
-              handleFieldChange(e, "tourName")
-            }
-          />
-          <input
-            type="date"
-            placeholder="Booking Date"
-            value={editingBooking.bookingDate}
-            onChange={(e) =>
-              handleFieldChange(e, "bookingDate")
-            }
-          />
-          <button onClick={handleEditBooking}>Update Booking</button>
+            {editBooking && (
+                <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                        <h3 className="text-lg font-semibold mb-4">Modify Booking</h3>
+                        <label className="block mb-2">Booking Date:</label>
+                        <input
+                            type="date"
+                            value={editBooking.bookingDate}
+                            onChange={(e) =>
+                                setEditBooking({ ...editBooking, bookingDate: e.target.value })
+                            }
+                            className="border p-2 rounded w-full mb-4"
+                        />
+                        <label className="block mb-2">Select Tour:</label>
+                        <select
+                            value={editBooking.tourId || ""}
+                            onChange={(e) =>
+                                setEditBooking({
+                                    ...editBooking,
+                                    tourId: parseInt(e.target.value),
+                                })
+                            }
+                            className="border p-2 rounded w-full mb-4"
+                        >
+                            <option value="" disabled>Select a Tour</option>
+                            {tours.map((tour) => (
+                                <option key={tour.id} value={tour.id}>
+                                    {tour.title}
+                                </option>
+                            ))}
+                        </select>
+                        <div className="flex justify-end space-x-2">
+                            <button
+                                onClick={handleUpdateBooking}
+                                className="bg-green-500 text-white px-4 py-2 rounded"
+                            >
+                                Save Changes
+                            </button>
+                            <button
+                                onClick={() => setEditBooking(null)}
+                                className="bg-gray-500 text-white px-4 py-2 rounded"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
-      )}
-    </div>
-  );
+    );
 };
 
-export default ManageBookings;
+export default ManageBooking;

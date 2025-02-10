@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tours.dao.ReviewDao;
 import com.tours.DTO.*;
+import com.tours.entity.ApiResponse;
 import com.tours.entity.Review;
 
 
@@ -36,7 +37,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getReviewsByTourId(Long tourId) {  // New method
+    public List<Review> getReviewsByTourId(Long tourId) {  
         return reviewDao.findByTourId(tourId);
     }
    

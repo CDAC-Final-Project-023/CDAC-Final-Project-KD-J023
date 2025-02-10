@@ -40,8 +40,9 @@ const StarRating = ({ tourId, userId }) => {
   };
 
   return (
-    <div className="star-rating container">
+    <div>
       <ToastContainer />
+    <div className="star-rating container">
       {isSubmitted ? (
         <p>Review submitted</p>
       ) : (
@@ -81,6 +82,7 @@ const StarRating = ({ tourId, userId }) => {
           </form>
         </>
       )}
+    </div>
     </div>
   );
 };

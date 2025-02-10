@@ -156,6 +156,7 @@ const ManageTours = () => {
 
                 <input type="file" onChange={handleImageChange} />
                 <button type="submit">{editingTourId ? "Update Tour" : "Add Tour"}</button>
+                
             </form>
 
             <h2>Available Active Tours</h2>
@@ -184,7 +185,11 @@ const ManageTours = () => {
                             <td>{tour.region}</td>
                             <td>{tour.city}</td>
                             <td>
+                                
                                 <img src={`${API_BASE_URL}/uploads/${tour.photoPath}`} alt={tour.title} width="100" />
+                    
+
+                    
                             </td>
                             <td className="actions">
                                 <button onClick={() => handleChangeStatus(tour.id, tour.status)}>

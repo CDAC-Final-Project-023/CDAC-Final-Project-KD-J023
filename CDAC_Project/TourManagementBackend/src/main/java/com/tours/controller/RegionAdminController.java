@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tours.DTO.RegionRespDTO;
 import com.tours.entity.Region;
-import com.tours.service.RegionService;
+import com.tours.service.RegionAdminService;
 
 @RestController
 @RequestMapping
 @CrossOrigin(origins = "http://localhost:3000")
-public class RegionController {
+public class RegionAdminController {
 
 	@Autowired
-	private RegionService regionService;
+	private RegionAdminService regionService;
 
-	public RegionController() {
+	public RegionAdminController() {
 		System.out.println("in ctor " + getClass());
 
 	}

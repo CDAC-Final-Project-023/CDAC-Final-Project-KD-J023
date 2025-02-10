@@ -6,7 +6,7 @@ import com.tours.dao.ToursDao;
 import com.tours.entity.Booking;
 import com.tours.entity.BookingStatus;
 import com.tours.entity.Tour;
-import com.tours.service.BookingService;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class BookingServiceImpl implements BookingService {
+public class BookingAdminServiceImpl implements BookingAdminService {
 
     @Autowired
     private BookingDao bookingDao;
@@ -33,7 +33,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<BookingDTO> getAllBookings() {
         return bookingDao.findAll().stream()
-                .map(this::convertToDto) // Convert to DTO with tour & user names
+                .map(this::convertToDto) 
                 .collect(Collectors.toList());
     }
 
@@ -84,8 +84,8 @@ public class BookingServiceImpl implements BookingService {
 
     private BookingDTO convertToDto(Booking booking) {
         BookingDTO dto = modelMapper.map(booking, BookingDTO.class);
-        dto.setTourName(booking.getTour().getTitle()); // Get tour name
-        dto.setUserName(booking.getUser().getFirstName() + " " + booking.getUser().getLastName()); // Get full user name
+        dto.setTourName(booking.getTour().getTitle()); 
+        dto.setUserName(booking.getUser().getFirstName() + " " + booking.getUser().getLastName()); 
         return dto;
     }
 }

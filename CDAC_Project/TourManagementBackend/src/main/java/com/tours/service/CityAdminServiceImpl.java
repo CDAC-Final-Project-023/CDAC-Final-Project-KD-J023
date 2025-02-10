@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CityServiceImpl implements CityService {
+public class CityAdminServiceImpl implements CityAdminService {
 
 	@Autowired
 	private CityDao cityDAO;

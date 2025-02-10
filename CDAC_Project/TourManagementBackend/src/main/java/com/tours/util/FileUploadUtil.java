@@ -7,7 +7,7 @@ import java.nio.file.*;
 
 public class FileUploadUtil {
 
-    private static final String UPLOAD_DIR = "src/main/resources/uploads/";
+    private static final String UPLOAD_DIR = "src/main/resources/static/uploads/";
 
     // Save file and return the filename
     public static String saveFile(MultipartFile file) throws IOException {
@@ -28,7 +28,6 @@ public class FileUploadUtil {
 
         return fileName;
     }
-
 
     public static String getImageUrl(String fileName) {
         return "/uploads/" + fileName; 

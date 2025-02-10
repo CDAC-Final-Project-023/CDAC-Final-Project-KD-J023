@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tours.DTO.CityDTO;
-import com.tours.service.CityService;
+import com.tours.service.CityAdminService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/cities/admin")
 @CrossOrigin(origins = "http://localhost:3000")
-public class CityController {
+public class CityAdminController {
 
 	@Autowired
-	private CityService cityService;
+	private CityAdminService cityService;
 
 	@GetMapping("/by-region/{regionId}")
 	public ResponseEntity<List<CityDTO>> getCitiesByRegion(@PathVariable Long regionId) {

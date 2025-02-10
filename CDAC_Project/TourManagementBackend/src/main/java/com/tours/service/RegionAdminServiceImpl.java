@@ -16,7 +16,7 @@ import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class RegionServiceImpl implements RegionService {
+public class RegionAdminServiceImpl implements RegionAdminService {
 	
 
 	@Autowired

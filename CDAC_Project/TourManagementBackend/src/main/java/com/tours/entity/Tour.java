@@ -42,7 +42,7 @@ public class Tour extends BaseEntity {
     @Column(length = 255)
     private String photoPath;
     
-    public String getFullImagePath() {
-        return (photoPath == null) ? null : "/uploads/" + photoPath;
-    }
+//    public String getFullImagePath() {
+//        return (photoPath == null) ? null : "/uploads/" + photoPath;
+//    }
 }

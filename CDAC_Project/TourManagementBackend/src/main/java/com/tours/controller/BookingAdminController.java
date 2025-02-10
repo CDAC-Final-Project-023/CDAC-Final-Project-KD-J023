@@ -1,23 +1,22 @@
 package com.tours.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.tours.DTO.BookingDTO;
-import com.tours.service.BookingService;
+import com.tours.service.BookingAdminService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/admin/bookings")
 @CrossOrigin(origins = "http://localhost:3000")
-public class BookingController {
+public class BookingAdminController {
 
-    private final BookingService bookingService;
+	@Autowired
+    private BookingAdminService bookingService;
 
-    public BookingController(BookingService bookingService) {
-        this.bookingService = bookingService;
-    }
 
     @GetMapping
     public ResponseEntity<List<BookingDTO>> getAllBookings() {

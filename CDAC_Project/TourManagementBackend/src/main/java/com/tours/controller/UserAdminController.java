@@ -4,17 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.tours.DTO.UserDTO;
-import com.tours.service.UserService;
+import com.tours.service.UserAdminService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("admin/users")
 @CrossOrigin(origins = "http://localhost:3000")
-public class UserController {
+public class UserAdminController {
 
     @Autowired
-    private UserService userService;
+    private UserAdminService userService;
 
     @GetMapping
     public List<UserDTO> getUsers() {

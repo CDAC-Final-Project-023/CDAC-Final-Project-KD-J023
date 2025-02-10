@@ -12,17 +12,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.tours.DTO.TourRequestDTO;
 import com.tours.DTO.TourResponseDTO;
-import com.tours.service.ToursService;
+import com.tours.service.ToursAdminService;
 
 @RestController
 @RequestMapping("/admin/tours")
 @CrossOrigin(origins = "http://localhost:3000")
-public class ToursController {
+public class ToursAdminController {
 
  
 
     @Autowired
-    private ToursService tourService;
+    private ToursAdminService tourService;
     
     @GetMapping
     public List<TourResponseDTO> getAllTours(@RequestParam(required = false) String keyword) {

@@ -20,7 +20,7 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    // Any user should be able to view all reviews
+ 
     @GetMapping("/view")
     public ResponseEntity<List<?>> viewReviews() {
         return ResponseEntity.ok(reviewService.getAllReviews());

@@ -101,7 +101,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class ToursServiceImpl implements ToursService {
+public class ToursAdminServiceImpl implements ToursAdminService {
 
 	@Autowired
 	private ToursDao toursDao;

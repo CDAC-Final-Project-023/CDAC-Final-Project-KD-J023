@@ -6,7 +6,7 @@ import com.tours.DTO.BookingDTO;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface BookingService {
+public interface BookingAdminService {
     List<BookingDTO> getAllBookings();
     BookingDTO approveBooking(Long bookingId);
     BookingDTO modifyBooking(Long bookingId, LocalDate newDate);

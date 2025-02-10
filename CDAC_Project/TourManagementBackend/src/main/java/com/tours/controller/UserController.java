@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -19,6 +20,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tours.DTO.ApiResponse;
 import com.tours.DTO.Credentials;
 import com.tours.DTO.LoginResponse;
+import com.tours.DTO.UserResponseDTO;
+import com.tours.DTO.UserUpdateDTO;
 import com.tours.entity.User;
 import com.tours.entity.UserRole;
 import com.tours.entity.UserStatus;
@@ -107,6 +110,18 @@ public class UserController {
 		        return ResponseEntity.status(401).body(new ApiResponse("Invalid credentials"));
 		    }
 	}
+	
+	@GetMapping("/user/{userId}")
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long userId) {
+        UserResponseDTO user = userService.getUserById(userId);
+        return ResponseEntity.ok(user);
+    }
+	
+	@PutMapping("/user/update/{userId}")
+    public ResponseEntity<String> updateUser(@PathVariable Long userId, @RequestBody UserUpdateDTO userUpdateDTO) {
+        userService.updateUser(userId, userUpdateDTO);
+        return ResponseEntity.ok("User updated successfully.");
+    }
 	
 	@GetMapping("tour/{id}/photo")
     public ResponseEntity<String> getUserPhoto(@PathVariable Long id) {

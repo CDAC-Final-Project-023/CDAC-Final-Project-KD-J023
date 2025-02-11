@@ -1,6 +1,7 @@
 package com.tours.service;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,8 @@ import com.tours.dao.BookingDao;
 import com.tours.dao.TouristDao;
 import com.tours.dao.ToursDao;
 import com.tours.dao.UserDao;
+import com.tours.email.EmailService;
+import com.tours.email.ReceiptGeneratorService;
 import com.tours.DTO.*;
 
 import com.tours.entity.Booking;
@@ -40,6 +43,12 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private ModelMapper modelMapper;
+    
+    @Autowired
+    private ReceiptGeneratorService receiptGeneratorService;
+
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public BookingRespDTO createBooking(BookingReqDTO bookingReqDTO) {
@@ -80,7 +89,27 @@ public class BookingServiceImpl implements BookingService {
 
             touristDao.saveAll(tourists);
         }
+        
+        List<Tourist> members =touristDao.findByBooking(savedBooking);
+        
+        String[][] touristDetails = new String[members.size()][3];
+        for (int i = 0; i < members.size(); i++) {
+            touristDetails[i][0] = members.get(i).getName();
+            touristDetails[i][1] = String.valueOf(members.get(i).getAge());
+            touristDetails[i][2] = members.get(i).getGender();
+        }
 
+        // Format booking date
+        String formattedBookingDate = savedBooking.getCreatedAt().toLocalDate().toString();
+
+
+        // Generate receipt PDF
+        byte[] receiptPdf = receiptGeneratorService.generateReceipt(user.getFirstName(),user.getLastName(),user.getEmail()
+        															,user.getMobileNumber(),tour.getTitle(),tour.getDescription()
+        															,booking.getTotalAmount(),formattedBookingDate,booking.getCount(),touristDetails);
+
+        // Send email with receipt
+        emailService.sendReceiptEmail(user.getEmail(), user.getFirstName(), totalAmount, tour.getTitle(), receiptPdf);
         return modelMapper.map(savedBooking, BookingRespDTO.class);
     }
 	

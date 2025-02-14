@@ -7,6 +7,8 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import Navbar from "../components/navbar/BetaNav";
 import Tejas from "../images/members/Tejas.jpg";
 import Srushti from "../images/members/Srushti.jpg";
+import Sanket from "../images/members/Sanket.jpg";
+import Anay from "../images/members/Anay.jpg";
 const AboutUs = () => {
   return (
     <div style={{ marginTop: "100px" }}>
@@ -98,7 +100,6 @@ const AboutUs = () => {
         <div className="text-center my-5">
           <h2 className="fw-bold">Meet Our Team</h2>
           <p className="text-muted">
-            Passionate travel experts guiding your journeys
           </p>
         </div>
         <Row className="text-center g-4">
@@ -106,7 +107,7 @@ const AboutUs = () => {
           {/* g-4 reduces space between columns */}
           <Col md={6}>
             <img
-              src="https://source.unsplash.com/200x200/?person,man"
+              src={Anay}
               alt="Team Member"
               className="rounded-circle shadow mb-3 team-member-img"
             />
@@ -134,7 +135,7 @@ const AboutUs = () => {
           </Col>
           <Col md={6}>
             <img
-              src="https://source.unsplash.com/200x200/?person,traveler"
+              src={Sanket}
               alt="Team Member"
               className="rounded-circle shadow mb-3 team-member-img"
             />

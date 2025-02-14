@@ -1,0 +1,69 @@
+/* General Styling */
+.analytics-container {
+    padding: 20px;
+    background-color: #f4f4f9;
+    min-height: 100vh;
+  }
+  
+  .analytics-title {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Grid Layout */
+  .analytics-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  /* Responsive Layout */
+  @media (min-width: 768px) {
+    .analytics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .analytics-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  /* Cards */
+  .card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card h3 {
+    font-size: 1.25rem;
+    color: #555;
+  }
+  
+  .highlight-text {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4CAF50;
+    margin-bottom: 10px;
+  }
+  
+  /* Loading Spinner */
+  .loading-spinner {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #666;
+    padding: 20px;
+  }
+  

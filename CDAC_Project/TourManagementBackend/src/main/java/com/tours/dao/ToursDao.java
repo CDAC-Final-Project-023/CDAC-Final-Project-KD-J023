@@ -1,6 +1,7 @@
 package com.tours.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,5 +16,7 @@ public interface ToursDao extends JpaRepository<Tour, Long> {
 
     @Query("SELECT t FROM Tour t WHERE t.status = :status")
     List<Tour> findByStatus(@Param("status") TourStatus status);
-	
+
+	List<Tour> findByTitleContainingIgnoreCase(String keyword);
+
 }

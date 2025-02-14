@@ -29,7 +29,7 @@ public class ReviewController {
    
     @PostMapping("/add")
     public ResponseEntity<?> addReview(@RequestBody @Valid ReviewDTO reviewDTO) {
-    	System.out.println(reviewDTO);
+    
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(reviewService.addReview(reviewDTO));
     }

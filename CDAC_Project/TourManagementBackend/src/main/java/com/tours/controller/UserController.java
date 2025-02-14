@@ -24,7 +24,6 @@ import com.tours.entity.UserRole;
 import com.tours.entity.UserStatus;
 import com.tours.security.JwtUtil;
 import com.tours.service.UserService;
-
 import io.jsonwebtoken.io.IOException;
 
 @RestController

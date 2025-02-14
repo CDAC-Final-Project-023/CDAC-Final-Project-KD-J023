@@ -1,8 +1,10 @@
 package com.tours.DTO;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.*;
 
 @Data
+@Getter
+@Setter
 public class ReviewDTO extends BaseDTO{
     private float rating;
     private String comment;

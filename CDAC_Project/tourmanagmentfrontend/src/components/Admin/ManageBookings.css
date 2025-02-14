@@ -1,46 +1,139 @@
-/* /src/screens/AdminDashboardPage/AdminDashboard.css */
-.error-message {
-  color: red;
-  font-size: 14px;
-  margin-bottom: 10px;
+/* ManageBookings.css */
+
+/* General styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
 }
 
-button.edit-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  margin-right: 10px;
+/* Container */
+.p-6 {
+  padding: 24px;
+  max-width: 1200px;
+  margin: auto;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-button.delete-btn {
-  background-color: #ff3333;
-  color: white;
-  border: none;
+/* Heading */
+h2 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-button:hover {
-  opacity: 0.8;
-}
-
+/* Table */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  background: white;
+  overflow-x: auto;
 }
 
-table, th, td {
-  border: 1px solid #ddd;
+thead {
+  background-color: #f2f2f2;  /* Light gray background */
+  color: black !important;    /* Ensuring text is black */
+  font-weight: bold;
 }
 
 th, td {
-  padding: 10px;
-  text-align: left;
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ddd;
 }
 
 th {
-  background-color: #f4f4f4;
+  background-color: #e0e0e0; /* Slightly darker background for visibility */
+  color: black;  /* Ensures black text */
 }
 
-select {
-  margin-top: 10px;
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Buttons */
+button {
+  cursor: pointer;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: 0.3s;
+  color: white;
+}
+
+.bg-blue-500 {
+  background-color: #007bff;
+}
+
+.bg-green-500 {
+  background-color: #28a745;
+}
+
+.bg-red-500 {
+  background-color: #dc3545;
+}
+
+.bg-gray-500 {
+  background-color: #6c757d;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+/* Modal Styling */
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.bg-white {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Input and Select Fields */
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+input:focus, select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  th, td {
+      padding: 8px;
+      font-size: 14px;
+  }
+  .p-6 {
+      padding: 16px;
+  }
+  h2 {
+      font-size: 1.5rem;
+  }
 }

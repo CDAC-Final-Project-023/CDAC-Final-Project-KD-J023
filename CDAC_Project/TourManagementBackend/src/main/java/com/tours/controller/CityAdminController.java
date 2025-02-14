@@ -16,7 +16,7 @@ import com.tours.service.CityAdminService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cities/admin")
+@RequestMapping("/cities")
 @CrossOrigin(origins = "http://localhost:3000")
 public class CityAdminController {
 

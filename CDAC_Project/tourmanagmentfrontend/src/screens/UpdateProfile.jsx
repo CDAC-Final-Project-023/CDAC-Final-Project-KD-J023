@@ -1,122 +1,167 @@
-import "react-toastify/dist/ReactToastify.css";
 import "./UpdateProfile.css";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import Navbar from "../components/navbar/BetaNav";
-
-const UpdateProfile = () => {
-  const [formData, setFormData] = useState({
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import  Navbar  from "../components/navbar/BetaNav";
+const UserProfile = () => {
+  const [user, setUser] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    password: "",
+    mobile: "",
+    newPassword: "",
     confirmPassword: "",
-    profilePhoto: null,
   });
 
-  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  // Fetch logged-in user details from the backend
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/auth/user/${userId}", {
+        withCredentials: true,
+      }) // Adjust endpoint as needed
+      .then((response) => {
+        setUser({
+          firstName: response.data.firstName,
+          lastName: response.data.lastName,
+          email: response.data.email,
+          mobile: response.data.mobile || "",
+          newPassword: "",
+          confirmPassword: "",
+        });
+      })
+      .catch((err) => setError("Failed to fetch user details"));
+  }, []);
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData({
-      ...formData,
-      [name]: files ? files[0] : value,
-    });
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const { firstName, lastName, email, password, confirmPassword } = formData;
 
-    if (!firstName || !lastName || !email) {
-      toast.error("First name, last name, and email are required!");
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(user.email)) {
+      setError("Invalid email format");
       return;
     }
 
-    if (password && password !== confirmPassword) {
-      toast.error("Passwords do not match!");
-      return;
+    // Validate passwords (only if entered)
+    if (user.newPassword || user.confirmPassword) {
+      if (user.newPassword !== user.confirmPassword) {
+        setError("Passwords do not match");
+        return;
+      }
     }
 
-    toast.success("Profile updated successfully!");
-    setTimeout(() => navigate("/dashboard"), 1500);
+    // Send update request
+    try {
+      const response = await axios.put(
+        "http://localhost:8080/auth/user/update/${userId}",
+        {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          mobile: user.mobile || null, // Send null if mobile is empty
+          newPassword: user.newPassword || null, // Update password only if provided
+        },
+        { withCredentials: true }
+      );
+
+      setMessage(response.data.message);
+      setError("");
+    } catch (err) {
+      setError("Failed to update profile");
+    }
   };
 
   return (
-    <div className="update-profile-container">
-      <Navbar />
-      <div className="update-profile-card">
-        <div className="update-profile-right">
-          <h2 className="update-profile-form-title">Update Profile</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="firstName">First Name</label>
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                placeholder="Enter your first name"
-                value={formData.firstName}
-                onChange={handleChange}
-                required
-              />
-            </div>
+    
+    <div className="container mx-auto max-w-lg mt-10 p-6 bg-white shadow-md rounded-lg">
+      <h2 className="text-2xl font-semibold text-center mb-4">User Profile</h2>
 
-            <div className="form-group">
-              <label htmlFor="lastName">Last Name</label>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                placeholder="Enter your last name"
-                value={formData.lastName}
-                onChange={handleChange}
-                required
-              />
-            </div>
+      {message && <p className="text-green-600 text-center">{message}</p>}
+      {error && <p className="text-red-600 text-center">{error}</p>}
 
-            <div className="form-group">
-              <label htmlFor="password">New Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Enter new password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Confirm your password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="profilePhoto">Profile Photo</label>
-              <input
-                type="file"
-                id="profilePhoto"
-                name="profilePhoto"
-                onChange={handleChange}
-              />
-            </div>
-
-            <button type="submit" className="update-profile-btn">Update Profile</button>
-          </form>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-gray-700">First Name</label>
+          <input
+            type="text"
+            name="firstName"
+            value={user.firstName}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
         </div>
-      </div>
-      <ToastContainer />
+
+        <div>
+          <label className="block text-gray-700">Last Name</label>
+          <input
+            type="text"
+            name="lastName"
+            value={user.lastName}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-gray-700">Email</label>
+          <input
+            type="email"
+            name="email"
+            value={user.email}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-gray-700">Mobile (Optional)</label>
+          <input
+            type="tel"
+            name="mobile"
+            value={user.mobile}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+        </div>
+
+        <div>
+          <label className="block text-gray-700">New Password (Optional)</label>
+          <input
+            type="password"
+            name="newPassword"
+            value={user.newPassword}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+        </div>
+
+        <div>
+          <label className="block text-gray-700">Confirm Password</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            value={user.confirmPassword}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+          Save
+        </button>
+      </form>
     </div>
   );
 };
 
-export default UpdateProfile;
+export default UserProfile;

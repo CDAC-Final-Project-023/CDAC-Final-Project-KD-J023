@@ -1,7 +1,7 @@
 import "chart.js/auto";
 import "./Analytics.css";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../context/axiosInstance";
 import { Doughnut } from "react-chartjs-2";
 
 import {
@@ -28,7 +28,7 @@ const Analytics = () => {
 
   const fetchAnalytics = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/admin/analytics");
+      const response = await axiosInstance.get("/analytics");
       setAnalytics(response.data);
     } catch (error) {
       console.error("Error fetching analytics:", error);
@@ -44,7 +44,9 @@ const Analytics = () => {
           {/* Total Revenue */}
           <div className="card">
             <h3>Total Revenue (₹)</h3>
-            <p className="highlight-text">₹{analytics.totalRevenue?.toLocaleString() || "0"}</p>
+            <p className="highlight-text">
+              ₹{analytics.totalRevenue?.toLocaleString() || "0"}
+            </p>
             <ResponsiveContainer width="100%" height={200}>
               <Doughnut
                 data={{
@@ -65,11 +67,17 @@ const Analytics = () => {
             <h3>Total Bookings</h3>
             <p className="highlight-text">{analytics.totalBookings}</p>
             <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={[{ name: "Bookings", value: analytics.totalBookings }]}>
+              <LineChart
+                data={[{ name: "Bookings", value: analytics.totalBookings }]}>
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
-                <Line type="monotone" dataKey="value" stroke="#2196F3" strokeWidth={3} />
+                <Line
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#2196F3"
+                  strokeWidth={3}
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -79,7 +87,8 @@ const Analytics = () => {
             <h3>Total Reviews</h3>
             <p className="highlight-text">{analytics.totalReviews}</p>
             <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={[{ name: "Reviews", value: analytics.totalReviews }]}>
+              <BarChart
+                data={[{ name: "Reviews", value: analytics.totalReviews }]}>
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
@@ -96,8 +105,7 @@ const Analytics = () => {
                 data={analytics.mostBookedTours.map(([tour, count]) => ({
                   name: tour,
                   value: count,
-                }))}
-              >
+                }))}>
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
@@ -120,12 +128,15 @@ const Analytics = () => {
                   cy="50%"
                   outerRadius={80}
                   fill="#FF5722"
-                  label
-                >
+                  label>
                   {analytics.topRatedTours.map((_, index) => (
                     <Cell
                       key={index}
-                      fill={["#FF5722", "#FFC107", "#8BC34A", "#03A9F4", "#9C27B0"][index % 5]}
+                      fill={
+                        ["#FF5722", "#FFC107", "#8BC34A", "#03A9F4", "#9C27B0"][
+                          index % 5
+                        ]
+                      }
                     />
                   ))}
                 </Pie>

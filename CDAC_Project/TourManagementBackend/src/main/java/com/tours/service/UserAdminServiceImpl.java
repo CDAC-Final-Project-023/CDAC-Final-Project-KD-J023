@@ -19,7 +19,7 @@ public class UserAdminServiceImpl implements UserAdminService {
 
 	@Override
 	public List<UserDTO> getAllUsers() {
-		return userDao.findAll().stream().filter(user -> !user.isDeleted())
+		return userDao.findAll().stream().filter(user -> user.getStatus() == UserStatus.ACTIVE)
 				.map(user -> new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),
 						user.getMobileNumber(), user.getRole().toString(), user.getStatus().toString()))
 				.collect(Collectors.toList());
@@ -46,7 +46,7 @@ public class UserAdminServiceImpl implements UserAdminService {
 	public void softDeleteUser(Long id) {
 		User user = userDao.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
 
-		user.setDeleted(true);
+		user.setStatus(UserStatus.BLOCKED);
 		userDao.save(user);
 	}
 }

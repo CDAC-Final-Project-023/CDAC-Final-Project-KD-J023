@@ -2,37 +2,39 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { AuthContext } from "../../context/authContext";
-import { capitalizeFirstLetter } from "../../utils/formatName"; 
-import { config } from "../../services/config"; 
-import "./BetaNav.css"; 
-import defaultuserlogo from "../../images/euser.png"; 
-import Logout from "../../context/Logout"; 
+import { capitalizeFirstLetter } from "../../utils/formatName";
+import { config } from "../../services/config";
+import "./BetaNav.css";
+import defaultuserlogo from "../../images/euser.png";
+import Logout from "../../context/Logout";
 
 const BetaNav = () => {
-  const { user} = useContext(AuthContext); 
+  const { user } = useContext(AuthContext);
   const [isExpanded, setIsExpanded] = useState(false);
   const navbarRef = useRef(null);
   const [userName, setUserName] = useState("");
   const [userPhoto, setUserPhoto] = useState("");
 
   useEffect(() => {
-    const token = sessionStorage.getItem("jwtToken");
+    const token = sessionStorage.getItem("user");
     if (token) {
       const decodedToken = jwtDecode(token);
       if (decodedToken.name) {
-        setUserName(capitalizeFirstLetter(decodedToken.name)); 
+        setUserName(capitalizeFirstLetter(decodedToken.name));
       }
 
-      if (decodedToken.photo) {
+      if (decodedToken.photo && decodedToken.photo !== "null") {
         const photoUrl = `${config.serverUrl}/uploads/${decodedToken.photo}`;
         setUserPhoto(photoUrl);
+      } else {
+        setUserPhoto(""); // Set to empty string if photo is null
       }
     }
   }, []);
 
   const handleLogout = () => {
-     Logout();
- 
+    Logout();
+
     window.location.reload();
   };
 
@@ -52,7 +54,7 @@ const BetaNav = () => {
     }
   };
 
- useEffect(() => {
+  useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -146,8 +148,8 @@ const BetaNav = () => {
                     alt="User"
                     className="rounded-circle me-2"
                     style={{
-                      width: "30px",
-                      height: "30px",
+                      width: "40px",
+                      height: "40px",
                       borderRadius: "50%",
                     }}
                   />

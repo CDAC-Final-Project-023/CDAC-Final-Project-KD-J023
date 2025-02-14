@@ -32,46 +32,62 @@ public class JwtFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		// PRE-PROCESSING
 		// get jwt token from request header
-		String authHeader = request.getHeader("Authorization");
-		boolean validHeader = authHeader != null && authHeader.startsWith("Bearer");
-		Authentication auth = null;
-		if (validHeader) {
-		    String token = authHeader.replace("Bearer", "").trim();
-		    // Validate the JWT token and extract claims
-		    Claims claims = jwtUtil.validateToken(token);
-		    String subject = claims.getSubject();
+String authHeader = request.getHeader("Authorization");
+        System.out.println("Authheader" + authHeader);
+        //change : Added a check to ensure authHeader is valid before proceeding
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
-		    // Extract additional claims
-		    String photoPath = claims.get("photo", String.class); // Extract photo path from claims
+        String token = authHeader.replace("Bearer ", "").trim();
+        System.out.println("token " + token);
+        // Validate the token
+        Claims claims;
+        try {
+            claims = jwtUtil.validateToken(token);
+            System.out.println("claims" + claims);
+            //change : Added a null check after validating the token
+            if (claims == null) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+        } catch (Exception e) {
+            //change : Catching exceptions during token validation to prevent breaking the request flow
+            filterChain.doFilter(request, response);
+            return;
+        }
 
-		    // Verify user details
-		    long userId = Long.parseLong(subject);
-		    User user = userDao.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        // Extract user ID from JWT
+        String email = claims.getSubject();
+        System.out.println("Subject  using clims.getsubject90 :" + claims.getSubject());
+        // Fetch user details from DB
+        
+        User user = userDao.findByEmail(email);
+        //change : Added a check to ensure user is found before proceeding
+        if (user == null) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
-		    // Update the photo if necessary
-		    if (photoPath != null && !photoPath.isEmpty()) {
-		        if (user.getPhoto() == null) {
-		            // Create a new Photo object
-		            Photo photo = new Photo();
-		            photo.setPhotoPath(photoPath);
-		            user.setPhoto(photo);
-		        } else {
-		            // Update the existing Photo object
-		            user.getPhoto().setPhotoPath(photoPath);
-		        }
-		    }
+        // Extract photo path from claims and update user entity
+        String photoPath = claims.get("photo", String.class);
+        if (photoPath != null && !photoPath.isEmpty()) {
+            if (user.getPhoto() == null) {
+                user.setPhoto(new Photo());
+            }
+            user.getPhoto().setPhotoPath(photoPath);
+            //change : Saving user entity after updating the photo path
+            userDao.save(user);
+            
+        }
 
-		    // Create an authentication object
-		    auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-		}
+        // Set authentication in security context
+        Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(auth);
 
-	    // Attach authentication to the SecurityContext
-	    if (auth != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-	        SecurityContextHolder.getContext().setAuthentication(auth);
-	    }
-
-	    // Invoke the next filter in the chain
-	    filterChain.doFilter(request, response);
-	}
+        // Continue with the filter chain
+        filterChain.doFilter(request, response);
+    }
 
 }

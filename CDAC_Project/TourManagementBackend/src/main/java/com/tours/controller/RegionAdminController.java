@@ -15,21 +15,21 @@ import com.tours.entity.Region;
 import com.tours.service.RegionService;
 
 @RestController
-@RequestMapping
+@RequestMapping("/admin")
 @CrossOrigin(origins = "http://localhost:3000")
 public class RegionAdminController {
 
 	@Autowired
 	private RegionService regionService;
-
+	
 
 	
-	 @GetMapping("admin/regions")
+	 @GetMapping("/regions")
 	    public ResponseEntity<List<RegionRespDTO>> getAllRegion() {
 	        List<RegionRespDTO> region = regionService.getAllRegions();
 	        return ResponseEntity.ok(region);
 	    }
-	 @GetMapping("admin/regions/{id}")
+	 @GetMapping("/regions/{id}")
 		public Region getRegionById(@PathVariable Long id) {
 			return regionService.getRegionById(id);
 		}

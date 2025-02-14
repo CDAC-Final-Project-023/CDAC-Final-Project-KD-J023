@@ -58,13 +58,8 @@ public class SecurityConfig {
 			.authorizeHttpRequests(requests -> 
 			requests
 				.requestMatchers("/auth/register", "/auth/login", "/auth/authenticate").permitAll()
-				.requestMatchers("/user/**").permitAll()                            //hasRole("CUSTOMER")      
-				.requestMatchers("/region/**").permitAll()                            //hasRole("CUSTOMER")      
-				.requestMatchers("/tours/**").permitAll()                            //hasRole("CUSTOMER")      
-				.requestMatchers("/reviews/**").permitAll()                            //hasRole("CUSTOMER")      
-				.requestMatchers("/bookings/**").permitAll()                            //hasRole("CUSTOMER")      
-				.requestMatchers("/admin/**").hasRole("ADMIN")
-				.requestMatchers("/uploads/**").permitAll()
+				.requestMatchers("/user/**", "/region/**", "/tours/**", "/reviews/**", "/bookings/**", "/uploads/**").permitAll()
+                .requestMatchers("/admin/**").hasAuthority("ADMIN")
 		    	.anyRequest().authenticated()
 		    )
 			.httpBasic(Customizer.withDefaults())

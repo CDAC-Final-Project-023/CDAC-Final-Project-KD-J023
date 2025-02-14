@@ -50,6 +50,7 @@ public class JwtUtil {
 	        claims.put("photo", user.getPhoto() != null && user.getPhoto().getPhotoPath() != null 
 	                    ? user.getPhoto().getPhotoPath() 
 	                    : "/images/default.jpg");
+	        claims.put("role", user.getRole() !=null ? user.getRole() : "");
 	    }
 
 	    return Jwts.builder()
@@ -67,6 +68,7 @@ public class JwtUtil {
 	    String email;
 	    String name = "";
 	    String photo = "";
+	    String role = "";
 
 	    if (principal instanceof UserDetails) {
 	        UserDetails userDetails = (UserDetails) principal;
@@ -84,6 +86,14 @@ public class JwtUtil {
 	            } else {
 	                photo = "/images/default.jpg"; // Default photo
 	            }
+	            if(user.getRole()!=null )
+	            {
+	            	role = (user.getRole().name());
+	            }
+	            else
+	            {
+	            	role ="";
+	            }
 	        }
 	    } else {
 	        throw new IllegalArgumentException("Unknown principal type");
@@ -94,7 +104,7 @@ public class JwtUtil {
 	    
 	    claims.put("name", name);
 	    claims.put("photo", photo);
-	   
+	   claims.put("role", role);
 
 	    return Jwts.builder()
 	            .setClaims(claims)

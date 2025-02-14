@@ -9,7 +9,7 @@ import com.tours.DTO.AnalyticsResponseDTO;
 import com.tours.service.AnalyticsService;
 
 @RestController
-@RequestMapping("/api/admin/analytics")
+@RequestMapping("/admin/analytics")
 @CrossOrigin(origins = "http://localhost:3000")
 public class AdminAnalyticsController {
 

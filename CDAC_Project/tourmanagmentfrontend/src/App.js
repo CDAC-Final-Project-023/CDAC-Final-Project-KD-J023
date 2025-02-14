@@ -42,10 +42,7 @@ function App() {
           <Route path="/coming-soon"  element={<ComingSoon />} />       
           <Route path="/mybookings" element={<MyBookings/>} />
           <Route path="/AddReview" element={<AddReview/>} />
-        
-
         </Routes>
-
         <ToastContainer />
       </AuthContextProvider>
     </div>

@@ -1,7 +1,5 @@
-import axios from "axios";
+import axiosInstance from "../../context/axiosInstance";
 import { useEffect, useState } from "react";
-
-const API_BASE_URL = "http://localhost:8080/admin/users"; 
 
 const ManageUser = () => {
   const [users, setUsers] = useState([]);
@@ -15,7 +13,7 @@ const ManageUser = () => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(API_BASE_URL);
+      const response = await axiosInstance.get("/users");
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -26,25 +24,31 @@ const ManageUser = () => {
 
   const toggleUserStatus = async (userId, currentStatus) => {
     try {
-        const newStatus = currentStatus.toUpperCase() === "ACTIVE" ? "BLOCKED" : "ACTIVE";
-        await axios.put(`${API_BASE_URL}/${userId}/status?status=${newStatus}`);
-        setMessage(`User status updated to ${newStatus}`);
-        fetchUsers();
+      const newStatus =
+        currentStatus.toUpperCase() === "ACTIVE" ? "BLOCKED" : "ACTIVE";
+      await axiosInstance.put(`/users/${userId}/status?status=${newStatus}`);
+      setMessage(`User status updated to ${newStatus}`);
+      fetchUsers();
     } catch (error) {
-        setMessage("Failed to update status");
-        console.error("Error updating user status:", error.response?.data || error.message);
+      setMessage("Failed to update status");
+      console.error(
+        "Error updating user status:",
+        error.response?.data || error.message
+      );
     }
-};
-
+  };
 
   const softDeleteUser = async (userId) => {
     try {
-      await axios.delete(`${API_BASE_URL}/${userId}`);
+      await axiosInstance.delete(`/users/${userId}`);
       setMessage("User deleted successfully");
       fetchUsers();
     } catch (error) {
       setMessage("Failed to delete user");
-      console.error("Error deleting user:", error);
+      console.error(
+        "Error deleting user:",
+        error.response?.data || error.message
+      );
     }
   };
 
@@ -77,20 +81,30 @@ const ManageUser = () => {
                 <td>{user.email}</td>
                 <td>{user.mobileNumber}</td>
                 <td>
-                  <span className={`badge ${user.role === "ADMIN" ? "bg-danger" : "bg-primary"}`}>
+                  <span
+                    className={`badge ${
+                      user.role === "ADMIN" ? "bg-danger" : "bg-primary"
+                    }`}>
                     {user.role}
                   </span>
                 </td>
                 <td>
-                  <span className={`badge ${user.status === "ACTIVE" ? "bg-success" : "bg-warning"}`}>
+                  <span
+                    className={`badge ${
+                      user.status === "ACTIVE" ? "bg-success" : "bg-warning"
+                    }`}>
                     {user.status}
                   </span>
                 </td>
                 <td>
-                  <button className="btn btn-sm btn-warning me-2" onClick={() => toggleUserStatus(user.id, user.status)}>
+                  <button
+                    className="btn btn-sm btn-warning me-2"
+                    onClick={() => toggleUserStatus(user.id, user.status)}>
                     {user.status === "ACTIVE" ? "Block" : "Unblock"}
                   </button>
-                  <button className="btn btn-sm btn-danger" onClick={() => softDeleteUser(user.id)}>
+                  <button
+                    className="btn btn-sm btn-danger"
+                    onClick={() => softDeleteUser(user.id)}>
                     Delete
                   </button>
                 </td>

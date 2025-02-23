@@ -23,7 +23,7 @@ public class Collection {
     @Column(name = "payment_date", nullable = false)
     private LocalDate paymentDate;
 
-    // Constructors
+    
     public Collection() {}
 
     public Collection(Booking booking, BigDecimal amount, LocalDate paymentDate) {

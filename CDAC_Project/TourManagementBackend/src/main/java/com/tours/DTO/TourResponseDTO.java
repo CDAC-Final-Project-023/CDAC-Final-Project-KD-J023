@@ -1,5 +1,7 @@
 package com.tours.DTO;
 
+import com.tours.entity.TourStatus;
+
 import lombok.Data;
 
 @Data

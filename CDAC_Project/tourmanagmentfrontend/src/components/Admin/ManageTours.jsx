@@ -51,6 +51,8 @@ const ManageTours = () => {
             console.error('Error fetching cities:', error);
         }
     };
+    
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -125,6 +127,8 @@ const ManageTours = () => {
         }
     };
 
+
+
     const resetForm = () => {
         setTour({ title: '', description: '', price: '', status: 'ACTIVE', regionId: '', cityId: '', photoPath: '' });
         setImage(null);
@@ -170,7 +174,7 @@ const ManageTours = () => {
                         <th>Status</th>
                         <th>Region</th>
                         <th>City</th>
-                        <th>Image</th>
+                        {/* <th>Image</th> */}
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -184,13 +188,13 @@ const ManageTours = () => {
                             <td>{tour.status}</td>
                             <td>{tour.region}</td>
                             <td>{tour.city}</td>
-                            <td>
+                            {/* <td>
                                 
                                 <img src={`${API_BASE_URL}/uploads/${tour.photoPath}`} alt={tour.title} width="100" />
                     
 
                     
-                            </td>
+                            </td> */}
                             <td className="actions">
                                 <button onClick={() => handleChangeStatus(tour.id, tour.status)}>
                                     {tour.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}
